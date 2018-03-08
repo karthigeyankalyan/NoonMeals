@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    form{
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        top: 20px;
+        position: relative;
+        align-items: center;
+    }
+
+</style>
+
+<body>
+
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js"></script>
+    <script src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+
+    <label for="accountHeadSelect">Account Head:</label>
+    <select id="accountHeadSelect"><option>Account Head:</option></select>
+
+    <div id="div1">
+    </div>
+
+</body>
+
+<script>
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function(){
+
+    var myObj = JSON.parse(this.responseText);
+    var accountHeadArray = [];
+
+        $.each(myObj, function (index) {
+            var district = myObj[index]["Account Head"];
+            if ($.inArray(district, accountHeadArray) === -1) {
+                accountHeadArray.push(district);
+            }
+        });
+
+        accountHeadArray.sort();
+        var $distDropDown = $("#accountHeadSelect");
+
+        $.each(accountHeadArray, function (i) {
+            $distDropDown.append('<option value="' + accountHeadArray[i] + '">' + accountHeadArray[i] + '</option>');
+        });
+
+        $distDropDown.change(function () {
+            var selecteddistrict = this.value;
+            //filter based on  selected year.
+            selectedDistArray = jQuery.grep(myObj, function (employee) {
+                return employee["Account Head"] === selecteddistrict;
+            });
+            updateTable(selectedDistArray);
+        });
+
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        function updateTable(selectedDistArray) {
+            var districtAccountHeads = d3.nest()
+            .key(function(d) { return d["District"]; })
+            .key(function(d) { return d["Account Head"]; })
+            .key(function(d) { return d["Month Year"]; })
+            .rollup(function(leaves) { return { "Amount Sanctioned": d3.sum(leaves, function(d) {return parseFloat(d["Amount Sanctioned"]);}), "Amount Spent": d3.sum(leaves, function(d) {return parseFloat(d["Amount Spent"]);})} })
+            .entries(selectedDistArray);
+            console.log(districtAccountHeads[0].values[0].values[0].values["Amount Sanctioned"]);
+            console.log(districtAccountHeads[0].key);
+
+            var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "districtSanctionSpends");
+            $("#div1").append(tbl);
+            var hr = "<tr>";
+            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Account Head" + "</th>";
+            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Amount Sanctioned" + "</th>";
+            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Amount Spent" + "</th>";
+            $("#districtSanctionSpends").append(hr + th1 + th2 + th3 + th4);
+            for (var j = 0; j < districtAccountHeads[0].values.length; j++) {
+//                var blockLink = districtAccountHeads[0].key;
+//                var url = '/block_beneficiaries/'+blockLink;
+                var row = $('<tr></tr>').html('<td>' +
+                    districtAccountHeads[0].key + '</td>'+
+                    '<td>'+districtAccountHeads[0].values[j].key+'</td>'+
+                    '<td>'+districtAccountHeads[0].values[0].values[0].values["Amount Sanctioned"] +'</td>'+
+                    '<td>'+districtAccountHeads[0].values[0].values[0].values["Amount Spent"] +'</td>');
+                  $("#districtSanctionSpends").append(row);
+            }
+        }
+    };
+xmlhttp.open("GET", "/district_table", true);
+xmlhttp.send();
+
+</script>
+
+{% endblock %}

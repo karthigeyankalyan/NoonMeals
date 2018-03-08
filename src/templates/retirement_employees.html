@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+#myTable {
+  border-collapse: collapse;
+  width: 70%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+    text-align:center;
+    vertical-align:middle
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#container{
+    position: absolute;
+    left: 15px;
+    top: 100px;
+}
+
+#DrpDwn {
+    margin-left: 40%;
+    position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+</style>
+
+<div class="container" id="container">
+    <div id="div1">
+        <div id="DrpDwn">
+        <label for="DistrictSelect">District:</label>
+        <select id="DistrictSelect"><option>Choose District</option></select>
+        </div>
+    </div>
+</div>
+
+<script>
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function()
+{
+    {
+        var myObj = JSON.parse(this.responseText);
+        var distArray = [];
+
+        $.each(myObj, function (index) {
+            var district = myObj[index].District;
+            if ($.inArray(district, distArray) === -1) {
+                distArray.push(district);
+            }
+        });
+
+        distArray.sort();
+        var $distDropDown = $("#DistrictSelect");
+
+        $.each(distArray, function (i) {
+            $distDropDown.append('<option value="' + distArray[i] + '">' + distArray[i] + '</option>');
+        });
+
+        $distDropDown.change(function () {
+            var selecteddistrict = this.value;
+            //filter based on  selected year.
+            selectedDistArray = jQuery.grep(myObj, function (employee) {
+                return employee.District === selecteddistrict;
+            });
+            updateTable(selectedDistArray);
+        });
+
+        //Getting only the valid dates for selected district
+        updateTable = function (districtArray) {
+
+            $("#myTable").find("tbody").empty();
+
+            var validDates = districtArray.filter(function (entry) {
+                return moment(entry["Date Of Birth"]).isValid()
+            });
+
+            var date = new Date();
+            var month = date.getMonth()+1;
+            var year = date.getFullYear();
+
+            var retirementThisMonth = validDates.filter(function (entry) {
+                return (moment(entry["Date of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
+            });
+
+            var aggregatedData = d3.nest()
+                .key(function (d) {
+                    return d.District;
+                })
+                .key(function (d) {
+                    return d.Block;
+                })
+                .rollup(function (v) { return v.length })
+                .entries(retirementThisMonth);
+
+            console.log(retirementThisMonth);
+
+            if (aggregatedData && typeof aggregatedData[0] != 'undefined') {
+                var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
+                $("#div1").append(tbl);
+                var hr = "<tr>";
+                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Retired Employees" + "</th>";
+                $("#myTable").append(hr + th1 + th2 + th3);
+                for (var j = 0; j < aggregatedData[0].values.length; j++) {
+                    var blockLink = aggregatedData[0].values[j].key;
+                    var url = '/retired/block_employees/' + blockLink;
+                    var row = $('<tr></tr>').html('<td><a href="' + url + '">' +
+                        aggregatedData[0].values[j].key + '</a></td>' +
+                        '<td>' + aggregatedData[0].key + '</td>' +
+                        '<td>' + aggregatedData[0].values[j].values + '</td>');
+                    $("#myTable").append(row);
+                }
+                $(document).ready(function () {
+                    $('#BlockLink').click(function () {
+                        this.href = '/retired/block_employees/' + blockLink;
+                    })
+                });
+            }
+
+            else {
+                tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
+                $("#div1").append(tbl);
+                hr = "<tr>";
+                th1 = "<th style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                th2 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                th3 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years <10" + "</th>";
+                th4 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years 10-20" + "</th>";
+                th5 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years 20-30" + "</th>";
+                th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years Above 30" + "</th>";
+                $("#myTable").append(hr + th1 + th2 + th3 + th4 + th5 + th6);
+                row = $('<tr></tr>').html('<td>' + 'Nothing To Display' + '</td>');
+                    $("#myTable").append(row);
+            }
+        }
+    }
+};
+
+xmlhttp.open("GET", "/table", true);
+xmlhttp.send();
+
+function myFunction() {
+  var input, filter, table, tr, td, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

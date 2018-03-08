@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    #AgeGroups{
+        margin-left: 60%;
+        margin-top: 1%;
+        margin-bottom: 3%;
+        position: relative;
+    }
+
+    th, td {
+        text-align:center;
+        vertical-align:middle
+    }
+
+    #budgetOverall{
+        text-align:center;
+        vertical-align:middle;
+        margin-left: 10%;
+        margin-top: 2%;
+        width: 20%;
+        position: absolute;
+    }
+</style>
+
+<body onload="todayDate()">
+
+<div style="margin-top: 3%;margin-bottom: 3%; border: double; padding-top: 5px; padding-bottom: 5px;">
+<span>
+    <label for="DateFilter" style="margin-left: 10%">Select Month To See Retirements</label>
+    <input type="date" value="" style="margin-left: 1%" id="DateFilter" name="DateFilter">
+    <label for="BucketSelect" style="margin-left: 10%">Service Bucket:</label>
+    <select id="BucketSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Cook">Cook</option>
+        <option value="Organiser">Organiser</option>
+        <option value="Assistant">Assistant</option>
+    </select>
+
+    <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 10%">Refresh Date</button>
+</span>
+</div>
+
+    <table id="budgetOverall" class="table table-bordered">
+        <thead>
+            <th style="text-align:center;vertical-align:middle;">Total Budget For Month</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalBudget"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="AgeGroups">
+        <div style="text-align: center;"><strong>Employee Age Groups</strong></div>
+    </div>
+
+    <div id="empList">
+    </div>
+
+</body>
+
+<script>
+
+    function todayDate() {
+        var todaysDate = new Date();
+        updateTable(moment(todaysDate).format("YYYY-MM-DD"));
+    }
+
+    function updateDate() {
+            var inputDate = moment(document.getElementById("DateFilter").value);
+            updateTable(inputDate);
+    }
+
+    function updateTable(inputDate) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                var bucketArray = [];
+                bucketArray = ["All"];
+                //Filtering for the block passed on by the url
+                var block = "{{block}}";
+                var blocksArray = [];
+                var myObj = JSON.parse(this.responseText);
+                for (var i = 0; i < myObj.length; i++) {
+                    if (myObj[i]["Block"] === block) {
+                        blocksArray.push(myObj[i]);
+                    }
+                }
+
+            var validDates = blocksArray.filter(function (entry) {
+                return moment(entry["Date Of Birth"]).isValid()
+            });
+
+            var date = new Date(inputDate);
+            var month = date.getMonth()+1;
+            var year = date.getFullYear();
+
+            //Getting employees retiring in the current month
+            var retirementThisMonth = validDates.filter(function (entry) {
+                return (moment(entry["Date of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
+            });
+
+            //Looping through the valid dates JSON to assign age, years in service
+            for (var j = 0; j < retirementThisMonth.length; j++) {
+                //Declaring moment.js dates
+                var birthDate = moment(new Date(retirementThisMonth[j]["Date Of Birth"])).format("YYYY-MM-DD");
+                var joiningDate = moment(new Date(retirementThisMonth[j]["Date Of Joining"])).format("YYYY-MM-DD");
+                var retirementDate = moment(new Date(retirementThisMonth[j]["Date Of Retirement"])).format("YYYY-MM-DD");
+
+                //Calculating the years in service, age
+                var now = moment(inputDate); //todays date
+
+                retirementThisMonth[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                retirementThisMonth[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
+                retirementThisMonth[j]["serviceBucket"] = calculateServiceBucket(retirementThisMonth[j]["Designation"], retirementThisMonth[j]["yearsInService"]);
+                retirementThisMonth[j]["currentSalary"] = calculateCurrentSalary(retirementThisMonth[j]["Designation"], retirementThisMonth[j]["serviceBucket"]);
+                retirementThisMonth[j]["lumpSumGrant"] = calculateLumpSum(retirementThisMonth[j]["Designation"]);
+            }
+
+        $.each(retirementThisMonth, function (index) {
+            var sbucket = retirementThisMonth[index].Designation;
+            if ($.inArray(sbucket, bucketArray) === -1) {
+                bucketArray.push(sbucket);
+            }
+        });
+
+        var $bucketDropDown = $("#BucketSelect");
+
+        $bucketDropDown.each(function() {
+            if (this.selectedIndex === 0) {
+                populatePage(retirementThisMonth);
+            }
+        });
+
+        $bucketDropDown.change(function () {
+            var selectedbucket = this.value;
+            //filter based on  selected year.
+            if (selectedbucket==="All") {
+                populatePage(retirementThisMonth);
+            }
+            else {
+                selectedBucketArray = jQuery.grep(retirementThisMonth, function (employee) {
+                    return employee.Designation === selectedbucket;
+                });
+                populatePage(selectedBucketArray);
+                populateEmployeeCount(selectedBucketArray);
+            }
+        });
+
+        function populateEmployeeCount() {
+            var BlockCountsBel10 = d3.nest()
+                .key(function (d) {
+                    return d.District;
+                })
+                .key(function (d) {
+                    return d.Block;
+                })
+                .rollup(function (v) {
+                    return v.length;
+                })
+                .entries(Below10Now);
+        }
+
+        function populatePage(selectedArray) {
+            $("#empDetails").find("tbody").empty();
+            var budget = 0;
+
+            var AgeGroups  = dc.pieChart("#AgeGroups");
+
+            //Plotting graphs by designation
+            var ndx = crossfilter(selectedArray),
+                designationDimension = ndx.dimension(function (d) {
+                        return d.Designation;
+                }),
+                ageGroup = designationDimension.group();
+
+            AgeGroups.width(200)
+                .height(200)
+                .slicesCap(4)
+                .dimension(designationDimension)
+                .group(ageGroup);
+
+            dc.renderAll();
+
+            //Summing up the lump sum to be granted to all the employees that are about to retire
+            $.each(selectedArray, function () {
+            budget += this.lumpSumGrant;
+        });
+
+            //Updating table with the final total retirement lump sum required for the current month
+            document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'});
+
+            var tbl = $("<table class='table table-bordered table-dark' id='empDetails' />");
+            $("#empList").append(tbl);
+            var hr = "<tr>";
+            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age" + "</th>";
+            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Service Bucket" + "</th>";
+            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th></tr>";
+            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Lump Sum" + "</th></tr>";
+            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7);
+            for (var j = 0; j < selectedArray.length; j++) {
+                var row = $('<tr></tr>').html('<td>' +
+                    selectedArray[j]["Employee Name"] + '</td>'+
+                    '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
+                    '<td>'+selectedArray[j]["Designation"] +'</td>'+
+                    '<td>'+selectedArray[j]["Age Of Employee"] +'</td>'+
+                    '<td>'+selectedArray[j]["yearsInService"] +'</td>'+
+                    '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
+                    '<td>'+selectedArray[j]["lumpSumGrant"] +'</td>');
+                  $("#empDetails").append(row);
+            }
+        }
+
+        function calculateCurrentSalary(Post, Bucket) {
+                if (Post==="Organiser") {
+                    if(Bucket==="Below 10"){
+                        return 14000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 20000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 20000;
+                    }
+                    else {
+                        return 25000;
+                    }
+                }
+
+            else if (Post==="Cook") {
+                    if(Bucket==="Below 10"){
+                        return 10000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 15000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 17000;
+                    }
+                    else {
+                        return 20000;
+                    }
+                }
+
+            else {
+                    if(Bucket==="Below 10"){
+                        return 8000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 10000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 12000;
+                    }
+                    else {
+                        return 15000;
+                    }
+                }
+
+            }
+
+        function calculateLumpSum(Designation) {
+            if (Designation === "Organiser") {
+                return 100000;
+            }
+            else if (Designation === "Cook" || Designation === "Assistant") {
+                return 50000;
+            }
+            else return null;
+        }
+
+        function calculateServiceBucket(Designation, YIS) {
+                if(YIS<10) {
+                    return "Below 10";
+                }
+                else if (YIS>=10 && YIS<20) {
+                    return "10 to 20";
+                }
+                else if (YIS>=20 && YIS<30) {
+                    return "20 to 30";
+                }
+                else if (YIS>58 && Designation===("Cook"|"Assistant")) {
+                    return "Retired";
+                }
+                else if (YIS>60 && Designation===("Organizer")) {
+                    return "Retired";
+                }
+                else {
+                    return "Above 30";
+                }
+            }
+
+        };
+        xmlhttp.open("GET", "/table", true);
+        xmlhttp.send();
+    }
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+
+        h4{
+        text-align: center;
+        top: 13px;
+        position: relative;
+    }
+
+    form{
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        top: 20px;
+        position: relative;
+    }
+
+
+    div{
+        display: list-item;
+    }
+
+
+</style>
+
+<body>
+<h4>Enter Dependent Details</h4>
+<form id="new-dependent" action="/dependents/new/{{ beneficiary_id }}" method="post">
+    <div class="form-group">
+        <label for="mother">Enter Beneficiary's Mother's Name</label>
+            <input type="text" id="mother" name="mother">
+    </div>
+
+    <div class="form-group">
+        <label for="father">Enter Beneficiary's Father's Name</label>
+            <input type="text" id="father" name="father">
+    </div>
+
+    <div class="form-group">
+        <label for="spouse">Enter Spouse's Name</label>
+            <input type="text" id="spouse" name="spouse">
+    </div>
+
+    <div class="form-group">
+          <label for="brothers">How many brothers does the beneficiary have?</label>
+          <select class="form-control" id="brothers" name="brothers">
+            {% set gender = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>9'] %}
+            {% for gen in gender %}
+                <option value= "{{gen}}">{{gen}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+          <label for="sisters">How many sisters does the beneficiary have?</label>
+          <select class="form-control" id="sisters" name="sisters">
+            {% set sisters = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>9'] %}
+            {% for sis in sisters %}
+                <option value= "{{sis}}">{{sis}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+        <label for="parents_residence">Where do your parents live?:</label>
+            <input type="text" id="parents_residence" name="parents_residence">
+    </div>
+
+    <div class="form-group">
+        <label for="parents_qualification">What is the Parent's highest qualification?</label>
+          <select class="form-control" id="parents_qualification" name="parents_qualification">
+            {% set choice = ['High-School', 'Under-Graduation', 'Post-Graduation', 'None'] %}
+            {% for ch in choice %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+        <label for="father_occupation">What is the occupation of the Father?:</label>
+            <input type="text" id="father_occupation" name="father_occupation">
+    </div>
+
+    <div class="form-group">
+        <label for="mother_occupation">What is the occupation of the Mother?:</label>
+            <input type="text" id="mother_occupation" name="mother_occupation">
+    </div>
+
+    <div class="form-group">
+          <label for="employed_siblings">How many siblings are employed?</label>
+          <select class="form-control" id="employed_siblings" name="employed_siblings">
+            {% set emp_sib= ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>9'] %}
+            {% for es in emp_sib %}
+                <option value= "{{es}}">{{es}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+          <label for="married_siblings">How many siblings are married?</label>
+          <select class="form-control" id="married_siblings" name="married_siblings">
+            {% set mar_sib= ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '>9'] %}
+            {% for ms in mar_sib %}
+                <option value= "{{ms}}">{{ms}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+        <label for="sibling_address">What is the address of the sibling?</label>
+            <input type="text" id="sibling_address" name="sibling_address">
+    </div>
+
+    <button type="submit" class="btn btn-success">Save Dependent Details</button>
+
+</form>
+</body>
+
+{% endblock %}

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    h4{
+        text-align: center;
+        top: 13px;
+        position: relative;
+    }
+
+    form{
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        top: 20px;
+        position: relative;
+    }
+
+</style>
+
+<body>
+<h4 style="text-align: center;">Enter Employee Details</h4>
+
+<form id="new-beneficiary" action="/update_employee/{{ emp_id }}" method="post">
+
+    <div class="form-group">
+          <label for="district">Select District:</label>
+          <select class="form-control" style="text-align: center;" id="district" name="district">
+            {% set districts = ['Ariyalur', 'Karur', 'Nagapattinam', 'Perambalur',
+              'Pudukkottai', 'Thanjavur', 'Tiruchirappalli','Tiruvarur', 'Dharmapuri',
+              'Coimbatore', 'Erode', 'Krishnagiri', 'Namakkal', 'The Nilgiris', 'Salem',
+              'Tiruppur', 'Dindigul', 'Kanyakumari', 'Madurai', 'Ramanathapuram', 'Sivaganga',
+              'Theni', 'Thoothukudi','Tirunelveli', 'Virudhunagar', 'Chennai', 'Cuddalore', 'Kancheepuram',
+              'Tiruvallur', 'Tiruvannamalai', 'Vellore','Viluppuram'] %}
+
+            {% for district in districts %}
+                <option value= "{{district}}">{{district}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" id="Name" name="name" style="display: block; width: 100%">
+    </div>
+
+    <div class="form-group">
+          <label for="block">Select Block:</label>
+          <select class="form-control" id="block" name="block">
+            {% set blocks = ['Acharapakkam', 'CHITHAMUR', 'Lathur', 'Madhuranthagam', 'Kattankolathur', 'Thirukazhukundram', 'Thiruporur', 'StThomasMount', 'Kancheepuram', 'Walajabad', 'Uthiramerur', 'Kundrathur', 'Sriperumbudur', 'KanchipuramMunicipality', 'ChengalpattuMunicipality', 'MadhuranthagamMunicipality', 'TambaramMunicipality', 'AlandhurMunicipality', 'PallavaramMunicipality'] %}
+            {% for block in blocks %}
+                <option value= "{{block}}">{{block}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div class="form-group">
+    <span>
+    <label for="panchayat">Select Panchayat</label>
+        <input class="form-control" id="panchayat" name="panchayat">
+    </span>
+    </div>
+
+    <div class="form-group">
+    <span>
+    <label for="center">Select Center</label>
+        <select class="form-control" id="center" name="center">
+            {% set Centers = ['Acharapakkam P.U.E. School', 'Allur P.U.E. School', 'Athivakkam P.U.E. School', 'Ananthamangalam P.U.E. School']%}
+            {% for block in Centers %}
+                <option value= "{{block}}">{{block}}</option>"
+            {% endfor %}
+        </select>
+    </span>
+    </div>
+
+    <div class="form-group">
+        <label for="designation">What is the designation of Employee?</label>
+          <select class="form-control" id="designation" name="designation">
+            {% set designation = ['Cook', 'Cooking Assistant', 'Organiser'] %}
+            {% for ch in designation %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <div id="date" style="display: inline;">
+    <label for="DOB">Enter Date Of Birth</label>
+    <input type="date" value="" id="DOB" onchange="CalculateAge()" name="DOB">
+
+    <label for="Age" style="display: inline">Age of the Beneficiary</label>
+    <input type="text" value="" id="Age" name="Age">
+    </div>
+
+    <div id="joining" style="display: inline;">
+    <label for="joiningDate">Enter Date Of Joining</label>
+    <input type="date" value="" id="joiningDate" onchange="CalculateYears()" name="joiningDate">
+
+    <label for="serviceYears" style="display: inline">Years OF Service</label>
+    <input type="text" value="" id="serviceYears" name="serviceYears">
+    </div>
+
+    <br><br>
+
+    <div class="form-group">
+        <label for="qualification">What is the qualification of Employee?</label>
+          <select class="form-control" id="qualification" name="qualification">
+            {% set qualification = ['None', 'Primary (1-5)', 'Secondary (6-10)', 'Higher-Secondary (11-12)', 'Under-Graduation', 'Post-Graduation'] %}
+            {% for ch in qualification %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+    </div>
+
+    <label for="retirementDate">This Employee shall retire by?</label>
+    <input type="date" value="" id="retirementDate" name="retirementDate">
+
+    <button type="submit" class="btn btn-success">Update Employee Details</button>
+
+</form>
+</body>
+
+<script>
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                var emp_id = "{{emp_id}}";
+                var myObj = JSON.parse(this.responseText);
+                var selected_employee = myObj.filter(function (entry) {
+                if (entry["_id"]["$oid"]){
+                    return entry["_id"]["$oid"] === emp_id
+                }
+                else {
+                    return entry["_id"] === emp_id
+                }
+            });
+                console.log(selected_employee);
+                document.getElementById("Name").value = selected_employee[0]["Employee Name"];
+                document.getElementById("district").value = selected_employee[0]["District"];
+                document.getElementById("block").value = selected_employee[0]["Block"];
+                document.getElementById("panchayat").value = selected_employee[0]["Name Of Village Panchayat"];
+                document.getElementById("designation").value = selected_employee[0]["Designation"];
+                document.getElementById("qualification").value = selected_employee[0]["Educational Qualification"];
+                document.getElementById("center").value = selected_employee[0]["Name Of the Center"];
+        };
+        xmlhttp.open("GET", "/table", true);
+        xmlhttp.send();
+
+    var blockPanchayats = {
+	Acharapakkam : 					['Acharapakkam'],
+	CHITHAMUR :  					['Chithamur'],
+	Lathur :  						['Adayalachery','Akkinabedu','Ammanur','Anaicut','Cheyyur','Iranyasithi','Kadalur','Kadugupattu','Kadugupattu','Kalkulam','Kanathur','Keelachery','Kodur','Koovathur','Lathur','Mugaiur','Mugaiyur','Nedumaram','Neelamangalam','Nelvoy','Nelvoypalayam','Nemandam','Nerkunapattu','Pachampakkam','Paramenkeni','Parameswaramangalam','Pavunjur','Pavunjur','Periyavelikkadu','Perumbakkam','Seekinan kuppam','Seevadi','Sembur','Sengattur','Siruvangunam','Thandarai','Thattampatu','Thenpattinam','Thiruvathur','Thondamanallur','Vadakkuvayalur','Vadapattinam','Veerabogam','Vettakkarakuppam'],
+	Madhuranthagam : 				['149 Budur','Andavakkam','Ariyanur','Ariyapakkam','Arungunam','Avurimedu','Bukkadurai','Chinnavenmani','Devathur','Gendiracherry','Irumbedu','Janakipuram','Kallapiranpuram','Karunagaracherry','Karunguzhi, Town Pts','Kattu Devathur','Kavathur','Keelakandai','Keezhavalam','Kelakandai','Kinar','Kizhakandai','Kumaravadi','Kunnathur','L.N.Puram','Madurantakam','Madurantakam Municipalities','Mamandur','Mangalam','Meyyur','Munuthikuppam','Murukambakkam','Nallamur','Nallur','Neerpair','Nelli','Nelvoy','Nesapakkam','Nethapakkam','Netrampakkam','Onambakkam','Padalam','Pakkam','Palayanur','Pazhamathur','Periyavenmani','Peruveli','Pilapur','Pudupattu','Puliyaranankottai','Silavattam','Sirunallur','Sithandi','Soorai','Thonnadu','Vaiyavoor','Veeranakunnam','Vettur','vilvarayanallur','Viralur','Zamin Budur','Zamin Endathur', 'Zamin Endhathur'],
+	Kattankolathur : 				['Alapakkam','Anjur','Appur','Athur','Chengalpattu Municipality','Chettipunniyam','Guduvancheri Town Panchayat','Guruvanmedu','Kalvoy','Karanaipuducheri','Karunilam','Kayarambedu','Keerapakkam','Kolathur','Kondamangalam','Kumizhi','Kunnavakkam','Mannivakkam','Maraimalai Nagar Municipality','Melamaiyur','Nallambakkam','Nedukundram','Ozhaloor','Palur','Patravakkam','Pazhaveli','Periapotheri','Perumattunallur','Pulipakkam','Reddipalaiyam','Singaperumalkoil','Thenmelpakkam','Thimmavaram','Thiruvadisoolam','Uanamancheri','Urapakkam','Vallam','Vandaloor','Veerapuram','Vengadamangalam','Venkatapuram', 'Villiambakkam'],
+	Thirukazhukundram : 			['Amijikarai','Aminjikarai','Ammanambakkam','Anoor','Ayapakkam','Azhagusamuthiram','Eachankaranai','Echur','Edaiyathur','Edaiyur','Irumbulicheri','Kadambadi','Kilapakkam','Kothimangalam','Kunnathur','Kuzhipanthadalam','Lattur','Mamallapuram','Mambakkam','Mamballapuram','Manamai','Manapakkam','Meleripakkam','Mosivakkam','Mullikolathur','Naduvakarai','Nallathur','Nallur','Narapakkam','Nathamkariyacheri','Neikuppi','Nenmeli','Nerumbur','Othivakkam','P/V/Kalathur','Pandur','Pattikadu','Periyakattupakkam','Perumbedu','Ponbathirkudam','PonpathirKoodam','Pudupattinam','Pulleri','Sadurangapattinam','Saloor','Sogandi','Sooradimangalam','Thathalur','Thazhambedu','Thirukkalukundram','Thirumani','Thiurkkalukundram','Vadakadumbadi','Vallipuram','Vasuvasamuthiram','Vayalur','Vazhuvathur','Vengambakkam','Vilagam', 'Vittilapuram'],
+	Thiruporur :  					['Alathur Panchayat','Amoor Panchayat','Anumanthapuram Panchayat','Arungkundram Panchayat','Illaloor Panchayat','Kanathur Reddy Kuppam Panchayat','Karani Panchayt','Karumbakkam Panchayat','Kayar Panchayat','Keelhur Panchayat','Kelambakkam Panchayat','Kolathur Panchayat','Kottamedu Panchayat','Kovalam Panchayat','Kunnapattu Panchayat','Madaiyathur Panchayat','Mailai Panchayat','Mambakkam Panchayat','Manambathy Panchayat','Melaikkoatttiyur Panchayat','Melaiyur Panchayat','Mullipakkam Panchayat','Muttukadu Panchayat','Navalur Panchayat','Nellikuppam Panchayat','Nemmeli Panchayat','Oragadam Panchayat','Padur Panchayat','Paiyanoor Panchyat','Panangkattupakkam Panchayat','Patipulam Panchayat','Periyairumbadu Panchayat','Periyavippadu Panchayat','Perunthandalam Panchayat','Ponmar Panchayat','Pudhupakkam Panchayat','Sembakkam Panchayat','Sirucherri Panchayat','Sirudhavoor Panchayat','Sirungkundram Panchayat','Sonalur Panchayat','Thaiyur Panchayat','Thalambhur Panchayat','Thandalam Panchayat','Thandari Panchayat','Thirunilai Panchayat','Thirupporur Town Panchayat','Thiruvidanthiai Panchayat','Vadanemmeli Panchayat','Velichiai Panchayat', 'Venbadu Panchayat'],
+	StThomasMount : 				['Adambakkam - Corporation','Alandur - Corporation','Alandur -Corporation','Anakaputhur - Municipality','Anakaputhur Municipality','Cantonement Board','Cantonment Board','Cantonment Board','Cantonment Board area','Chinna Neelangarai - Corporation','Chitlapakkam - Town Pt','Chitlapakkam Town Panchayat','Cowlbazaar - Village Pt','Injambakkam - Corporation','Jalladianpet Corporation','Karapakkam - Corporation','Keelkattalai Corporation','Kottivakkam - Corporation','Kottivakkamkuppam Corporation','Kovilambakkam - Village Pt','Kovilambakkam Village Panchayat','Kovilancheri Village Panchayat Habitation','Kudimiyandithoppu Corporation','Madambakkam - Town Pt','Madambakkam Town Panchayat','Madipakkam - Chennai Corporation','Madipakkam Corporation','Maduraipakkam Village Panchayat','Medavakkam Village Panchayat','Medavakkam -Village Pt','Meenambakkam - Corporation','Meenambakkam Corporation','MGR Nagar Selaiyur Tambaram Municipality','Moongileri Municipality','Mootaikaranchavadi Corporation','Moovarasampet - Corporation','Moovarasanpet Village Panchayat','Mudichur - Village Pt','Mudichur Village Pt','Nandambakkam (IDPL Township)','Nanganallur-Corporation','Nangnallur - Corporation','Nangnallur -Corporation','Nanmangalam -Corporation','Nanmangalam Village panchayat','Narayanapuram Corporation','Neelangarai - Corporation','New Perungalathur','Nookampalayam Village Panchayat Habitation','Okkiam thuraipakkam Corporation','Okkiamthuraipakkam - Chennai Corporation','Okkiamthuraipakkam - Corporation','Okkiamthuraipakkam Kannagi Nagar (FAB)','Okkiamthuriapakkam Corporation','Okkiyamthuraipakkam Kannagi Nagar (Housing Board) Corporation','Old Perungalathur Town Panchayat','Ottiambakkam Village Panchayat','Paduvancheri - Village Pt Habitation','Palavakkam -Corporation','Pallavaram Municipality','Pallikaranai - Corporation','Pallikaranai Pudiya kudiyiruppu Corporation','Pammal - Municipality','Pammal Settlement Municipality','Panaiyurkuppam Corporation','Pazhavanthangal - Corporation','Peerkanakaranai Town Panchayat','Peerkankarani - Town Pt','Perumbakkam - Village Pt','Perumbakkam -Village Pt','Perungalathur - Town Pt','Perungudi - Corporation','Polichalur - Village pt','Polichalur -Village Pt','Puzhidivakkam - Corporation','Puzhudivakkam Chennai Corporation','Ramakrishnapuram Tambaram Municipality','Sanatorium Tambaram Municipality','Santhosapuram (Village Panchayat Habitation)','Sembakkam - Municipality','Semmencheri thoppu - Chennai corporation','Semmencheri Thoppu - Corporation','Semmencheri Thoppu Corporation','Sholinganallur Corporation','Sholingnallur corporation','Sithalapakkam - Village Pt','Sithalapakkam-Village Pt','Tambaram - Municipality','Tambaram Municipality','Thiruneermalai - Town Pt','Thiruneermalai Town Panchayat','Thiruvanchery Village Pt','Tiruneermalai - Town Pt','Tirusoolam Village Panchayat','Tirusoolam Village Pt','Ullagaram Corporation','Uthandi - Corporation','Vengaivasal - Village Pt','Vengambakkam Village Panchayat','Vettuvankeni -Chennai Corporation', 'Vettuvankeni Corporation'],
+	Kancheepuram : 					['Kanchipuram Panchayat Union'],
+	Walajabad :  					['Sankarapuram Panchayat','139/Thandalam panjayat','Agaram panjayat','Alapakkam panjayat','Ariyampakkam Panchayat','Attuputhur panjayat','Aymicherry panajayat','Ayyanpettai panjayat','Cinnivakkam panjayat','Devariyampakkam panjayat','Eganampettai Panchayat','Elluppapattu panjayat','Enathur panjayat','Enjampakkam panjayat','Govindavadi panjayat','Kaliyanur panjayat','Karai panjayat','Karukkupettai Panchayat','Karur Panchayat','Katavakkam Panchayat','Kilottivakkam Panchayat','koothirampakkam panjayat','Kottavakkam Panchayat','kovalavedu village','Kunnavakkam panjayat','Maarutham panjayat','melpodavur panjayat','Muthiyal pettai panjayat','Naickenpettai panjayat','Naikkankuppam Panchayat','Naikkanpettai Panchayat','Nathanallur','Neikuppam Panchayat','Nelvoy Panchayat','Nelvoy Panjayat','padunelli  panjayat','padunelli panjayat','Padunelli Panchayat','Palayaseevaram Panchayat','Paranthur Panchayat','periyakarumpur village','pooderi village','Pudupakkam Panchayat','puliyampakkam panjayat','Pullaloor Panchayat','Purisai panjayat','Puthagaram panjayat','Rajampettai panjayat','singadivakkam village','Siruvakkam panjayat','Siruvallur panjayat','Tenneri panjayat','Thanki village','Thenneri Panchayat','Thimmaiyampettai Panchayat','Thiruvankaranai Panchayat','Thodur Panchayat','Thollazhi Panchayat','Timmaiyanpettai village','Ullavur panjayat','Uthukadu Panchayat','Vaiyavur panjayat','Valathur Panchayat','varanavasi panjayat','vedal panjajat','veliyur panjayat','Venkudi panjayat','Venmakkam Panchayat','villivalam village','walajabad Town panjayat'],
+	Uthiramerur : 					['Adavapakkam','Agaramthuli','Alancheri','Ammaiyappanallur','Andithangal','Annambakkam','Annampakkam','Annathur','Anumanthandalam','Arasanimangalam','Arumbuliyur','Arumpuliyur','Athiyurmelthuli','Azhisur','Chinnalampadi','Edaiyampudur','Edamichi','Elanagar','Kadalamangalam','Kaliyamp[oondi','Kaliyampoondi','Kaliyapettai','Kammalampoondi','Karanai','Kariyamangalam','Karuveppampoondi','Kattangulam','Kattiyampandal','Kavampair','Kavanoorpuducheri','Kavithandalam','Kilakkadi','Kunnavakkam','Malayangulam','Manamathikandigai','Manampathy','Marutham','Maruthuvambadi','Mathur','Matrutham','Melpakkam','Menallur','Nancheepuram','Neiyadivakkam','Oddanthangal','Orakkattupettai','Orakkaupettai','Ozaiyur','Ozhaiyur','Ozhugarai','Paleswaram','Pazaveri','Pennalur','Perunagar','Perungozhi','Pinayur','Porpandal','Pulippakkam','Pulivoy','Puliyur','Pullambakkam','Ravathanallur','Rettamangalam','Salavakkam','Sathanancheri','Seethancheri','Silampakkam','Siru[inayur','Sirumailur','Sirupinayur', 'Siruthamur'],
+	Kundrathur : 					['Adhanur',' Naduveerapattu','Adhanur','Amerambedu','Ayyapanthangal','Ayyappanthangal','Erumaiyur','Ezhichur','Gerugambakkam','Gerugambakkam','Karasangal','kavanur','Kolapakkam','Kollacheri','Kovur','Kozhumanivakkam','Kunrathur','Kunrathur Municipality','Kuntrathur','Madambakkam','Malaipattu','malaiyampakkam','Malayambakkam','Manapakkam','Mangadu','Mangadu','Manimangalam','Moulivakkam','Mugalivakkam','Naduveerapattu','Nandambakkam','Nandambakkam','Nariyambakkam','Nattaransanpattu','Nattarasanpattu','orathur','Padapai','Padappai','padappai','Paraniputhur','Pazhanthandalam','Poonthandalam','Salamangalam','Sennakuppam','Serapancheri','Serappanancheri','Sethupattu','Sikkarayapuram','Sirugalathur','Somangalam','Thandalam','Thirumudivakkam','Vadakkupattu','Vaipur','Valaiyakaranai','Valayakaranai','Valayakarani','Varatharajapuram', 'Vattambakkam'],
+	Sriperumbudur : 				['Akkamapuram Panchayat','Balnellur Panchayat','Chellampattidai Panchayat','Echoor Panchayat','Edaiyarpakkam Panchayat','Eganapuram Panchayat','Eraiyur Panchayat','Gunagarambakkam Panchayat','Gunagarampakkam Panchayat','Gunduperumbedu Panchayat','Irungkattukottai Panchayat','Kaduvanchery Panchayat','Kandoor Panchayat','Kannanthangal Panchayat','Kappankottur Panchayat','Katrambakkam Panchayat','Keeranallur Panchayat','Keevalur Panchayat','Kiloy Panchayat','Kolathur Panchayat','Kunnam Panchayat','Maduramangalam Panchayat','Mahaniyam Panchayat','Mambakkam Panchayat','Mannur Panchayat','Mathur Panchayat','Melmaduramangalam Panchayat','Mettupalayam Panchayat','Mevalurkuppam Panchayat','Molachur Panchayat','Nemily Panchayat','O.M.Mangalam Panchayat','Panrutti Panchayat','Pappankuzhi Panchayat','Pennalur Panchayat','Perinjambakkam Panchayat','Pillaipakkam Panchayat','Pitchivakam Panchayat','Pitchivakkam Panchayat','Podavur Panchayat','Pondur Panchayat','Ramanujapuram Panchayat','Santhavellore Panchayat','Santhavelore Panchayat','Selvazhimangalam Panchayat','Sendamangalam Panchayat','Sengadu Panchayat','Singilipadi Panchayat','Sirumangadu Panchayat','Sivapuram Panchayat','Sogandy Panchayat','Sriperumbudur Town Panchayat','Thandalam Panchayat','Thathanur Panchayat','Thirumangalam Panchayat','Thulasapuram Panchayat','Vadamangalam Panchayat','Valarpuram Panchayat','Vallakkottai Panchayat', 'Vallam Panchayat'],
+	KanchipuramMunicipality : 		['Kanchipuram Municipality'],
+	ChengalpattuMunicipality : 	    ['Chengalpattu Municipality'],
+	MadhuranthagamMunicipality : 	['Madhuranthagam Municipality'],
+	TambaramMunicipality : 		    ['Tambaram Municipality'],
+	AlandhurMunicipality : 		    ['Alandhur Municipality'],
+	PallavaramMunicipality : 		['Pallavaram Municipality']
+    };
+
+ // bind change event handler
+    $('#block').change(function() {
+            // get the second dropdown
+            $('#panchayat').html(
+                // get array by the selected value
+                blockPanchayats[this.value]
+                // iterate  and generate options
+                    .map(function (v) {
+                        // generate options with the array element
+                        return $('<option/>', {
+                            value: v,
+                            text: v
+                        })
+                    })
+            );
+        });
+
+    function CalculateAge(){
+        var today = new Date();
+        var Date1 = document.getElementById("DOB").value;
+        var designation = document.getElementById("designation").value;
+        var birthDate = new Date(Date1);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        var year = birthDate.getFullYear();
+        var month = birthDate.getMonth()+1;
+        var day = birthDate.getDate();
+        var retire;
+        if(designation) {
+            switch (designation){
+                case 'Cook':
+                    retire=58;
+                    break;
+                case 'Cooking Assistant':
+                    retire=58;
+                    break;
+                case 'Organiser':
+                    retire=60;
+                    break;
+                default:
+                    retire=58;
+            }
+        }
+
+        if (month < 10) {
+            month = '0'+month;
+        }
+
+        if (day < 10) {
+            day = '0'+day;
+        }
+
+        year = year + retire;
+
+        var retirementDate = year+"-"+month+"-"+day;
+        console.log(retirementDate);
+        document.getElementById("Age").value = age;
+        document.getElementById("retirementDate").value = retirementDate;
+    }
+
+    function CalculateYears(){
+        var today = new Date();
+        var Date1 = document.getElementById("joiningDate").value;
+        var joinDate = new Date(Date1);
+        var years = today.getFullYear() - joinDate.getFullYear();
+        var m = today.getMonth() - joinDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < joinDate.getDate())) {
+            years--;
+        }
+    document.getElementById("serviceYears").value = years;
+    }
+
+</script>
+
+{% endblock %}

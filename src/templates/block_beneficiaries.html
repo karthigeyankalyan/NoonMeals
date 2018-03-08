@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    #Search{
+        margin-left: 1%;
+        margin-top: 7%;
+        margin-bottom: 3%;
+        position: relative;
+    }
+
+    th, td {
+        text-align:center;
+        vertical-align:middle
+    }
+
+    #budgetOverall{
+        text-align:center;
+        vertical-align:middle;
+        margin-left: 50%;
+        margin-top: 2%;
+        width: 20%;
+        position: absolute;
+    }
+</style>
+
+<body onload="todayDate()">
+
+<div style="margin-top: 3%;margin-bottom: 3%; border: double; padding-top: 5px; padding-bottom: 5px;">
+<span>
+    <label for="DateFilter" style="margin-left: 10%">Enter Date To Check Budget</label>
+    <input type="date" value="" style="margin-left: 1%" id="DateFilter" name="DateFilter">
+    <label for="BucketSelect" style="margin-left: 10%">Service Bucket:</label>
+    <select id="BucketSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Cook">Cook</option>
+        <option value="Organiser">Organiser</option>
+        <option value="Assistant">Assistant</option>
+    </select>
+
+    <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 10%">Refresh Date</button>
+</span>
+</div>
+
+    <table id="budgetOverall" class="table table-bordered">
+        <thead>
+            <th style="text-align:center;vertical-align:middle;">Total Budget For Month</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalBudget"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="Search">
+    <label for="myInput" style="margin-left: 10%">Search for Employee by Name:</label>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
+    <div id="empList">
+    </div>
+
+</body>
+
+<script>
+
+    function todayDate() {
+        var todaysDate = new Date();
+        updateTable(moment(todaysDate).format("YYYY-MM-DD"));
+    }
+
+    function updateDate() {
+            var inputDate = moment(document.getElementById("DateFilter").value);
+            updateTable(inputDate);
+    }
+
+    function updateTable(inputDate) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                var bucketArray = [];
+                bucketArray = ["All"];
+                var block = "{{block}}";
+                var blocksArray = [];
+                var myObj = JSON.parse(this.responseText);
+                for (var i = 0; i < myObj.length; i++) {
+                    if (myObj[i]["Block"] === block) {
+                        blocksArray.push(myObj[i]);
+                    }
+                }
+
+            var validDates = blocksArray.filter(function (entry) {
+                return moment(entry["Date Of Birth"]).isValid()
+            });
+
+            //Looping through the valid dates JSON to assign age, years in service
+            for (var j = 0; j < validDates.length; j++) {
+                //Declaring moment.js dates
+                var birthDate = moment(new Date(validDates[j]["Date Of Birth"])).format("YYYY-MM-DD");
+                var joiningDate = moment(new Date(validDates[j]["Date Of Joining"])).format("YYYY-MM-DD");
+                var retirementDate = moment(new Date(validDates[j]["Date Of Retirement"])).format("YYYY-MM-DD");
+
+                //Calculating the years in service, age
+                var now = moment(inputDate); //todays date
+
+                validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
+                validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
+                validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
+            }
+
+        $.each(validDates, function (index) {
+            var sbucket = validDates[index].Designation;
+            if ($.inArray(sbucket, bucketArray) === -1) {
+                bucketArray.push(sbucket);
+            }
+        });
+
+        var $bucketDropDown = $("#BucketSelect");
+
+        $bucketDropDown.each(function() {
+            if (this.selectedIndex === 0) {
+                populatePage(validDates);
+            }
+        });
+
+        $bucketDropDown.change(function () {
+            var selectedbucket = this.value;
+            //filter based on  selected year.
+            if (selectedbucket==="All") {
+                populatePage(validDates);
+            }
+            else {
+                selectedBucketArray = jQuery.grep(validDates, function (employee) {
+                    return employee.Designation === selectedbucket;
+                });
+                populatePage(selectedBucketArray);
+                populateEmployeeCount(selectedBucketArray);
+            }
+        });
+
+        function populateEmployeeCount() {
+            var BlockCountsBel10 = d3.nest()
+                .key(function (d) {
+                    return d.District;
+                })
+                .key(function (d) {
+                    return d.Block;
+                })
+                .rollup(function (v) {
+                    return v.length;
+                })
+                .entries(Below10Now);
+        }
+
+        function populatePage(selectedArray) {
+            $("#empDetails").find("tbody").empty();
+            var budget = 0;
+
+            $.each(selectedArray, function () {
+            budget += this.currentSalary;
+        });
+            document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'
+        });
+            var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+            $("#empList").append(tbl);
+            var hr = "<tr>";
+            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age" + "</th>";
+            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Service Bucket" + "</th>";
+            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
+            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7);
+            for (var j = 0; j < selectedArray.length; j++) {
+                var emp_id;
+                if(selectedArray[j]["_id"]["$oid"]){
+                    emp_id = selectedArray[j]["_id"]["$oid"];
+                }
+                else {
+                    emp_id = selectedArray[j]["_id"];
+                }
+                var url = '/update_employee/'+emp_id;
+                var row = $('<tr></tr>').html('<td>' +
+                    selectedArray[j]["Employee Name"] + '</td>'+
+                    '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
+                    '<td>'+selectedArray[j]["Designation"] +'</td>'+
+                    '<td>'+selectedArray[j]["Age Of Employee"].toFixed(1) +'</td>'+
+                    '<td>'+selectedArray[j]["yearsInService"].toFixed(1) +'</td>'+
+                    '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
+                    '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
+                  $("#empDetails").append(row);
+            }
+        }
+
+        function calculateCurrentSalary(Post, Bucket) {
+                if (Post==="Organiser") {
+                    if(Bucket==="Below 10"){
+                        return 14000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 20000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 20000;
+                    }
+                    else {
+                        return 25000;
+                    }
+                }
+
+            else if (Post==="Cook") {
+                    if(Bucket==="Below 10"){
+                        return 10000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 15000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 17000;
+                    }
+                    else {
+                        return 20000;
+                    }
+                }
+
+            else {
+                    if(Bucket==="Below 10"){
+                        return 8000;
+                    }
+                    else if(Bucket==="10 to 20") {
+                        return 10000;
+                    }
+                    else if(Bucket==="20 to 30") {
+                        return 12000;
+                    }
+                    else {
+                        return 15000;
+                    }
+                }
+
+            }
+
+        function calculateServiceBucket(Designation, YIS) {
+                if(YIS<10) {
+                    return "Below 10";
+                }
+                else if (YIS>=10 && YIS<20) {
+                    return "10 to 20";
+                }
+                else if (YIS>=20 && YIS<30) {
+                    return "20 to 30";
+                }
+                else if (YIS>58 && Designation===("Cook"|"Assistant")) {
+                    return "Retired";
+                }
+                else if (YIS>60 && Designation===("Organizer")) {
+                    return "Retired";
+                }
+                else {
+                    return "Above 30";
+                }
+            }
+
+        };
+        xmlhttp.open("GET", "/table", true);
+        xmlhttp.send();
+    }
+
+    function myFunction() {
+          var input, filter, table, tr, td, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("empList");
+          tr = table.getElementsByTagName("tr");
+          console.log(tr.length);
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+
+</script>
+
+{% endblock %}

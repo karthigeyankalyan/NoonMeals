@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    form{
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        top: 20px;
+        position: relative;
+        align-items: center;
+    }
+
+</style>
+
+<body>
+
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js"></script>
+    <script src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+
+
+<form id="Selection" name="Selection" action="/sanctioned" method="post" style="flex-direction: column; justify-content: space-between;">
+    <label for="district">Select District</label>
+        <select class="form-control" id="district" name="district">
+            {% set districts = ['Ariyalur', 'Karur', 'Nagapattinam', 'Perambalur', 'Pudukkottai', 'Thanjavur', 'Tiruchirappalli','Tiruvarur', 'Dharmapuri', 'Coimbatore', 'Erode', 'Krishnagiri', 'Namakkal', 'The Nilgiris', 'Salem','Tiruppur', 'Dindigul', 'Kanyakumari', 'Madurai', 'Ramanathapuram', 'Sivaganga', 'Theni', 'Thoothukudi','Tirunelveli', 'Virudhunagar', 'Chennai', 'Cuddalore', 'Kancheepuram', 'Tiruvallur', 'Tiruvannamalai', 'Vellore','Viluppuram'] %}
+            {% for district in districts %}
+                <option value= "{{district}}">{{district}}</option>"
+            {% endfor %}
+        </select>
+
+    <label for="block">Select Block</label>
+        <select class="form-control" id="block" name="block">
+        </select>
+
+    <label for="accountHead">Choose Account-Head</label>
+        <select class="form-control" id="accountHead" name="accountHead">
+            {% set accountHeads = ['Bananas', 'Eggs', 'Retirement Funds', 'Potatoes'] %}
+            {% for accountHead in accountHeads %}
+                <option value= "{{accountHead}}">{{accountHead}}</option>"
+            {% endfor %}
+        </select>
+
+    <label for="MonthYear" style="display: block;">Enter the month and Year of Feed</label>
+    <input type="month" value="" id="MonthYear" name="MonthYear">
+
+    <label for="Sanctioned Amount" style="display: block;">Amount Sanctioned Under Account Head</label>
+    <input type="text" name="Sanctioned Amount" value="" id="Sanctioned Amount" class="mine"/>
+
+    <label for="Spent Amount" style="display: block;">Amount Spent Under Account Head</label>
+    <input type="text" name="Spent Amount" value="" id="Spent Amount" class="mine"/>
+
+    <br /><br />
+
+    <button type="submit" class="btn btn-success">Save</button>
+
+</form>
+</body>
+
+<script>
+
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function(){
+
+    var sanctionsArray = JSON.parse(this.responseText);
+    var panchayatBlocks = {
+        Kancheepuram: ['Walajabad',	'Kattankolathur',	'Kundrathur',	'Uthiramerur',	'St.Thomas Mount',	'Sriperumbudur',	'Kancheepuram',	'Lathur',	'Alandhur Municipality ',	'CHITHAMUR',	'Madhuranthagam',	'Thirukazhukundram',	'Acharapakkam ',	'Kanchipuram Municipality ',	'Thiruporur',	'Madhuranthagam Municipality',	'Tambaram Municipality',	'Chengalpattu Municipality', 'Pallavaram Municipality']
+    };
+
+    $('#district').change(function() {
+            // get the second dropdown
+            $('#block').html(
+                // get array by the selected value
+                panchayatBlocks[this.value]
+                // iterate  and generate options
+                    .map(function (v) {
+                        // generate options with the array element
+                        return $('<option/>', {
+                            value: v,
+                            text: v
+                        })
+                    })
+                );
+            });
+
+    document.getElementById("district").selectedIndex = -1;
+
+        var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+};
+xmlhttp.open("GET", "/district_table", true);
+xmlhttp.send();
+
+</script>
+
+{% endblock %}
