@@ -6,7 +6,6 @@ import json
 from bson import json_util
 from bson.json_util import dumps
 
-from src.models.district import District
 from src.models.user import User
 
 app = Flask(__name__)  #main
@@ -102,25 +101,6 @@ def all_employees():
 @app.route('/block_beneficiaries')
 def block_employees(Block):
     return render_template('block_beneficiaries.html', block=Block)
-
-@app.route('/district_sanctions')
-def district_sanctions():
-    return render_template('sanctions_table.html')
-
-@app.route('/sanctioned', methods=['POST', 'GET'])
-def sanctioned_beneficiaries():
-    if request.method == 'GET':
-        return render_template('sanctioned_beneficiaries.html')
-    else:
-        district = request.form['district']
-        block = request.form['block']
-        MonthYear = request.form['MonthYear']
-        accountHead = request.form['accountHead']
-        amount_sanctioned = request.form['Sanctioned Amount']
-        amount_spent = request.form['Spent Amount']
-        sanctioned = District(block=block, district=district, MonthYear=MonthYear, accountHead=accountHead, amount_sanctioned=amount_sanctioned, amount_spent=amount_spent)
-        sanctioned.save_to_mongo()
-        return render_template('sanctioned_beneficiaries.html', beneficiaries=sanctioned)
 
 @app.route('/retirement_employees')
 def retired_employees():
