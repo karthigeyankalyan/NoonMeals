@@ -90,8 +90,12 @@
                 }
 
             var validDates = blocksArray.filter(function (entry) {
+                console.log(inputDate);
+                console.log(moment(inputDate).format("YYYY-MM-DD"));
                 return (moment(entry["Date Of Birth"]).isValid() && moment(entry["Date Of Retirement"])>moment(entry["inputDate"]))
             });
+
+            console.log(validDates);
 
             //Looping through the valid dates JSON to assign age, years in service
             for (var j = 0; j < validDates.length; j++) {
