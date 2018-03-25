@@ -72,7 +72,7 @@
 
     function updateDate() {
             var inputDate = moment(document.getElementById("DateFilter").value);
-            updateTable(moment(inputDate).format("YYYY-MM-DD"));
+            updateTable(inputDate);
     }
 
     function updateTable(inputDate) {
