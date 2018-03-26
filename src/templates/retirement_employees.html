@@ -94,7 +94,8 @@ xmlhttp.onreadystatechange = function()
                 return (moment(entry["Date of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
             });
 
-            console.log(moment(validDates["Date of Retirement"]).month());
+            console.log(month);
+            console.log(year);
 
             var aggregatedData = d3.nest()
                 .key(function (d) {
@@ -105,8 +106,6 @@ xmlhttp.onreadystatechange = function()
                 })
                 .rollup(function (v) { return v.length })
                 .entries(retirementThisMonth);
-
-            console.log(retirementThisMonth);
 
             if (aggregatedData && typeof aggregatedData[0] != 'undefined') {
                 var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
