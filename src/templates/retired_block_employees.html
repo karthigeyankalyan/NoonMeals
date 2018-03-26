@@ -62,10 +62,6 @@
         </tbody>
     </table>
 
-    <div id="AgeGroups">
-        <div style="text-align: center;"><strong>Employee Age Groups</strong></div>
-    </div>
-
     <div id="empList">
     </div>
 
@@ -198,23 +194,6 @@
         function populatePage(selectedArray) {
             $("#empDetails").find("tbody").empty();
             var budget = 0;
-
-            var AgeGroups  = dc.pieChart("#AgeGroups");
-
-            //Plotting graphs by designation
-            var ndx = crossfilter(selectedArray),
-                designationDimension = ndx.dimension(function (d) {
-                        return d.Designation;
-                }),
-                ageGroup = designationDimension.group();
-
-            AgeGroups.width(200)
-                .height(200)
-                .slicesCap(4)
-                .dimension(designationDimension)
-                .group(ageGroup);
-
-            dc.renderAll();
 
             //Summing up the lump sum to be granted to all the employees that are about to retire
             $.each(selectedArray, function () {
