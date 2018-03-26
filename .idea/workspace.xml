@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="050e1f6d-b8eb-4970-a09c-ce61e3ae91cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/retirement_employees.html" afterPath="$PROJECT_DIR$/src/templates/retirement_employees.html" />
-    </list>
+    <list default="true" id="050e1f6d-b8eb-4970-a09c-ce61e3ae91cc" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -129,8 +127,8 @@
       <file leaf-file-name="retirement_employees.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/templates/retirement_employees.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state relative-caret-position="118">
+              <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
               <folding>
                 <marker date="1522078014852" expanded="true" signature="2944:2981" ph="..." />
                 <marker date="1522078014852" expanded="true" signature="3121:3160" ph="..." />
@@ -942,8 +940,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/retirement_employees.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="95" column="0" lean-forward="true" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state relative-caret-position="118">
+          <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding>
             <marker date="1522078014852" expanded="true" signature="2944:2981" ph="..." />
             <marker date="1522078014852" expanded="true" signature="3121:3160" ph="..." />
