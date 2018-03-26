@@ -94,8 +94,7 @@ xmlhttp.onreadystatechange = function()
                 return (moment(entry["Date Of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
             });
 
-            console.log(moment(validDates["Date Of Retirement"]).month()+1);
-            console.log(validDates);
+            console.log(retirementThisMonth);
 
             var aggregatedData = d3.nest()
                 .key(function (d) {
