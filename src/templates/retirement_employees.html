@@ -91,7 +91,7 @@ xmlhttp.onreadystatechange = function()
             var year = date.getFullYear();
 
             var retirementThisMonth = validDates.filter(function (entry) {
-                return (moment(entry["Date Of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
+                return (moment(entry["Date Of Retirement"]).month()+1 === month && moment(entry["Date Of Retirement"]).year() === year)
             });
 
             console.log(retirementThisMonth);
