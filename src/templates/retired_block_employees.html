@@ -30,7 +30,15 @@
 <span>
     <label for="DateFilter" style="margin-left: 10%">Select Month To See Retirements</label>
     <input type="date" value="" style="margin-left: 1%" id="DateFilter" name="DateFilter">
-    <label for="BucketSelect" style="margin-left: 10%">Service Bucket:</label>
+    <label for="DesignationSelect" style="margin-left: 10%">Select Designation</label>
+    <select id="DesignationSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Cook">Cook</option>
+        <option value="Organiser">Organiser</option>
+        <option value="Assistant">Assistant</option>
+    </select>
+
+    <label for="BucketSelect" style="margin-left: 10%">Select Bucket</label>
     <select id="BucketSelect" style="margin-left: 1%; position: relative;">
         <option value="All">All</option>
         <option value="Cook">Cook</option>
@@ -126,6 +134,29 @@
             }
         });
 
+        var $designationDropDown = $("#DesignationSelect");
+
+        $designationDropDown.each(function() {
+            if (this.selectedIndex === 0) {
+                populatePage(retirementThisMonth);
+            }
+        });
+
+        $designationDropDown.change(function () {
+            var selectedDesignation = this.value;
+            //filter based on  selected year.
+            if (selectedDesignation==="All") {
+                populatePage(retirementThisMonth);
+            }
+            else {
+                selectedDesignationArray = jQuery.grep(retirementThisMonth, function (employee) {
+                    return employee.Designation === selectedDesignation;
+                });
+                populatePage(selectedDesignationArray);
+                populateEmployeeCount(selectedDesignationArray);
+            }
+        });
+
         var $bucketDropDown = $("#BucketSelect");
 
         $bucketDropDown.each(function() {
@@ -135,14 +166,14 @@
         });
 
         $bucketDropDown.change(function () {
-            var selectedbucket = this.value;
+            var selectedBucket = this.value;
             //filter based on  selected year.
-            if (selectedbucket==="All") {
+            if (selectedBucket==="All") {
                 populatePage(retirementThisMonth);
             }
             else {
                 selectedBucketArray = jQuery.grep(retirementThisMonth, function (employee) {
-                    return employee.Designation === selectedbucket;
+                    return employee.serviceBucket === selectedBucket;
                 });
                 populatePage(selectedBucketArray);
                 populateEmployeeCount(selectedBucketArray);
