@@ -38,18 +38,15 @@
         <option value="Assistant">Assistant</option>
     </select>
 
-    <label for="BucketSelect" style="margin-left: 6%">Select Bucket</label>
-    <select id="BucketSelect" style="margin-left: 1%; position: relative;">
-        <option value="All">All</option>
-        <option value="Bel10">Below 10</option>
-        <option value="10to20">10 to 20</option>
-        <option value="20to30">20 to 30</option>
-        <option value="Above30">Above 30</option>
-    </select>
-
     <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 7%">Refresh Date</button>
 </span>
 </div>
+
+    <div id="Search">
+    <label for="myInput" style="margin-left: 10%">Search for Employee by Name:</label>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
 
     <table id="budgetOverall" class="table table-bordered">
         <thead>
@@ -310,6 +307,25 @@
         xmlhttp.open("GET", "/table", true);
         xmlhttp.send();
     }
+
+    function myFunction() {
+          var input, filter, table, tr, td, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("empList");
+          tr = table.getElementsByTagName("tr");
+          console.log(tr.length);
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+              if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
 
 </script>
 

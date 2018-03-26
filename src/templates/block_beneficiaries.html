@@ -28,9 +28,9 @@
 
 <div style="margin-top: 3%;margin-bottom: 3%; border: double; padding-top: 5px; padding-bottom: 5px;">
 <span>
-    <label for="DateFilter" style="margin-left: 10%">Enter Date To Check Budget</label>
+    <label for="DateFilter" style="margin-left: 6%">Enter Date To Check Budget</label>
     <input type="date" value="" style="margin-left: 1%" id="DateFilter" name="DateFilter">
-    <label for="BucketSelect" style="margin-left: 10%">Service Bucket:</label>
+    <label for="BucketSelect" style="margin-left: 6%">Service Designation:</label>
     <select id="BucketSelect" style="margin-left: 1%; position: relative;">
         <option value="All">All</option>
         <option value="Cook">Cook</option>
@@ -38,7 +38,16 @@
         <option value="Assistant">Assistant</option>
     </select>
 
-    <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 10%">Refresh Date</button>
+    <label for="DesignationSelect" style="margin-left: 6%">Select Bucket</label>
+    <select id="DesignationSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Bel10">Below 10</option>
+        <option value="10to20">10 to 20</option>
+        <option value="20to30">20 to 30</option>
+        <option value="Above30">Above 30</option>
+    </select>
+
+    <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 6%">Refresh Date</button>
 </span>
 </div>
 
