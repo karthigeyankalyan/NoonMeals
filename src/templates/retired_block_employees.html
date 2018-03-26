@@ -108,7 +108,7 @@
 
             //Getting employees retiring in the current month
             var retirementThisMonth = validDates.filter(function (entry) {
-                return (moment(entry["Date of Retirement"]).month()+1 === month && moment(entry["Date of Retirement"]).year() === year)
+                return (moment(entry["Date Of Retirement"]).month()+1 === month && moment(entry["Date Of Retirement"]).year() === year)
             });
 
             //Looping through the valid dates JSON to assign age, years in service
