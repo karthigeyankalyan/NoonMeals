@@ -99,7 +99,6 @@
                 }
 
             var validDates = blocksArray.filter(function (entry) {
-                console.log(moment(entry["Date Of Retirement"])>moment(entry["inputDate"]));
                 return (moment(entry["Date Of Birth"]).isValid() && moment(entry["Date Of Retirement"])>moment(entry["inputDate"]))
             });
 
@@ -115,12 +114,12 @@
 
                 validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
                 validDates[j]["yisTotalDays"] = validDates[j]["yearsInService"] * 365;
-                validDates[j]["yisInYears"] = math.floor(validDates[j]["yisTotalDays"]/365);
-                validDates[j]["yisInMonths"] = math.floor((validDates[j]["yisTotalDays"]-(years *365))/30);
+                validDates[j]["yisInYears"] = Math.floor(validDates[j]["yisTotalDays"]/365);
+                validDates[j]["yisInMonths"] = Math.floor((validDates[j]["yisTotalDays"]-(years *365))/30);
                 validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
                 validDates[j]["totalDays"] = validDates[j]["Age Of Employee"] * 365;
-                validDates[j]["inYears"] = math.floor(validDates[j]["totalDays"]/365);
-                validDates[j]["inMonths"] = math.floor((validDates[j]["totalDays"]-(years *365))/30);
+                validDates[j]["inYears"] = Math.floor(validDates[j]["totalDays"]/365);
+                validDates[j]["inMonths"] = Math.floor((validDates[j]["totalDays"]-(years *365))/30);
                 validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
                 validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
             }
