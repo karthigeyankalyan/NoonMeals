@@ -114,7 +114,13 @@
                 var now = moment(inputDate); //todays date
 
                 validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                validDates[j]["yisTotalDays"] = validDates[j]["yearsInService"] * 365;
+                validDates[j]["yisInYears"] = math.floor(validDates[j]["yisTotalDays"]/365);
+                validDates[j]["yisInMonths"] = math.floor((validDates[j]["yisTotalDays"]-(years *365))/30);
                 validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
+                validDates[j]["totalDays"] = validDates[j]["Age Of Employee"] * 365;
+                validDates[j]["inYears"] = math.floor(validDates[j]["totalDays"]/365);
+                validDates[j]["inMonths"] = math.floor((validDates[j]["totalDays"]-(years *365))/30);
                 validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
                 validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
             }
@@ -178,11 +184,13 @@
             var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
             var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
             var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age" + "</th>";
-            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Service Bucket" + "</th>";
-            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7);
+            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
+            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
+            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
+            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
+            var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
+            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9);
             for (var j = 0; j < selectedArray.length; j++) {
                 var emp_id;
                 if(selectedArray[j]["_id"]["$oid"]){
@@ -196,9 +204,10 @@
                     selectedArray[j]["Employee Name"] + '</td>'+
                     '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                     '<td>'+selectedArray[j]["Designation"] +'</td>'+
-                    '<td>'+selectedArray[j]["Age Of Employee"].toFixed(1) +'</td>'+
-                    '<td>'+selectedArray[j]["yearsInService"].toFixed(1) +'</td>'+
-                    '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
+                    '<td>'+selectedArray[j]["inYears"] +'</td>'+
+                    '<td>'+selectedArray[j]["inMonths"] +'</td>'+
+                    '<td>'+selectedArray[j]["yisInYears"].toFixed(1) +'</td>'+
+                    '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
                     '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                   $("#empDetails").append(row);
             }
