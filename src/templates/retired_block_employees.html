@@ -13,7 +13,14 @@
         text-align:center;
         vertical-align:middle
     }
-
+    #budgetOverall{
+        text-align:center;
+        vertical-align:middle;
+        margin-left: 50%;
+        margin-top: 2%;
+        width: 20%;
+        position: absolute;
+    }
 </style>
 
 <body onload="todayDate()">
@@ -34,16 +41,14 @@
 </span>
 </div>
 
-<span>
     <div id="Search">
     <label for="myInput" style="margin-left: 10%">Search for Employee by Name:</label>
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
     </div>
 
-
     <table id="budgetOverall" class="table table-bordered">
         <thead>
-            <th style="text-align:center; vertical-align:middle; margin-top:-2%;margin-left: 50%;width: 20%;position: absolute;">Total Budget For Month</th>
+            <th style="text-align:center; vertical-align:middle;">Total Budget For Month</th>
         </thead>
         <tbody>
             <tr>
@@ -51,11 +56,9 @@
             </tr>
         </tbody>
     </table>
-</span>
 
     <div id="empList">
     </div>
-
 </body>
 
 <script>
