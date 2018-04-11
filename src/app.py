@@ -94,8 +94,12 @@ def profileLanding():
 
 @app.route('/all_beneficiaries')
 def all_employees():
-    employee = Employee.from_mongo_blog()
-    return render_template('all_beneficiaries.html', employee=employee)
+    email = session['email']
+    if email is not None:
+        employee = Employee.from_mongo_blog()
+        return render_template('all_beneficiaries.html', employee=employee)
+    else:
+        return render_template('login.html')
 
 @app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
