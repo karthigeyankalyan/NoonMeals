@@ -92,10 +92,12 @@
             //Looping through the valid dates JSON to assign age, years in service
             for (var i = 0; i < validDates.length; i++) {
                 //Declaring moment.js dates
-                var birthDate = moment(new Date(validDates[i]["Date Of Birth"])).format("DD/MM/YYYY");
-                var joiningDate = moment(new Date(validDates[i]["Date Of Joining"])).format("DD/MM/YYYY");
-                var retirementDate = moment(new Date(validDates[i]["Date Of Retirement"])).format("DD/MM/YYYY");
+                var birthDate = moment(new Date(validDates[i]["Date of Birth"])).format("DD/MM/YYYY");
+                var joiningDate = moment(new Date(validDates[i]["Date of Joining"])).format("DD/MM/YYYY");
+                var retirementDate = moment(new Date(validDates[i]["Date of Retirement"])).format("DD/MM/YYYY");
                 var today = moment();
+
+                console.log(birthDate);
 
                 //Calculating the years in service, age
                 var yearsInService = moment().diff(joiningDate, 'years');
