@@ -15,9 +15,50 @@
 
 </head>
 
+<style>
 
-<script>
+#myTable {
+  border-collapse: collapse;
+  width: 70%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
 
+#myTable th, #myTable td {
+    text-align:center;
+    vertical-align:middle
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#container{
+    position: absolute;
+    left: 15px;
+    top: 100px;
+}
+
+#DrpDwn {
+    margin-left: 40%;
+    position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+</style>
+
+<div class="container" id="container">
+    <div id="div1">
+        <div id="DrpDwn">
+        <label for="DistrictSelect">District:</label>
+        <select id="DistrictSelect"><option>Choose District</option></select>
+        </div>
+    </div>
+
+    <script>
         function name() {
         var source = "/table";
         $.ajax({
