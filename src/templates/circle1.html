@@ -15,207 +15,29 @@
 
 </head>
 
-{% extends "base.html" %}
-{% block content %}
-
-<style>
-
-            #District{
-            border: 1px solid darkgrey;
-            position: relative;
-            top: 26px;
-            left: 54px;
-            width: 1150px;
-            height: 210px;
-            overflow-y: scroll;
-            background: grey;
-        }
-
-        #Axis{
-            top: 330px;
-            left: 45px;
-            position: absolute;
-            stroke-width: 1;
-        }
-
-        #DistChartDescription{
-            position: relative;
-            top: 15px;
-            left: 54px;
-            color: white;
-        }
-
-        #Community{
-            border: 1px solid black;
-            position: absolute;
-            top: 360px;
-            left: 80px;
-            width: 350px;
-            height: 210px;
-            text-align: center;
-            background: grey;
-            color: white;
-        }
-
-        #CommunityRing{
-            border: 1px solid black;
-            position: absolute;
-            top: 360px;
-            left: 450px;
-            height: 210px;
-            width: 350px;
-            text-align: center;
-            background: grey;
-            color: white;
-        }
-
-        #PensionRing{
-            background: grey;
-            border: 1px solid black;
-            position: absolute;
-            top: 360px;
-            left: 820px;
-            height: 210px;
-            width: 350px;
-            text-align: center;
-            color: white;
-        }
-
-        .extnl-axis path{
-            fill: white;
-            stroke-width: 1;
-        }
-
-        .extnl-axis text{
-            fill: white;
-        }
-
-        body{
-            background-color: black;
-        }
-
-</style>
-
-<div id="whole">
-
-<div id="DistChartDescription"><strong>District-Wise Beneficiaries</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:DistrictChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-</div>
-
-<div id="District">
-</div>
-
-<div id="Axis"></div>
-
-<div id="Community">
-    <strong>Community-Wise Beneficiaries</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:CommunityChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-    <br />
-</div>
-
-<div id="CommunityRing">
-    <strong>Beneficiary Caste-Composition</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:CommunityRing.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-    <br />
-</div>
-
-<div id="PensionRing">
-    <strong>Pension Eligibility</strong>
-    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
-    <a class="reset" href="javascript:PensionRing.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-    <br />
-</div>
 
 <script>
 
-    var DistrictChart  = dc.rowChart("#District"),
-        CommunityChart = dc.rowChart("#Community"),
-        PensionRing  = dc.pieChart("#PensionRing"),
-        CommunityRing  = dc.pieChart("#CommunityRing");
-
-    d3.json("/table", function(error, data){
-
-        if(error) throw error;
-
-        var ndx = crossfilter(data);
-
-        var DistrictDim = ndx.dimension(function (d) {
-            return d.district;
+        function name() {
+        var source = "/table";
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                console.log(json)
+            },
+            error: function (e) {
+                alert("error");
+            }
         });
-
-        var PensionDim = ndx.dimension(function (d) {
-            return d.pension_eligible;
-        });
-
-        var CommunityDim = ndx.dimension(function (d) {
-            return d.community;
-        });
-
-        var DistrictGroup = DistrictDim.group();
-        var CommunityGroup = CommunityDim.group();
-        var PensionGroup = PensionDim.group();
-
-        DistrictChart
-            .width(800)
-            .height(200)
-            .dimension(DistrictDim)
-            .elasticX(true)
-            .margins({top: 0, right: 0, bottom: -1, left: 0})
-            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'])
-            .group(DistrictGroup);
-
-        CommunityChart
-            .width(350)
-            .height(175)
-            .dimension(CommunityDim)
-            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'])
-            .group(CommunityGroup);
-
-        //chart.ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
-        CommunityRing
-            .width(350).height(175)
-            .dimension(CommunityDim)
-            .group(CommunityGroup)
-            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'])
-            .innerRadius(0);
-
-        PensionRing
-            .width(350).height(175)
-            .dimension(PensionDim)
-            .group(PensionGroup)
-            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628'])
-            .innerRadius(0);
-
-        dc.renderAll();
-
-        var margin = {top: 5, right: 0, bottom: 0, left: 0},
-            width = 750 - margin.left - margin.right ,
-            height = 25 - margin.top - margin.bottom;
-
-	    var svg = d3.select("#Axis")
-            .append("svg:svg")
-            .attr("width", width + margin.right + margin.left)
-            .attr("height", height + margin.top + margin.bottom)
-            .append('g')
-            .attr("transform", function(d, i) {
-            return "translate("+margin.left+","+margin.top+")";
-		})
-            .attr("color", "white");
-
-    	var xAxis = DistrictChart.xAxis();
-            svg.append("g")
-                .attr("class", "extnl-axis")
-                .attr("transform", "translate(10," + margin.bottom + ")")
-                .call(xAxis);
-
-        return xAxis;
-
+    }
+        $(document).ready(function() {
+        name();
     });
 
 </script>
 </div>
-{% endblock %}
+
 </html>
