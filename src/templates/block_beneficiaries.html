@@ -76,12 +76,12 @@
 
     function todayDate() {
         var todaysDate = new Date();
-        updateTable(moment(todaysDate).format("YYYY-MM-DD"));
+        name(moment(todaysDate).format("YYYY-MM-DD"));
     }
 
     function updateDate() {
             var inputDate = moment(document.getElementById("DateFilter").value);
-            updateTable(inputDate);
+            name(inputDate);
     }
 
     function name(inputDate) {
@@ -317,9 +317,6 @@
             }
         });
     }
-        $(document).ready(function() {
-        name();
-    });
 
 </script>
 
