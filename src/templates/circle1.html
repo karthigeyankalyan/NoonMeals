@@ -26,8 +26,117 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                console.log(json)
-            },
+    {
+        var myObj = json;
+
+        $.each(myObj, function (index) {
+            var district = myObj[index].District;
+            if ($.inArray(district, distArray) === -1) {
+                distArray.push(district);
+            }
+        });
+
+        distArray.sort();
+        var $distDropDown = $("#DistrictSelect");
+
+        $.each(distArray, function (i) {
+            $distDropDown.append('<option value="' + distArray[i] + '">' + distArray[i] + '</option>');
+        });
+
+        $distDropDown.change(function () {
+            var selecteddistrict = this.value;
+            //filter based on  selected year.
+            selectedDistArray = jQuery.grep(myObj, function (employee) {
+                return employee.District === selecteddistrict;
+            });
+            updateTable(selectedDistArray);
+        });
+
+        //Getting only the valid dates for selected district
+        updateTable = function (districtArray) {
+
+            $("#myTable").find("tbody").empty();
+
+            var validDates = districtArray.filter(function (entry) {
+                return moment(entry["Date Of Birth"]).isValid()
+            });
+
+            //Looping through the valid dates JSON to assign age, years in service
+            for (var i = 0; i < validDates.length; i++) {
+                //Declaring moment.js dates
+                var birthDate = moment(new Date(validDates[i]["Date Of Birth"])).format("YYYY-MM-DD");
+                var joiningDate = moment(new Date(validDates[i]["Date Of Joining"])).format("YYYY-MM-DD");
+                var retirementDate = moment(new Date(validDates[i]["Date Of Retirement"])).format("YYYY-MM-DD");
+                var today = moment();
+
+                //Calculating the years in service, age
+                var yearsInService = moment().diff(joiningDate, 'years');
+                var ageOfEmployee = moment().diff(birthDate, 'years');
+
+                if(moment(retirementDate).isAfter(today)) {
+                    var retired = "yes";
+                }
+
+                else {
+                    retired = "no";
+                }
+
+                validDates[i]["yearsInService"] = yearsInService;
+                validDates[i]["Age Of Employee"] = ageOfEmployee;
+                validDates[i]["Retired"] = retired;
+            }
+
+            validFilteredDates = validDates.filter(function (emp) {
+                return emp.Retired === "no";
+            });
+
+            var aggregatedData = d3.nest()
+                .key(function (d) {
+                    return d.District;
+                })
+                .key(function (d) {
+                    return d.Block;
+                })
+                .rollup(function (v) {
+                    return {
+                        "Below10": v.filter(function (v) { return v.yearsInService<10 }).length,
+                        "10to20": v.filter(function (v) { return (v.yearsInService>=10 && v.yearsInService<20)}).length,
+                        "20to30": v.filter(function (v) { return (v.yearsInService>=20 && v.yearsInService<30) }).length,
+                        "Above30": v.filter(function (v) { return v.yearsInService>30 }).length
+                    }
+                })
+                .entries(validFilteredDates);
+
+            var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
+            $("#div1").append(tbl);
+            var hr = "<tr>";
+            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years <10" + "</th>";
+            var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years 10-20" + "</th>";
+            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years 20-30" + "</th>";
+            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years Above 30" + "</th>";
+            $("#myTable").append(hr + th1 + th2 + th3 + th4 + th5 + th6 );
+            for (var j = 0; j < aggregatedData[0].values.length; j++) {
+                var blockLink = aggregatedData[0].values[j].key;
+                var url = '/block_beneficiaries/'+blockLink;
+                var row = $('<tr></tr>').html('<td><a href="' + url + '">' +
+                    aggregatedData[0].values[j].key + '</a></td>'+
+                    '<td>'+aggregatedData[0].key+'</td>'+
+                    '<td>'+aggregatedData[0].values[j].values["Below10"] +'</td>'+
+                    '<td>'+aggregatedData[0].values[j].values["10to20"] +'</td>'+
+                    '<td>'+aggregatedData[0].values[j].values["20to30"] +'</td>'+
+                    '<td>'+aggregatedData[0].values[j].values["Above30"] +'</td>');
+                  $("#myTable").append(row);
+            }
+                    $(document).ready(function () {
+                        $('#BlockLink').click(function () {
+                            this.href = '/block_beneficiaries/' + blockLink;
+                        })
+                    });
+                }
+            }
+        },
             error: function (e) {
                 alert("error");
             }
