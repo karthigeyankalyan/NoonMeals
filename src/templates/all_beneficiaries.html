@@ -52,7 +52,8 @@ xmlhttp.onreadystatechange = function()
     {
         var myObj = JSON.parse(this.responseText);
         for (var i = 0; i < myObj.length/1000; i++) {
-            console.log(myObj[i])
+            console.log(moment(myObj[i]["Date Of Birth"]).isValid());
+            console.log(moment(myObj[i]["Date Of Birth"]));
         }
         var distArray = [];
 
