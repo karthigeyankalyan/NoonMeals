@@ -69,6 +69,8 @@
             success: function (json) {
     {
         var myObj = json;
+        var distArray = [];
+        console.log(myObj);
 
         $.each(myObj, function (index) {
             var district = myObj[index].District;
