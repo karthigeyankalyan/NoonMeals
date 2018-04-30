@@ -56,7 +56,6 @@
     {
         var myObj = json;
         var distArray = [];
-        console.log(myObj);
 
         $.each(myObj, function (index) {
             var district = myObj[index].District;
@@ -135,6 +134,9 @@
                     }
                 })
                 .entries(validFilteredDates);
+
+            console.log(aggregatedData);
+            console.log(validDates);
 
             var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
             $("#div1").append(tbl);
