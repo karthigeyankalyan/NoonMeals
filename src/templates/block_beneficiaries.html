@@ -96,10 +96,9 @@
                             var bucketArray = [];
                             bucketArray = ["All"];
                             var block = "{{block}}";
-                            var emp = "{{emp}}";
-                            emp.forEach(function(err, item) {
-                                console.log(item);
-                            });
+                            var emp = [];
+                            var len = "{{emp|length}}";
+                            console.log(len);
                             var blocksArray = [];
                             var myObj = json;
                             for (var i = 0; i < myObj.length; i++) {
