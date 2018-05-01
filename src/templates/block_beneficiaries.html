@@ -76,7 +76,7 @@
 
     function todayDate() {
         var todaysDate = new Date();
-        name(moment(todaysDate).format("YYYY-MM-DD"));
+        name(moment(todaysDate).format("DD/MM/YYYY"));
     }
 
     function updateDate() {
@@ -106,9 +106,6 @@
 
 //                            Checking if DOB is valid and if retirement date is after current date
                             var validDates = blocksArray.filter(function (entry) {
-                                console.log(moment(entry["Date of Birth"]).isValid());
-                                console.log(moment(entry["Date of Retirement"])>moment(inputDate));
-                                console.log(moment(entry["Date of Retirement"]));
                                 console.log(moment(inputDate));
                                 return (moment(entry["Date of Birth"]).isValid() && moment(entry["Date of Retirement"])>moment(inputDate))
                             });
