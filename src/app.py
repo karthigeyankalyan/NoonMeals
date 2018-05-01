@@ -103,7 +103,7 @@ def all_employees():
 @app.route('/block_beneficiaries')
 def block_employees(Block):
     emp = Database.find("employees", {'Block': Block})
-    return render_template('abc.html', block=Block, emp=emp)
+    return render_template('block_beneficiaries.html', block=Block, emp=emp)
 
 @app.route('/retirement_employees')
 def retired_employees():
