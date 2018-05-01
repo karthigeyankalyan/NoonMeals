@@ -96,18 +96,15 @@
                             var bucketArray = [];
                             bucketArray = ["All"];
                             var block = "{{block}}";
-                            var emp = [];
-                            var len = "{{emp|length}}";
-                            console.log(len);
                             var blocksArray = [];
                             var myObj = json;
                             for (var i = 0; i < myObj.length; i++) {
                                 if (myObj[i]["Block"] === block) {
                                     blocksArray.push(myObj[i]);
                                 }
+                            console.log(moment(myObj[i]["Date of Birth"]).isValid());
+                            console.log(moment(myObj[i]["Date of Birth"]));
                             }
-
-                            console.log(moment(blocksArray["Date of Birth"]).isValid());
 
 //                            Checking if DOB is valid and if retirement date is after current date
                             var validDates = blocksArray.filter(function (entry) {
