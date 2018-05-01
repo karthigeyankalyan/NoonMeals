@@ -104,9 +104,11 @@
                                 }
                             }
 
+                            console.log(moment(blocksArray["Date of Birth"]).isValid());
+
                             //Checking if DOB is valid and if retirement date is after current date
                             var validDates = blocksArray.filter(function (entry) {
-                                return (moment(entry["Date of Birth"]).format("DD/MM/YYYY").isValid() && moment(entry["Date of Retirement"])>moment(entry["inputDate"]))
+                                return (moment(entry["Date of Birth"]).isValid() && moment(entry["Date of Retirement"])>moment(entry["inputDate"]))
                             });
 
                             //Looping through the valid dates JSON to assign age, years in service
