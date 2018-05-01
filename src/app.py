@@ -99,10 +99,10 @@ def all_employees():
         employee = Employee.from_mongo_blog()
         return render_template('all_beneficiaries.html', employee=employee)
 
-@app.route('/block_beneficiaries/<string:District>/<string:Block>')
+@app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
-def block_employees(District, Block):
-    emp = Database.find("employees", {'District': District, 'Block': Block})
+def block_employees(Block):
+    emp = Database.find("employees", {'Block': Block})
     return render_template('abc.html', block=Block, emp=emp)
 
 @app.route('/retirement_employees')
