@@ -106,9 +106,7 @@
 
 //                            Checking if DOB is valid and if retirement date is after current date
                             var validDates = blocksArray.filter(function (entry) {
-                                console.log(moment(entry["Date of Retirement"]).isValid());
-                                console.log(moment(entry["Date of Retirement"]).format("YYYY/MM/DD"));
-                                return (moment(entry["Date of Birth"]).isValid() && moment(entry["Date of Retirement"])>inputDate)
+                                return (moment(entry["Date of Birth"]).isValid())
                             });
 
                             console.log(validDates);
