@@ -1,9 +1,10 @@
 from src.common.database import Database
 from src.models.employee import Employee
-from flask import Flask, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, make_response
 
 import json
 from bson import json_util
+from bson.json_util import dumps
 
 from src.models.user import User
 
@@ -105,8 +106,7 @@ def block_employees(Block):
     block_employees = Database.find("employees", {'Block': Block})
     for Emp in block_employees:
         block_employees_array.append(Emp)
-    r = jsonify(block_employees_array)
-    return render_template('abc.html', block=Block, emp=r)
+    return render_template('abc.html', block=Block, emp=block_employees_array)
 
 @app.route('/retirement_employees')
 def retired_employees():
