@@ -45,6 +45,16 @@ def render_employees():
 
         return json_projects
 
+@app.route('/block_table/<string:Block>')
+def render_block_employees(Block):
+    block_employees_array = []
+    block_employees_dict = Database.find("employees", {'Block': Block})
+    for Emp in block_employees_dict:
+        block_employees_array.append(Emp)
+    json_projects = json.dumps(block_employees_array, default=json_util.default)
+
+    return json_projects
+
 @app.route('/district_table')
 def render_district():
         projects = Database.find("district_nmp", {})
@@ -106,7 +116,7 @@ def block_employees(Block):
     block_employees_dict = Database.find("employees", {'Block': Block})
     for Emp in block_employees_dict:
         block_employees_array.append(Emp)
-    json_projects = json.loads(block_employees_dict)
+    json_projects = json.dumps(block_employees_array, default=json_util.default)
     return render_template('abc.html', block=Block, emp=json_projects)
 
 @app.route('/retirement_employees')
