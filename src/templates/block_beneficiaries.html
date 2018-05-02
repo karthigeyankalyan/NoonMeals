@@ -85,7 +85,8 @@
     }
 
     function name(inputDate) {
-        var source = "/table";
+        var block = "{{block}}";
+        var source = "/block_table/"+block;
         $.ajax({
             type: 'GET',
             url: source,
@@ -95,9 +96,7 @@
                     {
                             var bucketArray = [];
                             bucketArray = ["All"];
-                            var block = "{{block}}";
-                            var cursor = "{{emp}}";
-                            console.log(cursor);
+                            console.log(json);
                             var blocksArray = [];
                             var myObj = json;
                             for (var i = 0; i < myObj.length; i++) {
