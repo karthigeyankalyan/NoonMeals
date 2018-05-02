@@ -107,7 +107,7 @@ def block_employees(Block):
     for Emp in block_employees_dict:
         block_employees_array.append(Emp)
     json_projects = json.dumps(block_employees_array, default=json_util.default)
-    return render_template('abc.html', block=Block, emp=json_projects)
+    return render_template('abc.html', block=Block, emp=block_employees_array)
 
 @app.route('/retirement_employees')
 def retired_employees():
