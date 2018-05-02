@@ -110,8 +110,6 @@
                                 return (moment(entry["Date of Birth"]).isValid())
                             });
 
-                            console.log(validDates);
-
                             //Looping through the valid dates JSON to assign age, years in service
                             for (var j = 0; j < validDates.length; j++) {
                                 //Declaring moment.js dates
@@ -193,13 +191,16 @@
                                 var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
                                 var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
                                 var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
-                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
+                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
                                 var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
                                 var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
+//                                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
+//                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
+//                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
+//                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
                                 var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
                                 var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                                $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9);
+                                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
                                 for (var j = 0; j < selectedArray.length; j++) {
                                     var emp_id;
                                     if(selectedArray[j]["_id"]["$oid"]){
@@ -208,6 +209,8 @@
                                     else {
                                         emp_id = selectedArray[j]["_id"];
                                     }
+
+                                    console.log(selectedArray);
                                     var url = '/update_employee/'+emp_id;
                                     var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
@@ -216,7 +219,7 @@
                                         '<td>'+selectedArray[j]["inYears"] +'</td>'+
                                         '<td>'+selectedArray[j]["inMonths"] +'</td>'+
                                         '<td>'+selectedArray[j]["yisInYears"] +'</td>'+
-                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
+//                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
                                         '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
                                         '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                                     $("#empDetails").append(row);
