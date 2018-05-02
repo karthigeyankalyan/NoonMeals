@@ -5,6 +5,7 @@
     var block = "{{block}}";
     var cursor = "{{emp}}";
     cursor = cursor.replace(/&#34;/g, "");
+    cursor = cursor.replace(/_/g, "");
     console.log(JSON.parse(cursor));
 </script>
 
