@@ -210,8 +210,8 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    console.log(selectedArray[j]['Date of Birth'].format('M')<12);
-                                    console.log(selectedArray[j]['Date of Birth']);
+                                    console.log(moment(selectedArray[j]['Date of Birth']).format('M')<12);
+                                    console.log(moment(selectedArray[j]['Date of Birth']));
 
                                     var url = '/update_employee/'+emp_id;
                                     var row = $('<tr></tr>').html('<td>' +
