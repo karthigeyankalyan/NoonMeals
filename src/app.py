@@ -102,10 +102,7 @@ def all_employees():
 @app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
 def block_employees(Block):
-    block_employees_array = []
     block_employees_dict = Database.find("employees", {'Block': Block})
-    for Emp in block_employees_dict:
-        block_employees_array.append(Emp)
     json_projects = json.dumps(block_employees_dict)
     return render_template('abc.html', block=Block, emp=json_projects)
 
