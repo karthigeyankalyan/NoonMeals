@@ -210,7 +210,9 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    console.log(selectedArray);
+                                    console.log(selectedArray[j]['Date of Retirement'].format('M')<12);
+                                    console.log(selectedArray[j]['Date of Retirement']);
+
                                     var url = '/update_employee/'+emp_id;
                                     var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
