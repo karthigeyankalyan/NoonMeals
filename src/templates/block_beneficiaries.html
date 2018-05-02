@@ -192,8 +192,8 @@
                                 var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
                                 var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
                                 var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
+                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
 //                                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
 //                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
 //                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
@@ -210,21 +210,23 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    console.log(moment(selectedArray[j]['Date of Birth']).format('M')<12);
-                                    console.log(moment(selectedArray[j]['Date of Birth']));
+                                    console.log(moment(selectedArray[j]['Date of Joining']).format('D')<12);
 
-                                    var url = '/update_employee/'+emp_id;
-                                    var row = $('<tr></tr>').html('<td>' +
+                                    if((moment(selectedArray[j]['Date of Birth']).format('D')<12) || (moment(selectedArray[j]['Date of Joining']).format('D')<12))
+                                    {
+                                        var url = '/update_employee/'+emp_id;
+                                        var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
-                                        '<td>'+selectedArray[j]["inYears"] +'</td>'+
-                                        '<td>'+selectedArray[j]["inMonths"] +'</td>'+
-                                        '<td>'+selectedArray[j]["yisInYears"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
 //                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
                                         '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
                                         '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
-                                    $("#empDetails").append(row);
+                                        $("#empDetails").append(row);
+                                    }
                                 }
                             }
 
