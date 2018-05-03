@@ -51,9 +51,6 @@
                 return moment(entry["Date of Birth"]).isValid()
             });
 
-            console.log(validDates);
-            console.log(json);
-
             //Looping through the valid dates JSON to assign age, years in service
             for (var i = 0; i < validDates.length; i++) {
                 //Declaring moment.js dates
@@ -99,6 +96,9 @@
                     }
                 })
                 .entries(validFilteredDates);
+
+            console.log(validFilteredDates);
+            console.log(aggregatedData);
 
             var tbl = $("<table class='table table-bordered table-dark' style='margin-left: auto;margin-right: auto;'/>").attr("id", "myTable");
             $("#div1").append(tbl);
