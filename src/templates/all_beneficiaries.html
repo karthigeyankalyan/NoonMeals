@@ -51,6 +51,9 @@
                 return moment(entry["Date of Birth"]).isValid()
             });
 
+            console.log(validDates);
+            console.log(json);
+
             //Looping through the valid dates JSON to assign age, years in service
             for (var i = 0; i < validDates.length; i++) {
                 //Declaring moment.js dates
