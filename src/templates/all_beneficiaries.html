@@ -25,11 +25,6 @@
     top: 100px;
 }
 
-#DrpDwn {
-    margin-left: 40%;
-    position: relative;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -37,13 +32,6 @@
 </style>
 
 <div class="container" id="container">
-    <div id="div1">
-        <div id="DrpDwn">
-        <label for="DistrictSelect">District:</label>
-        <select id="DistrictSelect"><option>Choose District</option></select>
-        </div>
-    </div>
-
     <script>
         function name() {
         var district = "{{district}}";
@@ -56,30 +44,7 @@
             success: function (json) {
     {
         var myObj = json;
-        var distArray = [];
-
-        $.each(myObj, function (index) {
-            var district = myObj[index].District;
-            if ($.inArray(district, distArray) === -1) {
-                distArray.push(district);
-            }
-        });
-
-        distArray.sort();
-        var $distDropDown = $("#DistrictSelect");
-
-        $.each(distArray, function (i) {
-            $distDropDown.append('<option value="' + distArray[i] + '">' + distArray[i] + '</option>');
-        });
-
-        $distDropDown.change(function () {
-            var selecteddistrict = this.value;
-            //filter based on  selected year.
-            selectedDistArray = jQuery.grep(myObj, function (employee) {
-                return employee.District === selecteddistrict;
-            });
-            updateTable(selectedDistArray);
-        });
+        updateTable(myObj);
 
         //Getting only the valid dates for selected district
         updateTable = function (districtArray) {
