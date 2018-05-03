@@ -43,11 +43,7 @@
             dataType: 'json',
             success: function (json) {
     {
-        var myObj = json;
-        updateTable(myObj);
-
-        //Getting only the valid dates for selected district
-        updateTable = function (districtArray) {
+        var districtArray = json;
 
             $("#myTable").find("tbody").empty();
 
@@ -129,8 +125,7 @@
                         })
                     });
                 }
-            }
-        },
+            },
             error: function (e) {
                 alert("error");
             }
