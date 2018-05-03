@@ -46,7 +46,8 @@
 
     <script>
         function name() {
-        var source = "/table";
+        var district = "{{district}}";
+        var source = "/district_table/"+district;
         $.ajax({
             type: 'GET',
             url: source,
