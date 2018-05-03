@@ -41,9 +41,9 @@ def render_employees():
         json_projects = []
         for project in projects:
             json_projects.append(project)
-        json_projects = json.dumps(json_projects, default=json_util.default)
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return json_projects
+        return all_employees_state
 
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
@@ -51,19 +51,21 @@ def render_block_employees(Block):
     block_employees_dict = Database.find("employees", {'Block': Block})
     for Emp in block_employees_dict:
         block_employees_array.append(Emp)
-    json_projects = json.dumps(block_employees_array, default=json_util.default)
 
-    return json_projects
+    all_employees_block = json.dumps(block_employees_array, default=json_util.default)
 
-@app.route('/district_table')
-def render_district():
-        projects = Database.find("district_nmp", {})
-        district = []
-        for project in projects:
-            district.append(project)
-        district = json.dumps(district, default=json_util.default)
+    return all_employees_block
 
-        return district
+@app.route('/district_table/<string:District>')
+def render_district(District):
+    district_employees_array = []
+    district_employees_dict = Database.find("employees", {'District': District})
+    for Emp in district_employees_dict:
+        district_employees_array.append(Emp)
+
+    all_employees_state = json.dumps(district_employees_array, default=json_util.default)
+
+    return all_employees_state
 
 @app.route('/register')
 def register_form():
@@ -102,12 +104,13 @@ def profileLanding():
         user = User.get_by_email(email)
         return render_template('profile.html', user=user)
 
-@app.route('/all_beneficiaries')
-def all_employees():
+@app.route('/district_beneficiaries/<string:District>')
+def all_district_employees(District):
     email = session['email']
     if email is not None:
-        employee = Employee.from_mongo_blog()
-        return render_template('all_beneficiaries.html', employee=employee)
+        return render_template('all_beneficiaries.html', district=District)
+    else:
+        return render_template('login_fail.html')
 
 @app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
