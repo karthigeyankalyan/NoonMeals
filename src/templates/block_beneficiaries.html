@@ -96,7 +96,6 @@
                     {
                             var bucketArray = [];
                             bucketArray = ["All"];
-                            console.log(json);
                             var blocksArray = [];
                             var myObj = json;
                             for (var i = 0; i < myObj.length; i++) {
@@ -162,8 +161,6 @@
                                 }
                             });
 
-                            console.log(selectedBucketArray);
-
                             function populateEmployeeCount() {
                                 var BlockCountsBel10 = d3.nest()
                                     .key(function (d) {
@@ -204,7 +201,6 @@
                                 var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
                                 $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
                                 for (var j = 0; j < selectedArray.length; j++) {
-                                    console.log(selectedArray[j]["District"], selectedArray[j]["Block"]);
                                     var emp_id;
                                     if(selectedArray[j]["_id"]["$oid"]){
                                         emp_id = selectedArray[j]["_id"]["$oid"];
@@ -215,7 +211,7 @@
 
                                     if((moment(selectedArray[j]['Date of Birth']).format('D')<12) || (moment(selectedArray[j]['Date of Joining']).format('D')<12))
                                     {
-                                        var url = '/update_employee/'+selectedArray[j]["District"]+"/"+selectedArray[j]["Block"]+emp_id;
+                                        var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+

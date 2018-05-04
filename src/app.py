@@ -45,6 +45,17 @@ def render_employees():
 
         return all_employees_state
 
+@app.route('/employee_table/<string:_id>')
+def render_block_employees(_id):
+    single_employee_array = []
+    single_employee_dict = Employee.from_mongo(_id)
+    for Emp in single_employee_dict:
+        single_employee_array.append(Emp)
+
+    single_employee_block = json.dumps(single_employee_array, default=json_util.default)
+
+    return single_employee_block
+
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
     block_employees_array = []

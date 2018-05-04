@@ -117,8 +117,8 @@
 
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-                var emp_id = "{{emp_id}}";
                 var myObj = JSON.parse(this.responseText);
+                console.log(myObj);
                 var selected_employee = myObj.filter(function (entry) {
                 if (entry["_id"]["$oid"]){
                     return entry["_id"]["$oid"] === emp_id
@@ -136,7 +136,7 @@
                 document.getElementById("qualification").value = selected_employee[0]["Educational Qualification"];
                 document.getElementById("center").value = selected_employee[0]["Name Of the Center"];
         };
-        xmlhttp.open("GET", "/table", true);
+        xmlhttp.open("GET", "/employee_table/"+"{{emp_id}}", true);
         xmlhttp.send();
 
     var blockPanchayats = {
