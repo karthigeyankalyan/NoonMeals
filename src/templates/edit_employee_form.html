@@ -49,13 +49,8 @@
     </div>
 
     <div class="form-group">
-          <label for="block">Select Block:</label>
-          <select class="form-control" id="block" name="block">
-            {% set blocks = ['Acharapakkam', 'CHITHAMUR', 'Lathur', 'Madhuranthagam', 'Kattankolathur', 'Thirukazhukundram', 'Thiruporur', 'StThomasMount', 'Kancheepuram', 'Walajabad', 'Uthiramerur', 'Kundrathur', 'Sriperumbudur', 'KanchipuramMunicipality', 'ChengalpattuMunicipality', 'MadhuranthagamMunicipality', 'TambaramMunicipality', 'AlandhurMunicipality', 'PallavaramMunicipality'] %}
-            {% for block in blocks %}
-                <option value= "{{block}}">{{block}}</option>"
-            {% endfor %}
-          </select>
+        <label for="block">Block</label>
+        <input type="text" id="block" name="block" style="display: block; width: 100%">
     </div>
 
     <div class="form-group">
@@ -67,13 +62,8 @@
 
     <div class="form-group">
     <span>
-    <label for="center">Select Center</label>
-        <select class="form-control" id="center" name="center">
-            {% set Centers = ['Acharapakkam P.U.E. School', 'Allur P.U.E. School', 'Athivakkam P.U.E. School', 'Ananthamangalam P.U.E. School']%}
-            {% for block in Centers %}
-                <option value= "{{block}}">{{block}}</option>"
-            {% endfor %}
-        </select>
+        <label for="center">Select Center</label>
+        <input type="text" id="center" name="center" style="display: block; width: 100%">
     </span>
     </div>
 
