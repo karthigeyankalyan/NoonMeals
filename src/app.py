@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, make_response
 
 import json
 from bson import json_util
+from bson.objectid import ObjectId
 from bson.json_util import dumps
 
 from src.models.user import User
@@ -48,13 +49,13 @@ def render_employees():
 @app.route('/employee_table/<string:_id>')
 def render_individual_employees(_id):
     single_employee_array = []
-    single_employee_dict = Employee.from_mongo(_id)
+    single_employee_dict = Database.find("employees", {'_id': ObjectId(_id)})
     for Emp in single_employee_dict:
         single_employee_array.append(Emp)
 
     single_employee_block = json.dumps(single_employee_array, default=json_util.default)
 
-    return single_employee_dict
+    return single_employee_block
 
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
