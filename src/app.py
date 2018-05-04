@@ -46,7 +46,7 @@ def render_employees():
         return all_employees_state
 
 @app.route('/employee_table/<string:_id>')
-def render_block_employees(_id):
+def render_individual_employees(_id):
     single_employee_array = []
     single_employee_dict = Employee.from_mongo(_id)
     for Emp in single_employee_dict:
