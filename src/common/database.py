@@ -28,9 +28,9 @@ class Database(object):
         return Database.DATABASE[collection].update_one(query, {'$set':{'Employee Name':emp_name,
                                                                         'District':district,
                                                                         'Block': block,
-                                                                        'Name Of Village Panchayat': panchayat,
+                                                                        'Name of Village Panchayat': panchayat,
                                                                         'Designation': designation,
                                                                         'Name of the Center': center_name,
-                                                                        'Date Of Birth': dob,
-                                                                        'Date Of Joining': doj,
-                                                                        'Date Of Retirement': dor}}, True)
+                                                                        'Date of Birth': dob,
+                                                                        'Date of Joining': doj,
+                                                                        'Date of Retirement': dor}}, True)
