@@ -1,5 +1,6 @@
 import uuid
 from src.common.database import Database
+from bson.objectid import ObjectId
 
 class Employee(object):
 
@@ -23,7 +24,7 @@ class Employee(object):
 
     @classmethod
     def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor):
-        Database.update_employee(collection='employees', query={'_id': emp_id}, emp_name=name, district=district,
+        Database.update_employee(collection='employees', query={'_id': ObjectId(emp_id)}, emp_name=name, district=district,
                                  block=block, panchayat=panchayat, designation=designation, center_name=center_name,
                                  dob=dob, doj=doj, dor=dor)
 
