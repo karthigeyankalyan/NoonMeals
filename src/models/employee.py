@@ -33,7 +33,7 @@ class Employee(object):
             'Employee Name': self.name,
             'District': self.district,
             'Block': self.block,
-            'Name Of Village Panchayat': self.panchayat,
+            'Name of Village Panchayat': self.panchayat,
             'Designation': self.designation,
             'Name of the Center': self.center_name,
             'Educational Qualification': self.qualification,
