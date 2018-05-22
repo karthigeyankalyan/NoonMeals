@@ -6,11 +6,11 @@
     <style>
 
         h1, h2, h5{
-        text-align: center;
+            text-align: center;
         }
 
         h1{
-          color: darkgreen;
+            color: darkgreen;
         }
 
         #dropbtn, #dropbtn1, #dropbtn2 {
@@ -42,7 +42,9 @@
             display: block;
         }
 
-        .dropdown-content a:hover {background-color: white}
+        .dropdown-content a:hover {
+            background-color: white
+        }
 
         .dropdown:hover .dropdown-content {
             display: block;
@@ -53,80 +55,79 @@
         }
 
       #database-icon img, #dashboard-icon img, #insights-icon img, #decisions-icon img{
-        height: 100px;
-        width: 100px;
+            height: 100px;
+            width: 100px;
       }
 
       #database-icon {
-        top: 300px;
-        left: 400px;
-        position: absolute;
-        text-align: center;
+            top: 300px;
+            left: 400px;
+            position: absolute;
+            text-align: center;
       }
 
       #dashboard-icon {
-        top: 300px;
-        left: 550px;
-        position: absolute;
-        text-align: center;
+            top: 300px;
+            left: 550px;
+            position: absolute;
+            text-align: center;
       }
 
       #insights-icon {
-        top: 300px;
-        left: 700px;
-        position: absolute;
-        text-align: center;
+            top: 300px;
+            left: 700px;
+            position: absolute;
+            text-align: center;
       }
 
       #decisions-icon {
-        top: 300px;
-        left: 850px;
-        position: absolute;
-        text-align: center;
+            top: 300px;
+            left: 850px;
+            position: absolute;
+            text-align: center;
       }
 
     </style>
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><strong> Noon Meals Program Database </strong></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <div class="dropdown">
-        <div id="dropbtn">Charts</div>
-          <div class="dropdown-content">
-            <a href="/beneficiary_plots">Employee Charts</a>
-            <a href="/district_plots/sanctioned">Sanction Charts</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <div class="dropdown">
-        <div id="dropbtn1">Database</div>
-          <div class="dropdown-content">
-            <a href="/new_employee/{{user._id}}">Add Employee</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item active">
-        <div class="dropdown">
-        <div id="dropbtn2">Employees</div>
-          <div class="dropdown-content">
-            <a href="/all_beneficiaries">Active Employees</a>
-            <a href="/retirement_employees">Retired Employees</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"></a>
-      </li>
-    </ul>
-  </div>
-  </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#"><strong> Noon Meals Program Database </strong></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <div class="dropdown">
+                <div id="dropbtn">Charts</div>
+                  <div class="dropdown-content">
+                    <a href="/beneficiary_plots">Employee Charts</a>
+                    <a href="/district_plots/sanctioned">Sanction Charts</a>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item active">
+                <div class="dropdown">
+                <div id="dropbtn1">Database</div>
+                  <div class="dropdown-content">
+                    <a href="/new_employee/{{user._id}}">Add Employee</a>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item active">
+                <div class="dropdown">
+                <div id="dropbtn2">Employees</div>
+                  <div class="dropdown-content">
+                    <a href="/all_beneficiaries">Active Employees</a>
+                    <a href="/retirement_employees">Retired Employees</a>
+                  </div>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+            </ul>
+      </div>
+</nav>
 
 
 <br><br>
@@ -139,27 +140,6 @@
 <br>
 <h5>Choose District Below to see Employee Summary</h5>
 <br/>
-
-<!--<div id="database-icon">-->
-  <!--<img src="http://downloadicons.net/sites/default/files/database-icon-61942.png">-->
-  <!--<br />-->
-  <!--<strong>Database</strong>-->
-<!--</div>-->
-<!--<div id="dashboard-icon">-->
-  <!--<img src="https://n6-img-fp.akamaized.net/free-icon/increasing-stocks-graphic-of-bars_318-55034.jpg?size=338c&ext=jpg">-->
-  <!--<br />-->
-  <!--<strong>Dashboard</strong>-->
-<!--</div>-->
-<!--<div id="insights-icon">-->
-  <!--<img src="https://d30y9cdsu7xlg0.cloudfront.net/png/411198-200.png">-->
-  <!--<br />-->
-  <!--<strong>Insights</strong>-->
-<!--</div>-->
-<!--<div id="decisions-icon">-->
-  <!--<img src="https://d30y9cdsu7xlg0.cloudfront.net/png/157536-200.png">-->
-  <!--<br />-->
-  <!--<strong>Decisions</strong>-->
-<!--</div>-->
 
 <div style="flex-direction: row; align-items: center; justify-content: space-around; display: flex;">
   <div id="districtLinks" style="flex-direction: column; justify-content: space-between; display: flex;">
@@ -199,6 +179,7 @@
       <a href="/district_beneficiaries/Thiruvannamalai">Thiruvannamalai</a>
       <a href="/district_beneficiaries/Tirupur">Tirupur</a>
       <a href="/district_beneficiaries/Vellore">Vellore</a>
+      <a href="/district_beneficiaries/Villupuram">Villupuram</a>
       <a href="/district_beneficiaries/Virudhunagar">Virudhunagar</a>
   </div>
 </div>
