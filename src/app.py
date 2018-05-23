@@ -26,7 +26,7 @@ def beneficiary_plots():
 
 @app.route('/raw_retirement_by_date/<string:date>')
 def retiring_this_month(date):
-    date_filter = date.split("/")
+    date_filter = date.replace("_", "/")
     projects = Database.find("employees", {"Date of Retirement": date_filter})
     json_projects = []
     for project in projects:
