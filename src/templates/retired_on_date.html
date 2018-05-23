@@ -1,4 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div id="District">
+</div>
+
 <script>
     var date = "{{date}}";
-    console.log(date)
+    var source = "/raw_retirement_by_date/"+date;
+
+    var DistPlot  = dc.rowChart("#District");
+    d3.json(source, function(error, data){
+        var ndx = crossfilter(data);
+        var Dist = ndx.dimension(function (d) {
+            return d.District;
+        });
+        var DistGroup = Dist.group().reduceCount();
+
+        DistPlot
+            .width(400)
+            .height(200)
+            .dimension(Dist)
+            .group(DistGroup);
+
+        dc.renderAll();
+    });
+
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                    {
+                    }},
+            error: function (e) {
+                alert("error");
+            }
+        });
 </script>
+
+{% endblock %}
