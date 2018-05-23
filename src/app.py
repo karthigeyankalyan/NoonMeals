@@ -24,13 +24,16 @@ def home():
 def beneficiary_plots():
     return render_template('circle1.html')
 
-@app.route('/district_plots/sanctioned')
-def district_pension():
-    return render_template('district_plots.html')
+@app.route('/raw_retirement_by_date/<string:date>')
+def retiring_this_month(date):
+    date_filter = date.split("/")
+    projects = Database.find("employees", {"Date of Retirement": date_filter})
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-@app.route('/district_plots/eligible')
-def district_pension_eligible():
-    return render_template('district_plots_eligible.html')
+    return all_employees_retiring
 
 @app.route('/login')
 def login_form():
