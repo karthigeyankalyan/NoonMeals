@@ -35,6 +35,19 @@ def retiring_this_month(date):
 
     return all_employees_retiring
 
+@app.route('/get_retirement', methods=['POST', 'GET'])
+def retirement_by_date():
+    if request.method == 'GET':
+        return render_template('get_date.html')
+    else:
+        day = request.form['day']
+        month = request.form['month']
+        year = request.form['year']
+
+        date = day+"_"+month+"_"+year
+
+        return render_template('retired_on_date.html', date=date)
+
 @app.route('/login')
 def login_form():
     return render_template('login.html')
