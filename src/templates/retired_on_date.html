@@ -23,6 +23,11 @@
                                 if ($.inArray(item, arrDistinct) === -1)
                                     arrDistinct.push(item);
                             });
+
+                        console.log(arrDistinct);
+                        console.log(distArray);
+                        console.log(json);
+
                         $(arrDistinct).each(function (index, item) {
                             $("#DistrictSelect").append($("<option>").html(item));
                             });
