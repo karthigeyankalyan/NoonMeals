@@ -16,8 +16,11 @@
             dataType: 'json',
             success: function (json) {
                     {
-                        var distArray = json['District'];
+                        var distArray = [];
                         var arrDistinct = [];
+                        $(json).each(function (index, item) {
+                                    distArray.push(item[index]['District']);
+                            });
                         $(document).ready(function () {
                             $(distArray).each(function (index, item) {
                                 if ($.inArray(item, arrDistinct) === -1)
