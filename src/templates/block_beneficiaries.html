@@ -209,21 +209,18 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    if((moment(selectedArray[j]['Date of Birth']).format('D')<12) || (moment(selectedArray[j]['Date of Joining']).format('D')<12))
-                                    {
-                                        var url = '/update_employee/'+emp_id;
-                                        var row = $('<tr></tr>').html('<td>' +
+                                    var url = '/update_employee/'+emp_id;
+                                    var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
-//                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
+//                                      '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
                                         '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
                                         '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                                         $("#empDetails").append(row);
-                                    }
                                 }
                             }
 
