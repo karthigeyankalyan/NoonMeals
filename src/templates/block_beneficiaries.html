@@ -209,7 +209,7 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    if((moment(selectedArray[j]['Date of Birth']).format('D')>12) || (moment(selectedArray[j]['Date of Joining']).format('D')>12))
+                                    if((moment(selectedArray[j]['Date Of Birth']).format('D')>12) || (moment(selectedArray[j]['Date Of Joining']).format('D')>12))
                                     {
                                         var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' +
