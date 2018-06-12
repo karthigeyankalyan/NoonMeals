@@ -38,9 +38,9 @@ class Employee(object):
             'Name of the Center': self.center_name,
             'Educational Qualification': self.qualification,
             'Contact Number': self.contact_number,
-            'Date Of Birth': self.DOB,
-            'Date Of Joining': self.joining_date,
-            'Date Of Retirement': self.retirement_date,
+            'Date of Birth': self.DOB,
+            'Date of Joining': self.joining_date,
+            'Date of Retirement': self.retirement_date,
             '_id': self._id,
         }
 

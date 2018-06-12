@@ -106,7 +106,7 @@
 
 //                            Checking if DOB is valid and if retirement date is after current date
                             var validDates = blocksArray.filter(function (entry) {
-                                return (moment(entry["Date of Birth"]).isValid())
+                                return (entry["Employee Name"] !== "Vacant")
                             });
 
                             //Looping through the valid dates JSON to assign age, years in service
@@ -209,8 +209,6 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    if((moment(selectedArray[j]['Date Of Birth']).format('D')>12) || (moment(selectedArray[j]['Date Of Joining']).format('D')>12))
-                                    {
                                         var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' +
                                         selectedArray[j]["Employee Name"] + '</td>'+
@@ -223,7 +221,6 @@
                                         '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
                                         '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                                         $("#empDetails").append(row);
-                                    }
                                 }
                             }
 
