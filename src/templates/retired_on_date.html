@@ -15,27 +15,8 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                    {
-                        var distArray = [];
-                        var arrDistinct = [];
-                        console.log(json[0]["District"]);
-                        for(var i = 0; i<= json.length; i++){
-                            console.log(json[i]["District"])
-                        }
-                        $(document).ready(function () {
-                            $(distArray).each(function (index, item) {
-                                if ($.inArray(item, arrDistinct) === -1)
-                                    arrDistinct.push(item);
-                            });
-
-                        console.log(arrDistinct);
-                        console.log(distArray);
-
-                        $(arrDistinct).each(function (index, item) {
-                            $("#DistrictSelect").append($("<option>").html(item));
-                            });
-                        });
-                    }},
+                        console.log(json);
+                        },
             error: function (e) {
                 alert("error");
             }
