@@ -12,8 +12,6 @@
     var month = "{{month}}";
     var year = "{{year}}";
     var source = "/raw_ttt/"+month+"/"+year;
-    console.log(month);
-    console.log(year);
 
         $.ajax({
             type: 'GET',
@@ -40,18 +38,48 @@
                     })
                     .entries(json);
 
-//                var columns = ["Name of Bank", "Name of SHG", "# of Beneficiaries", "Loan Amount"];
-//                var rows = [];
-//                for (var a = 0; a < empCount.length; a++) {
-//                }
-
                 var doc = new jsPDF();
-                doc.setFontSize(10);
-                doc.text(30, 30, 'PROCEEDINGS OF THE MANAGING DIRECTOR, TAMIL NADU BACKWARD CLASSES');
-                doc.text(45, 35, 'ECONOMIC DEVELOPMENT CORPORATION LIMITED, CHENNAI-8.');
 
-//                rows.push([[['Grand Total']], [['']], [[total_strength]], [[json[0]['loan_amount']]]]);
-//                doc.autoTable(columns, rows, {startY: 175, endY: 200});
+                var columns = ["District", "10 Years", "20 Years", "30 Years"];
+                var rows = [];
+
+                for (var a = 0; a < empCount.length; a++) {
+                    if(empCount[a]['values'].length === 3) {
+                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
+                    }
+                    else if(empCount[a]['values'].length === 2) {
+                        if(empCount[a]['values'][0]['key'] === 10 && empCount[a]['values'][1]['key'] === 20) {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values']['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]], [[0]]]);
+                        }
+
+                        else if(empCount[a]['values'][0]['key'] === 20 && empCount[a]['values'][1]['key'] === 30) {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === 10 && empCount[a]['values'][1]['key'] === 30) {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                    }
+                    else {
+                        if(empCount[a]['values'][0]['key'] === 10) {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values']['values'][0]['values']]],
+                                [[0]], [[0]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === 20) {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[0]]]);
+                        }
+                        else if(empCount[a]['values'][1]['key'] === 30) {
+                            rows.push([[[empCount[a]['key']]], [[0]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                    }
+                }
+
+                doc.autoTable(columns, rows, {startY: 35});
 
                 doc.save('test.pdf')
             },
