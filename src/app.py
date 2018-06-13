@@ -63,6 +63,11 @@ def ttw_this_month(month, year):
         {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year30 + '/'}]},
     ]})
 
+    print(year10)
+    print(year20)
+    print(year30)
+    print(year, month)
+
     json_projects = []
     for project in projects:
         json_projects.append(project)
