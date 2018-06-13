@@ -63,17 +63,12 @@ def ttw_this_month(month, year):
         {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year30 + '/'}]},
     ]})
 
-    print(year10)
-    print(year20)
-    print(year30)
-    print(year, month)
-
     json_projects = []
     for project in projects:
         json_projects.append(project)
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-    return all_employees_retiring
+    return all_employees_retiring, year, year10
 
 @app.route('/get_tentwentythirty', methods=['POST', 'GET'])
 def ttw_by_date():
