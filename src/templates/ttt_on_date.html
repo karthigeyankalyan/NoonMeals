@@ -46,26 +46,22 @@
                 console.log(empCount.length);
 
                 for (var a = 0; a < empCount.length; a++) {
-//                    if(empCount[a]['values'].length === 3) {
-//                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
-//                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
-//                    }
-//
-//                    else
-                    if(empCount[a]['values'].length === 2) {
-                        console.log(a);
-                        console.log(empCount[a]['values'][0]['key'] === 10);
-                        console.log((empCount[a]['values'][0]['key'] === 10) && (empCount[a]['values'][1]['key'] === 20));
-                        if(empCount[a]['values'][0]['key'] === 10 && empCount[a]['values'][1]['key'] === 20) {
+                    if(empCount[a]['values'].length === 3) {
+                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
+                    }
+
+                    else if(empCount[a]['values'].length === 2) {
+                        if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '20') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values']['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]], [[0]]]);
                         }
 
-                        else if(empCount[a]['values'][0]['key'] === 20 && empCount[a]['values'][1]['key'] === 30) {
+                        else if(empCount[a]['values'][0]['key'] === '20' && empCount[a]['values'][1]['key'] === '30') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === 10 && empCount[a]['values'][1]['key'] === 30) {
+                        else if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '30') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[0]], [[empCount[a]['values'][1]['values']]]]);
                         }
@@ -74,15 +70,15 @@
                     else if(empCount[a]['values'].length === 1) {
                         console.log(a);
                         console.log(empCount[a]['values'][0]['key']);
-                        if(empCount[a]['values'][0]['key'] === 10) {
+                        if(empCount[a]['values'][0]['key'] === '10') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values']['values'][0]['values']]],
                                 [[0]], [[0]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === 20) {
+                        else if(empCount[a]['values'][0]['key'] === '20') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[0]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === 30) {
+                        else if(empCount[a]['values'][0]['key'] === '30') {
                             rows.push([[[empCount[a]['key']]], [[0]],
                                 [[0]], [[empCount[a]['values'][1]['values']]]]);
                         }
