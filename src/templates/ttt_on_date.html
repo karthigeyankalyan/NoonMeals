@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<label for="DistrictSelect" style="margin-left: 6%">District Select:</label>
+<select id="DistrictSelect" style="margin-left: 1%; position: relative;">
+</select>
+
+<script>
+    var month = "{{month}}";
+    var year = "{{year}}";
+    var source = "/raw_retirement_by_date/"+month+"/"+year;
+
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                        console.log(json);
+                        },
+            error: function (e) {
+                alert("error");
+            }
+        });
+</script>
+
+{% endblock %}

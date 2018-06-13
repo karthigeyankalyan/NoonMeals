@@ -48,6 +48,38 @@ def retirement_by_date():
 
         return render_template('retired_on_date.html', date=date)
 
+@app.route('/raw_ttt/<string:month>/<string:year>')
+def ttw_this_month(month, year):
+    yearMinus10 = year - 10
+    yearMinus20 = year - 20
+    yearMinus30 = year - 30
+
+    projects = Database.find("employees", {"$or": [
+        {"$and": [{"Date of Joining": '/' + yearMinus10 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + yearMinus20 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + yearMinus30 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus10 + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus20 + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus30 + '/'}]},
+    ]})
+
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
+
+@app.route('/get_tentwentythirty', methods=['POST', 'GET'])
+def ttw_by_date():
+    if request.method == 'GET':
+        return render_template('get_month_date.html')
+    else:
+        month = request.form['month']
+        year = request.form['year']
+
+        return render_template('ttt_on_date.html', month=month, year=year)
+
 @app.route('/login')
 def login_form():
     return render_template('login.html')
