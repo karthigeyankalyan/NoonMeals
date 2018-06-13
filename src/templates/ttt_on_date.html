@@ -82,18 +82,6 @@
                 }
 
                 doc.autoTable(columns, rows, {startY: 35});
-
-                doc.text(50, doc.autoTableEndPosY() + 15, 'Detailed List of Employees pertaining to above summary');
-                var columns1 = ["Name", "Designation", "District", "Service Bucket", "Center"];
-                var rows1 = [];
-
-                for (var b = 0; b < (json.length)/4; a++) {
-                    rows1.push([[json[b]['Employee Name']], [[json[b]['Designation']]],
-                        [[json[b]['District']]], [[json[b]['yearsInService']]], [[json[b]['Name of the Center']]]])
-                }
-
-                doc.autoTable(columns1, rows1, {startY: doc.autoTableEndPosY() + 35});
-
                 doc.save('test.pdf')
             },
             error: function (e) {
