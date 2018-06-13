@@ -50,9 +50,13 @@ def retirement_by_date():
 
 @app.route('/raw_ttt/<string:month>/<string:year>')
 def ttw_this_month(month, year):
-    year10 = year - 10
-    year20 = year - 20
-    year30 = year - 30
+    year10 = int(year) - 10
+    year20 = int(year) - 20
+    year30 = int(year) - 30
+
+    year10 = str(year10)
+    year20 = str(year20)
+    year30 = str(year30)
 
     projects = Database.find("employees", {"$or": [
         {"$and": [{"Date of Joining": '/' + year10 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
@@ -68,7 +72,7 @@ def ttw_this_month(month, year):
         json_projects.append(project)
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-    return all_employees_retiring, year, year10
+    return all_employees_retiring
 
 @app.route('/get_tentwentythirty', methods=['POST', 'GET'])
 def ttw_by_date():
