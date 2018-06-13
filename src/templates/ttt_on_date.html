@@ -53,7 +53,9 @@
 //
 //                    else
                     if(empCount[a]['values'].length === 2) {
-                        console.log(empCount[a]['values'][0]['key']);
+                        console.log(a);
+                        console.log(empCount[a]['values'][0]['key'] === 10);
+                        console.log((empCount[a]['values'][0]['key'] === 10) && (empCount[a]['values'][1]['key'] === 20));
                         if(empCount[a]['values'][0]['key'] === 10 && empCount[a]['values'][1]['key'] === 20) {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values']['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]], [[0]]]);
