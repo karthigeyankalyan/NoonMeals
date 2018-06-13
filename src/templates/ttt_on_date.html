@@ -14,7 +14,6 @@
     var source = "/raw_ttt/"+month+"/"+year;
     console.log(month);
     console.log(year);
-    var doc = new jsPDF();
 
         $.ajax({
             type: 'GET',
@@ -46,6 +45,7 @@
 //                for (var a = 0; a < empCount.length; a++) {
 //                }
 
+                var doc = new jsPDF();
                 doc.setFontSize(10);
                 doc.text(30, 30, 'PROCEEDINGS OF THE MANAGING DIRECTOR, TAMIL NADU BACKWARD CLASSES');
                 doc.text(45, 35, 'ECONOMIC DEVELOPMENT CORPORATION LIMITED, CHENNAI-8.');
