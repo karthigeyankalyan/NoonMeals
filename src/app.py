@@ -61,10 +61,7 @@ def ttw_this_month(month, year):
     projects = Database.find("employees", {"$or": [
         {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
         {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year10 + '/'}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year20 + '/'}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year30 + '/'}]}
+        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}
     ]})
 
     json_projects = []

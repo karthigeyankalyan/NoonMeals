@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<label for="DistrictSelect" style="margin-left: 6%">District Select:</label>
-<select id="DistrictSelect" style="margin-left: 1%; position: relative;">
-</select>
+<div id="empList">
+</div>
 
 <script>
     var month = "{{month}}";
@@ -18,8 +17,45 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                        console.log(json);
-                        },
+                for(var i = 0; i< json.length; i++){
+                    var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("DD/MM/YYYY");
+                    json[i]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                }
+
+                console.log(json);
+
+//                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+//                $("#empList").append(tbl);
+//                var hr = "<tr>";
+//                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+//                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+//                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+//                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+//                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+//                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+//                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
+//                for (var j = 0; j < selectedArray.length; j++) {
+//                    var emp_id;
+//                    if(selectedArray[j]["_id"]["$oid"]){
+//                        emp_id = selectedArray[j]["_id"]["$oid"];
+//                    }
+//                    else {
+//                        emp_id = selectedArray[j]["_id"];
+//                    }
+//
+//                    var url = '/update_employee/'+emp_id;
+//                    var row = $('<tr></tr>').html('<td>' +
+//                        selectedArray[j]["Employee Name"] + '</td>'+
+//                        '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
+//                        '<td>'+selectedArray[j]["Designation"] +'</td>'+
+//                        '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+
+//                        '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
+//                        '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
+//                        '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
+//                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
+//                    $("#empDetails").append(row);
+//                }
+            },
             error: function (e) {
                 alert("error");
             }
