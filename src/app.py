@@ -50,17 +50,17 @@ def retirement_by_date():
 
 @app.route('/raw_ttt/<string:month>/<string:year>')
 def ttw_this_month(month, year):
-    yearMinus10 = year - 10
-    yearMinus20 = year - 20
-    yearMinus30 = year - 30
+    year10 = year - 10
+    year20 = year - 20
+    year30 = year - 30
 
     projects = Database.find("employees", {"$or": [
-        {"$and": [{"Date of Joining": '/' + yearMinus10 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
-        {"$and": [{"Date of Joining": '/' + yearMinus20 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
-        {"$and": [{"Date of Joining": '/' + yearMinus30 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus10 + '/'}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus20 + '/'}]},
-        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + yearMinus30 + '/'}]},
+        {"$and": [{"Date of Joining": '/' + year10 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + year20 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + year30 + '$/'}, {"Date of Joining": '/^' + month + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year10 + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year20 + '/'}]},
+        {"$and": [{"Date of Joining": '/' + month + '$/'}, {"Date of Joining": '/^' + year30 + '/'}]},
     ]})
 
     json_projects = []
