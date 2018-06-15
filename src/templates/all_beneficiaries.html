@@ -52,7 +52,7 @@
             $("#myTable").find("tbody").empty();
 
             var validDates = districtArray.filter(function (entry) {
-                return moment(entry["Date of Birth"]).isValid()
+                return entry["Name"] !== '';
             });
 
             //Looping through the valid dates JSON to assign age, years in service

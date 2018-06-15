@@ -38,11 +38,23 @@
                     })
                     .entries(json);
 
+                var designationWise = d3.nest()
+                    .key(function (d) {
+                        return d.Designation;
+                    })
+                    .key(function (d) {
+                        return d.yearsInService;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
                 var doc = new jsPDF();
 
                 var columns = ["District", "10 Years", "20 Years", "30 Years"];
                 var rows = [];
-                doc.text(50,25, 'District Wise Summaries of Employees completing 10/20/30 years during '+month+'/'+year);
+                doc.text(25,25, 'District Wise Summaries of Employees completing 10/20/30 years during '+month+'/'+year);
                 for (var a = 0; a < empCount.length; a++) {
                     if(empCount[a]['values'].length === 3) {
                     rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
@@ -82,6 +94,12 @@
                 }
 
                 doc.autoTable(columns, rows, {startY: 35});
+
+                var columns1 = ["Designation", "10 Years", "20 Years", "30 Years"];
+                var rows1 = [];
+
+                doc.text(25,25, 'Designation-Wise Employees completing 10/20/30 years during '+month+'/'+year);
+
                 doc.save('test.pdf')
             },
             error: function (e) {
