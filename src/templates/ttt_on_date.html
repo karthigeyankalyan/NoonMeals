@@ -98,41 +98,43 @@
                 var columns1 = ["Designation", "10 Years", "20 Years", "30 Years"];
                 var rows1 = [];
 
+                doc.addPage();
+
                 doc.text(25,25, 'Designation-Wise Employees completing 10/20/30 years during '+month+'/'+year);
 
                 for (var b = 0; b < designationWise.length; b++) {
                     if(designationWise[b]['values'].length === 3) {
-                    rows.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
+                    rows1.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
                         [[designationWise[b]['values'][1]['values']]], [[designationWise[b]['values'][2]['values']]]]);
                     }
 
                     else if(designationWise[b]['values'].length === 2) {
                         if(designationWise[b]['values'][0]['key'] === '10' && designationWise[b]['values'][1]['key'] === '20') {
-                            rows.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
+                            rows1.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
                                 [[designationWise[b]['values'][1]['values']]], [[0]]]);
                         }
 
                         else if(designationWise[b]['values'][0]['key'] === '20' && designationWise[b]['values'][1]['key'] === '30') {
-                            rows.push([[[designationWise[b]['key']]], [[0]], [[designationWise[b]['values'][0]['values']]],
+                            rows1.push([[[designationWise[b]['key']]], [[0]], [[designationWise[b]['values'][0]['values']]],
                                 [[designationWise[b]['values'][1]['values']]]]);
                         }
                         else if(designationWise[b]['values'][0]['key'] === '10' && designationWise[b]['values'][1]['key'] === '30') {
-                            rows.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
+                            rows1.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
                                 [[0]], [[designationWise[b]['values'][1]['values']]]]);
                         }
                     }
 
                     else if(designationWise[b]['values'].length === 1) {
                         if(designationWise[b]['values'][0]['key'] === '10') {
-                            rows.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
+                            rows1.push([[[designationWise[b]['key']]], [[designationWise[b]['values'][0]['values']]],
                                 [[0]], [[0]]]);
                         }
                         else if(designationWise[b]['values'][0]['key'] === '20') {
-                            rows.push([[[designationWise[b]['key']]], [[0]], [[designationWise[b]['values'][0]['values']]],
+                            rows1.push([[[designationWise[b]['key']]], [[0]], [[designationWise[b]['values'][0]['values']]],
                                 [[0]]]);
                         }
                         else if(designationWise[b]['values'][0]['key'] === '30') {
-                            rows.push([[[designationWise[b]['key']]], [[0]],
+                            rows1.push([[[designationWise[b]['key']]], [[0]],
                                 [[0]], [[designationWise[b]['values'][1]['values']]]]);
                         }
                     }
