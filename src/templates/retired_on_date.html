@@ -15,12 +15,91 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                        console.log(json);
+                for(var i = 0; i< json.length; i++){
+                    var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
+                    var inputDate = new Date(year, month-1, 1);
+                    var now = moment(inputDate);
+                }
+
+                var empCount = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .key(function (d) {
+                        return d.Designation;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                console.log(empCount);
+
+                var doc = new jsPDF();
+
+                var columns = ["District", "Organiser", "Cook", "Cook Assistant"];
+                var rows = [];
+                doc.text(25,25, 'District Wise Summary of Employees retiring during '+month+'/'+year);
+                for (var a = 0; a < empCount.length; a++) {
+                    if(empCount[a]['values'].length === 3) {
+                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
+                    }
+
+                    else if(empCount[a]['values'].length === 2) {
+                        if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '20') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]], [[0]]]);
+                        }
+
+                        else if(empCount[a]['values'][0]['key'] === '20' && empCount[a]['values'][1]['key'] === '30') {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '30') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                    }
+
+                    else if(empCount[a]['values'].length === 1) {
+                        if(empCount[a]['values'][0]['key'] === '10') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[0]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === '20') {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[0]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === '30') {
+                            rows.push([[[empCount[a]['key']]], [[0]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                    }
+                }
+
+                doc.autoTable(columns, rows, {startY: 35});
+
+                doc.save('test.pdf')
+
+            },
+            error: function (e) {
+                alert("error");
+            }
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
                         },
             error: function (e) {
                 alert("error");
             }
         });
+
 </script>
 
 {% endblock %}
