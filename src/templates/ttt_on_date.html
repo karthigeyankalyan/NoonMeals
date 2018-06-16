@@ -140,6 +140,8 @@
                     }
                 }
 
+                doc.autoTable(columns1, rows1, {startY: 35});
+
                 doc.save('test.pdf')
             },
             error: function (e) {
