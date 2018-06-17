@@ -35,9 +35,9 @@
 
                 var doc = new jsPDF();
 
-                var columns = ["District", "Organiser", "Cook", "Cook Assistant"];
+                var columns = ["District", "Cook", "Cook Assistant", "Organiser"];
                 var rows = [];
-                doc.text(25,25, 'District Wise Summary of Employees retiring during '+month+'/'+year);
+                doc.text(25,25, 'District Wise Summary of Employees retiring during '+date);
                 for (var a = 0; a < empCount.length; a++) {
                     if(empCount[a]['values'].length === 3) {
                     rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
@@ -45,31 +45,35 @@
                     }
 
                     else if(empCount[a]['values'].length === 2) {
-                        if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '20') {
+                        if(empCount[a]['values'][0]['key'] === 'Cook' && (empCount[a]['values'][1]['key'] ===
+                            'Cook Assistant' || empCount[a]['values'][1]['key'] === 'Cooking Assistant')) {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]], [[0]]]);
                         }
 
-                        else if(empCount[a]['values'][0]['key'] === '20' && empCount[a]['values'][1]['key'] === '30') {
+                        else if((empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][1]['key'] === 'Cooking Assistant') && empCount[a]['values'][1]['key']
+                            === 'Organiser') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '30') {
+                        else if(empCount[a]['values'][0]['key'] === 'Cook' && empCount[a]['values'][1]['key'] === 'Organiser') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[0]], [[empCount[a]['values'][1]['values']]]]);
                         }
                     }
 
                     else if(empCount[a]['values'].length === 1) {
-                        if(empCount[a]['values'][0]['key'] === '10') {
+                        if(empCount[a]['values'][0]['key'] === 'Cook') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[0]], [[0]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === '20') {
+                        else if(empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][1]['key'] === 'Cooking Assistant') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[0]]]);
                         }
-                        else if(empCount[a]['values'][0]['key'] === '30') {
+                        else if(empCount[a]['values'][0]['key'] === 'Organiser') {
                             rows.push([[[empCount[a]['key']]], [[0]],
                                 [[0]], [[empCount[a]['values'][1]['values']]]]);
                         }
