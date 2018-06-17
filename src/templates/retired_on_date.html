@@ -33,8 +33,6 @@
                     })
                     .entries(json);
 
-                console.log(empCount);
-
                 var doc = new jsPDF();
 
                 var columns = ["District", "Cook", "Cook Assistant", "Organiser"];
@@ -94,6 +92,8 @@
 
     }
 
+        var date = "{{date}}";
+        var source = "/raw_retirement_by_date/"+date;
         $.ajax({
             type: 'GET',
             url: source,
