@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
 
-<label for="DistrictSelect" style="margin-left: 6%">District Select:</label>
-<select id="DistrictSelect" style="margin-left: 1%; position: relative;">
-</select>
+<button onclick="downloadPDF()">Download Report</button>
+
+<div id="empList">
+</div>
 
 <script>
     var date = "{{date}}";
@@ -68,7 +69,7 @@
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[0]], [[0]]]);
                         }
-                        else if(empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
+                        else if(empCount[a]['values'][0]['key'] === 'Cook Assistant' ||
                             empCount[a]['values'][1]['key'] === 'Cooking Assistant') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[0]]]);
@@ -96,7 +97,36 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                        },
+
+                var empCount = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .key(function (d) {
+                        return d.yearsInService;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+                $("#empList").append(tbl);
+                var hr = "<tr>";
+                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6);
+                for (var j = 0; j < json.length; j++) {
+                    var row = $('<tr></tr>').html('<td>' +
+                        json[j]["Employee Name"] + '</td>'+
+                        '<td>'+json[j]["Name of the Center"]+'</td>'+
+                        '<td>'+json[j]["Designation"] +'</td>'+
+                        '<td>'+json[j]["District"] +'</td>');
+                    $("#empDetails").append(row);
+                }
+            },
             error: function (e) {
                 alert("error");
             }
