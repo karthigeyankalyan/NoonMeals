@@ -156,8 +156,9 @@
                                     selectedBucketArray = jQuery.grep(validDates, function (employee) {
                                         return employee.Designation === selectedbucket;
                                     });
-                                    populatePage(selectedBucketArray);
-                                    populateEmployeeCount(selectedBucketArray);
+                                    var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
+                                    populatePage(sortedSelectedBucketArray);
+                                    populateEmployeeCount(sortedSelectedBucketArray);
                                 }
                             });
 
@@ -173,6 +174,15 @@
                                         return v.length;
                                     })
                                     .entries(Below10Now);
+                            }
+
+
+
+                            function sortByKey(array, key) {
+                                return array.sort(function(a, b) {
+                                    var x = a[key]; var y = b[key];
+                                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                                });
                             }
 
                             function populatePage(selectedArray) {
