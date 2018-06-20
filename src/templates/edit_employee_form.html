@@ -130,10 +130,9 @@
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
 
-                console.log(moment(json[0]["Date of Birth"], "m/dd/yyyy").format("YYYY-MM-DD"));
-                console.log(moment(json[0]["Date of Birth"], "m/dd/yyyy"));
-
                 document.getElementById("DOB").value = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("YYYY-MM-DD");
+                document.getElementById("retirementDate").value = moment(json[0]["Date of Retirement"], "m/dd/yyyy").format("YYYY-MM-DD");
+                document.getElementById("joiningDate").value = moment(json[0]["Date of Joining"], "m/dd/yyyy").format("YYYY-MM-DD");
 
         },
             error: function (e) {
