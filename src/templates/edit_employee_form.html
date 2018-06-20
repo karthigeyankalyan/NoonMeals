@@ -130,6 +130,13 @@
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
 
+                document.getElementById("DOB").valueAsDate = json[0]["Date of Birth"];
+
+                var htmlDateBirth = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("D");
+                var htmlMonthBirth = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("M");
+                var htmlYearBirth = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("YYYY");
+
+                console.log(htmlDateBirth, htmlMonthBirth, htmlYearBirth);
 
         },
             error: function (e) {
