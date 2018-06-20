@@ -130,7 +130,7 @@
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
 
-                document.getElementById("DOB").valueAsDate = json[0]["Date of Birth"];
+                document.getElementById("DOB").valueAsDate = moment(json[0]["Date of Birth"], "m/dd/yyyy");
 
                 var htmlDateBirth = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("D");
                 var htmlMonthBirth = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("M");
