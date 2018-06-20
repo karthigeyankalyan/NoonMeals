@@ -133,9 +133,9 @@
                 console.log(moment(json[0]["Date of Retirement"]));
                 console.log(moment(json[0]["Date of Joining"]).format("YYYY-MM-DD"));
 
-                document.getElementById("DOB").value = moment(json[0]["Date of Birth"], "m/dd/yyyy").format("YYYY-MM-DD");
-                document.getElementById("retirementDate").value = moment(json[0]["Date of Retirement"], "m/dd/yyyy").format("YYYY-MM-DD");
-                document.getElementById("joiningDate").value = moment(json[0]["Date of Joining"], "m/dd/yyyy").format("YYYY-MM-DD");
+                document.getElementById("DOB").value = moment(json[0]["Date of Birth"]).format("YYYY-MM-DD");
+                document.getElementById("retirementDate").value = moment(json[0]["Date of Retirement"]).format("YYYY-MM-DD");
+                document.getElementById("joiningDate").value = moment(json[0]["Date of Joining"]).format("YYYY-MM-DD");
 
         },
             error: function (e) {
