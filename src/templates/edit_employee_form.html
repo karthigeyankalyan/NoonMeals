@@ -121,7 +121,7 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                console.log(json[0]["Employee Name"]);
+                console.log(json);
                 document.getElementById("Name").value = json[0]["Employee Name"];
                 document.getElementById("district").value = json[0]["District"];
                 document.getElementById("block").value = json[0]["Block"];
@@ -129,6 +129,8 @@
                 document.getElementById("designation").value = json[0]["Designation"];
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
+
+
         },
             error: function (e) {
                 alert("error");
