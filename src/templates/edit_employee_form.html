@@ -79,7 +79,7 @@
 
     <div id="date" style="display: inline;">
     <label for="DOB">Enter Date Of Birth</label>
-    <input type="date" value="" id="DOB" onchange="CalculateAge()" name="DOB">
+    <input type="date" value="" id="DOB" onload="CalculateAge()" onchange="CalculateAge()" name="DOB">
 
     <label for="Age" style="display: inline">Age of the Beneficiary</label>
     <input type="text" value="" id="Age" name="Age">
@@ -87,7 +87,7 @@
 
     <div id="joining" style="display: inline;">
     <label for="joiningDate">Enter Date Of Joining</label>
-    <input type="date" value="" id="joiningDate" onchange="CalculateYears()" name="joiningDate">
+    <input type="date" value="" id="joiningDate" onchange="CalculateYears()" onload="CalculateYears()" name="joiningDate">
 
     <label for="serviceYears" style="display: inline">Years OF Service</label>
     <input type="text" value="" id="serviceYears" name="serviceYears">
@@ -129,9 +129,6 @@
                 document.getElementById("designation").value = json[0]["Designation"];
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
-
-                console.log(moment(json[0]["Date of Retirement"]));
-                console.log(moment(json[0]["Date of Joining"]).format("YYYY-MM-DD"));
 
                 document.getElementById("DOB").value = moment(json[0]["Date of Birth"]).format("YYYY-MM-DD");
                 document.getElementById("retirementDate").value = moment(json[0]["Date of Retirement"]).format("YYYY-MM-DD");
