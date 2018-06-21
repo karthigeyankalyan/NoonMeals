@@ -1,6 +1,9 @@
 import os
 
 import pymongo
+from bson import ObjectId
+from bson.errors import InvalidId
+
 
 class Database(object):
     URI = os.environ['MONGODB_URI']
@@ -22,6 +25,14 @@ class Database(object):
     @staticmethod
     def find_one(collection, query):
         return Database.DATABASE[collection].find_one(query)
+
+    @staticmethod
+    def is_valid(oid):
+        try:
+            ObjectId(oid)
+            return True
+        except (InvalidId, TypeError):
+            return False
 
     @staticmethod
     def update_employee(collection, query, emp_name, district, block, panchayat, designation, center_name, dob, doj, dor):

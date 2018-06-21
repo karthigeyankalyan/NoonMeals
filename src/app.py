@@ -99,10 +99,10 @@ def render_employees():
 def render_individual_employees(_id):
     single_employee_array = []
 
-    if Database.find("employees", {'_id': ObjectId(_id)}).count() == 0:
-        single_employee_dict = Database.find("employees", {'_id': _id})
-    else:
+    if Database.is_valid(_id):
         single_employee_dict = Database.find("employees", {'_id': ObjectId(_id)})
+    else:
+        single_employee_dict = Database.find("employees", {'_id': _id})
 
     for Emp in single_employee_dict:
         single_employee_array.append(Emp)
