@@ -24,9 +24,15 @@ class Employee(object):
 
     @classmethod
     def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor):
-        Database.update_employee(collection='employees', query={'_id': ObjectId(emp_id)}, emp_name=name, district=district,
-                                 block=block, panchayat=panchayat, designation=designation, center_name=center_name,
-                                 dob=dob, doj=doj, dor=dor)
+        if Database.is_valid(emp_id):
+            Database.update_employee(collection='employees', query={'_id': ObjectId(emp_id)}, emp_name=name,
+                                     district=district, block=block, panchayat=panchayat, designation=designation,
+                                     center_name=center_name, dob=dob, doj=doj, dor=dor)
+
+        else:
+            Database.update_employee(collection='employees', query={'_id': emp_id}, emp_name=name, district=district,
+                                     block=block, panchayat=panchayat, designation=designation, center_name=center_name,
+                                     dob=dob, doj=doj, dor=dor)
 
     def json(self):
         return {
