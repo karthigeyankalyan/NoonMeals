@@ -100,15 +100,23 @@ def render_individual_employees(_id):
     single_employee_array = []
     single_employee_dict = Database.find("employees", {'_id': ObjectId(_id)})
 
-    for Emp in single_employee_dict:
-        single_employee_array.append(Emp)
+    if single_employee_dict.hasNext():
+        single_employee_dict2 = Database.find("employees", {'_id': _id})
 
-    single_employee_block = json.dumps(single_employee_array, default=json_util.default)
+        for Emp in single_employee_dict2:
+            single_employee_array.append(Emp)
 
-    if single_employee_block:
+        single_employee_block = json.dumps(single_employee_array, default=json_util.default)
+
         return single_employee_block
+
     else:
-        return None
+        for Emp in single_employee_dict:
+            single_employee_array.append(Emp)
+
+        single_employee_block = json.dumps(single_employee_array, default=json_util.default)
+
+        return single_employee_block
 
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
