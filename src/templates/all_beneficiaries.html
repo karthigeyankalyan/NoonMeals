@@ -81,7 +81,7 @@
             }
 
             validFilteredDates = validDates.filter(function (emp) {
-                return emp.Retired === "no";
+                return emp.Retired !== "";
             });
 
             var aggregatedData = d3.nest()
