@@ -105,7 +105,10 @@ def render_individual_employees(_id):
 
     single_employee_block = json.dumps(single_employee_array, default=json_util.default)
 
-    return single_employee_block
+    if single_employee_block:
+        return single_employee_block
+    else:
+        return None
 
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
