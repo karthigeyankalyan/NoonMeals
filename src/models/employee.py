@@ -4,8 +4,8 @@ from bson.objectid import ObjectId
 
 class Employee(object):
 
-    def __init__(self, name, district, block, panchayat, designation, center_name, DOB,
-                 joining_date, retirement_date, qualification, contact_number=None, _id=None):
+    def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None,
+                 joining_date=None, retirement_date=None, qualification=None, contact_number=None, _id=None):
         self.name = name
         self.district = district
         self.block = block
