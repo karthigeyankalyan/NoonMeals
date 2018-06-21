@@ -98,7 +98,7 @@ def render_employees():
 @app.route('/employee_table/<string:_id>')
 def render_individual_employees(_id):
     single_employee_array = []
-    single_employee_dict = Database.find("employees", {'_id': _id})
+    single_employee_dict = Database.find("employees", {'_id': ObjectId(_id)})
 
     for Emp in single_employee_dict:
         single_employee_array.append(Emp)
