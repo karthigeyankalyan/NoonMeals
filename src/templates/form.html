@@ -31,12 +31,11 @@
           <label for="district">Select District:</label>
           <select class="form-control" style="text-align: center;" id="district" name="district">
             {% set districts = ['Ariyalur', 'Karur', 'Nagapattinam', 'Perambalur',
-              'Pudukkottai', 'Thanjavur', 'Trichy','Tiruvarur', 'Dharmapuri',
-              'Coimbatore', 'Erode', 'Krishnagiri', 'Namakkal', 'The Nilgiris', 'Salem',
-              'Tiruppur', 'Dindigul', 'Kanyakumari', 'Madurai', 'Ramanathapuram', 'Sivagangai',
-              'Theni', 'Thoothukudi','Tirunelveli', 'Virudhunagar', 'Chennai', 'Cuddalore', 'Kancheepuram',
-              'Tiruvallur', 'Tiruvannamalai', 'Vellore','Viluppuram'] %}
-
+              'Pudukkottai', 'Thanjavur', 'Trichy','Thiruvarur', 'Dharmapuri',
+              'Coimbatore', 'Erode', 'Krishnagiri', 'Namakkal', 'Nilgiris', 'Salem',
+              'Tirupur', 'Dindigul', 'Kanyakumari', 'Madurai', 'Ramanathapuram', 'Sivagangai',
+              'Theni', 'Thoothukudi','Thirunelveli', 'Virudhunagar', 'Chennai', 'Cuddalore', 'Kancheepuram',
+              'Thiruvallur', 'Thiruvannamalai', 'Vellore','Villupuram'] %}
             {% for district in districts %}
                 <option value= "{{district}}">{{district}}</option>"
             {% endfor %}
