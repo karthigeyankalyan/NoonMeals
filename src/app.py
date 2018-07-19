@@ -12,17 +12,21 @@ from src.models.user import User
 app = Flask(__name__)  #main
 app.secret_key = "commercial"
 
+
 @app.before_first_request
 def initialize_database():
     Database.initialize()
+
 
 @app.route('/')
 def home():
     return render_template('home.html')
 
+
 @app.route('/beneficiary_plots')
 def beneficiary_plots():
     return render_template('circle1.html')
+
 
 @app.route('/raw_retirement_by_date/<string:date>')
 def retiring_this_month(date):
@@ -34,6 +38,7 @@ def retiring_this_month(date):
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
     return all_employees_retiring
+
 
 @app.route('/get_retirement', methods=['POST', 'GET'])
 def retirement_by_date():
@@ -47,6 +52,7 @@ def retirement_by_date():
         date = day+"_"+month+"_"+year
 
         return render_template('retired_on_date.html', date=date)
+
 
 @app.route('/raw_ttt/<string:month>/<string:year>')
 def ttw_this_month(month, year):
@@ -71,6 +77,7 @@ def ttw_this_month(month, year):
 
     return all_employees_retiring
 
+
 @app.route('/get_tentwentythirty', methods=['POST', 'GET'])
 def ttw_by_date():
     if request.method == 'GET':
@@ -81,9 +88,11 @@ def ttw_by_date():
 
         return render_template('ttt_on_date.html', month=month, year=year)
 
+
 @app.route('/login')
 def login_form():
     return render_template('login.html')
+
 
 @app.route('/table')
 def render_employees():
@@ -94,6 +103,7 @@ def render_employees():
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
         return all_employees_state
+
 
 @app.route('/employee_table/<string:_id>')
 def render_individual_employees(_id):
@@ -111,6 +121,7 @@ def render_individual_employees(_id):
 
     return single_employee_block
 
+
 @app.route('/block_table/<string:Block>')
 def render_block_employees(Block):
     block_employees_array = []
@@ -121,6 +132,7 @@ def render_block_employees(Block):
     all_employees_block = json.dumps(block_employees_array, default=json_util.default)
 
     return all_employees_block
+
 
 @app.route('/district_table/<string:District>')
 def render_district(District):
@@ -133,9 +145,11 @@ def render_district(District):
 
     return all_employees_state
 
+
 @app.route('/register')
 def register_form():
     return render_template('register.html')
+
 
 @app.route('/authorize/login', methods=['POST'])
 def login_user():
@@ -151,6 +165,7 @@ def login_user():
     else:
         return render_template('login_fail.html')
 
+
 @app.route('/authorize/register', methods=['POST'])
 def register_user():
     email = request.form['email']
@@ -163,12 +178,14 @@ def register_user():
 
     return render_template('profile.html', user=user)
 
+
 @app.route('/profile_landing')
 def profileLanding():
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
         return render_template('profile.html', user=user)
+
 
 @app.route('/district_beneficiaries/<string:District>')
 def all_district_employees(District):
@@ -178,18 +195,22 @@ def all_district_employees(District):
     else:
         return render_template('login_fail.html')
 
+
 @app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
 def block_employees(Block):
     return render_template('block_beneficiaries.html', block=Block)
 
+
 @app.route('/retirement_employees')
 def retired_employees():
     return render_template('retirement_employees.html')
 
+
 @app.route('/retired/block_employees/<string:Block>')
 def retired_block_employees(Block):
     return render_template('retired_block_employees.html', block=Block)
+
 
 @app.route('/new_employee/<string:_id>', methods=['POST', 'GET'])
 def my_entries(_id):
@@ -214,6 +235,7 @@ def my_entries(_id):
         employee.save_to_mongo()
 
         return render_template('beneficiary_added.html', employee=employee)
+
 
 @app.route('/update_employee/<string:_id>', methods=['POST', 'GET'])
 def update_entries(_id):

@@ -208,8 +208,8 @@
 //                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
 //                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
                                 var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-                                var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
+//                                var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8);
                                 for (var j = 0; j < selectedArray.length; j++) {
                                     var emp_id;
                                     if(selectedArray[j]["_id"]["$oid"]){
@@ -228,8 +228,8 @@
                                         '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
 //                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
-                                        '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
-                                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
+                                        '<td>'+selectedArray[j]["currentSalary"] +'</td>');
+//                                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                                         $("#empDetails").append(row);
                                 }
                             }
