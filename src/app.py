@@ -54,6 +54,57 @@ def retirement_by_date():
         return render_template('retired_on_date.html', date=date)
 
 
+@app.route('/raw_retirement_by_date_panmp/<string:date>/<string:District>')
+def retiring_this_month(date, District):
+    date_filter = date.replace("_", "/")
+    projects = Database.find("employees", {"$and": [{"Date of Retirement": date_filter},
+                                                    {"district": District}]})
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
+
+
+@app.route('/get_retirement_panmp/<string:District>', methods=['POST', 'GET'])
+def retirement_by_date(District):
+    if request.method == 'GET':
+        return render_template('get_date_panmp.html', district=District)
+    else:
+        day = request.form['day']
+        month = request.form['month']
+        year = request.form['year']
+
+        date = day+"_"+month+"_"+year
+
+        return render_template('retired_on_date_panmp.html', date=date, district=District)
+
+
+@app.route('/raw_ttt_panmp/<string:month>/<string:year>/<string:District>')
+def ttw_this_month_panmp(month, year, District):
+    year10 = int(year) - 10
+    year20 = int(year) - 20
+    year30 = int(year) - 30
+
+    year10 = str(year10)
+    year20 = str(year20)
+    year30 = str(year30)
+
+    projects = Database.find("employees", {"$and": [{"$or": [
+        {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
+        {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
+        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}
+    ]}, {"district": District}]})
+
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
+
+
 @app.route('/raw_ttt/<string:month>/<string:year>')
 def ttw_this_month(month, year):
     year10 = int(year) - 10
@@ -87,6 +138,17 @@ def ttw_by_date():
         year = request.form['year']
 
         return render_template('ttt_on_date.html', month=month, year=year)
+
+
+@app.route('/get_tentwentythirty_panmp/<string:District>', methods=['POST', 'GET'])
+def ttw_by_date_panmp(District):
+    if request.method == 'GET':
+        return render_template('get_month_date_panmp.html', district=District)
+    else:
+        month = request.form['month']
+        year = request.form['year']
+
+        return render_template('ttt_on_date_panmp.html', month=month, year=year, district=District)
 
 
 @app.route('/login')
@@ -160,7 +222,11 @@ def login_user():
     user = User.get_by_email(email)
 
     if valid:
-        return render_template('profile.html', user=user)
+        if user.designation == "Admin":
+            return render_template('profile_admin.html', user=user)
+
+        else:
+            return render_template('profile.html', user=user)
 
     else:
         return render_template('login_fail.html')
