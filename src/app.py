@@ -191,7 +191,11 @@ def profileLanding():
 def all_district_employees(District):
     email = session['email']
     if email is not None:
-        return render_template('all_beneficiaries.html', district=District)
+        user = User.get_by_email(email)
+        if user.designation == "PA NMP":
+            return render_template('all_beneficiaries_PANMP.html', district=District)
+        else:
+            return render_template('all_beneficiaries.html', district=District)
     else:
         return render_template('login_fail.html')
 

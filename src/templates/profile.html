@@ -146,9 +146,11 @@
 <h1> NMP Employees Database </h1>
 <br>
 <h2>Welcome, {{ user.username }}! </h2>
-<br>
-<h5>Choose District Below to see Employee Summary</h5>
-<br/>
+
+<div id="singleLink" style="flex-direction: column; justify-content: space-between; display: flex;">
+    <a href="/district_beneficiaries/{{ user.district }}">Block-Wise Employees</a>
+</div>
+
 
 <div style="flex-direction: row; align-items: center; justify-content: space-around; display: flex;">
   <div id="districtLinks" style="flex-direction: column; justify-content: space-between; display: flex;">
