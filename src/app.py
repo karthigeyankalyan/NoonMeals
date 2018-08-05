@@ -55,7 +55,7 @@ def retirement_by_date():
 
 
 @app.route('/raw_retirement_by_date_panmp/<string:date>/<string:District>')
-def retiring_this_month(date, District):
+def retiring_this_month_panmp(date, District):
     date_filter = date.replace("_", "/")
     projects = Database.find("employees", {"$and": [{"Date of Retirement": date_filter},
                                                     {"district": District}]})
@@ -68,7 +68,7 @@ def retiring_this_month(date, District):
 
 
 @app.route('/get_retirement_panmp/<string:District>', methods=['POST', 'GET'])
-def retirement_by_date(District):
+def retirement_by_date_panmp(District):
     if request.method == 'GET':
         return render_template('get_date_panmp.html', district=District)
     else:
