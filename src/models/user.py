@@ -4,11 +4,14 @@ from flask import session
 
 from src.common.database import Database
 
+
 class User(object):
-    def __init__(self, email, password, username, _id=None):
+    def __init__(self, email, password, username, district=None, designation=None, _id=None):
         self.email = email
         self.password = password
         self.username = username
+        self.district = district
+        self.designation = designation
         self._id = uuid.uuid4().hex if _id is None else _id
 
     @classmethod
@@ -60,7 +63,9 @@ class User(object):
             'email': self.email,
             '_id': self._id,
             'password': self.password,
-            'username': self.username
+            'username': self.username,
+            'district': self.district,
+            'designation': self.designation
         }
 
     def save_to_mongo(self):
