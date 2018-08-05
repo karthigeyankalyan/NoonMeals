@@ -58,7 +58,7 @@ def retirement_by_date():
 def retiring_this_month_panmp(date, District):
     date_filter = date.replace("_", "/")
     projects = Database.find("employees", {"$and": [{"Date of Retirement": date_filter},
-                                                    {"district": District}]})
+                                                    {"District": District}]})
     json_projects = []
     for project in projects:
         json_projects.append(project)
@@ -95,7 +95,7 @@ def ttw_this_month_panmp(month, year, District):
         {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
         {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
         {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}
-    ]}, {"district": District}]})
+    ]}, {"District": District}]})
 
     json_projects = []
     for project in projects:
