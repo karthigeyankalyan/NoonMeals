@@ -14,6 +14,14 @@ class Database(object):
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client['heroku_sc2xc25q']
 
+    # URI = "mongodb://127.0.0.1:27017"
+    # DATABASE = None
+    #
+    # @staticmethod
+    # def initialize():
+    #     client = pymongo.MongoClient(Database.URI)
+    #     Database.DATABASE = client['NMP']
+
     @staticmethod
     def insert(collection, data):
         Database.DATABASE[collection].insert(data)
