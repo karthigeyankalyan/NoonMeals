@@ -280,7 +280,7 @@ def block_employees(Block):
         return render_template('login_fail.html')
 
 
-@app.route('/delete_application/<string:_id>')
+@app.route('/delete_employee/<string:_id>')
 def delete_application(_id):
 
     Employee.deletefrom_mongo(_id=_id)
