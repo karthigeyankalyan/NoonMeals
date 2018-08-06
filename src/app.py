@@ -269,7 +269,23 @@ def all_district_employees(District):
 @app.route('/block_beneficiaries/<string:Block>')
 @app.route('/block_beneficiaries')
 def block_employees(Block):
-    return render_template('block_beneficiaries.html', block=Block)
+    email = session['email']
+    if email is not None:
+        user = User.get_by_email(email)
+        if user.designation == "PA NMP":
+            return render_template('block_beneficiaries_panmp.html', block=Block)
+        else:
+            return render_template('block_beneficiaries.html', block=Block)
+    else:
+        return render_template('login_fail.html')
+
+
+@app.route('/delete_application/<string:_id>')
+def delete_application(_id):
+
+    Employee.deletefrom_mongo(_id=_id)
+
+    return render_template('deleted.html')
 
 
 @app.route('/retirement_employees')

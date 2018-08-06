@@ -45,3 +45,7 @@ class Database(object):
                                                                          'Date of Birth': dob,
                                                                          'Date of Joining': doj,
                                                                          'Date of Retirement': dor}}, True)
+    @staticmethod
+    def delete_from_mongo(collection, query):
+        print(query)
+        Database.DATABASE[collection].remove(query)

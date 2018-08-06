@@ -2,6 +2,7 @@ import uuid
 from src.common.database import Database
 from bson.objectid import ObjectId
 
+
 class Employee(object):
 
     def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None,
@@ -21,6 +22,13 @@ class Employee(object):
 
     def save_to_mongo(self):
         Database.insert(collection='employees', data=self.json())
+
+    @classmethod
+    def deletefrom_mongo(cls, _id):
+        if Database.is_valid(_id):
+            Database.delete_from_mongo(collection='employees', query={'_id': ObjectId(_id)})
+        else:
+            Database.delete_from_mongo(collection='employees', query={'_id': _id})
 
     @classmethod
     def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor):
