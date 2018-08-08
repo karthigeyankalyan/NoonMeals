@@ -96,8 +96,8 @@
                     {
                             var bucketArray = [];
                             bucketArray = ["All"];
-                            var blocksArray = [];
-                            var validDates = json;
+                            var validDates = [];
+                            var myObj = json;
                             for (var i = 0; i < myObj.length; i++) {
                                 if (myObj[i]["Block"] === block) {
                                     validDates.push(myObj[i]);
