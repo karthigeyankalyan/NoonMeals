@@ -97,20 +97,15 @@
                             var bucketArray = [];
                             bucketArray = ["All"];
                             var blocksArray = [];
-                            var myObj = json;
+                            var validDates = json;
                             for (var i = 0; i < myObj.length; i++) {
                                 if (myObj[i]["Block"] === block) {
                                     blocksArray.push(myObj[i]);
                                 }
                             }
 
-//                            Checking if DOB is valid and if retirement date is after current date
-                            var validDates = blocksArray.filter(function (entry) {
-                                return (entry["Employee Name"] !== "Vacant")
-                            });
-
-                            //Looping through the valid dates JSON to assign age, years in service
-                            for (var j = 0; j < validDates.length; j++) {
+                        //Looping through the valid dates JSON to assign age, years in service
+                        for (var j = 0; j < validDates.length; j++) {
                                 //Declaring moment.js dates
                                 var birthDate = moment(new Date(validDates[j]["Date of Birth"])).format("DD/MM/YYYY");
                                 var joiningDate = moment(new Date(validDates[j]["Date of Joining"])).format("DD/MM/YYYY");
