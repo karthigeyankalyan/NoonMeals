@@ -94,128 +94,123 @@
             dataType: 'json',
             success: function (json) {
                     {
-                            var bucketArray = [];
-                            bucketArray = ["All"];
-                            var blocksArray = [];
-                            var myObj = json;
-                            for (var i = 0; i < myObj.length; i++) {
-                                if (myObj[i]["Block"] === block) {
-                                    blocksArray.push(myObj[i]);
-                                }
+                        console.log(json);
+                        var bucketArray = [];
+                        bucketArray = ["All"];
+                        var validDates = [];
+                        var myObj = json;
+                        for (var i = 0; i < myObj.length; i++) {
+                            if (myObj[i]["Block"] === block) {
+                                validDates.push(myObj[i]);
                             }
+                        }
 
-//                            Checking if DOB is valid and if retirement date is after current date
-                            var validDates = blocksArray.filter(function (entry) {
-                                return (entry["Employee Name"] !== "Vaccacacaaant")
-                            });
+                        //Looping through the valid dates JSON to assign age, years in service
+                        for (var j = 0; j < validDates.length; j++) {
+                            //Declaring moment.js dates
+                            var birthDate = moment(new Date(validDates[j]["Date of Birth"])).format("DD/MM/YYYY");
+                            var joiningDate = moment(new Date(validDates[j]["Date of Joining"])).format("DD/MM/YYYY");
+                            var retirementDate = moment(new Date(validDates[j]["Date of Retirement"])).format("DD/MM/YYYY");
+                            //Calculating the years in service, age
+                            var now = moment(inputDate); //todays date
 
-                            //Looping through the valid dates JSON to assign age, years in service
-                            for (var j = 0; j < validDates.length; j++) {
-                                //Declaring moment.js dates
-                                var birthDate = moment(new Date(validDates[j]["Date of Birth"])).format("DD/MM/YYYY");
-                                var joiningDate = moment(new Date(validDates[j]["Date of Joining"])).format("DD/MM/YYYY");
-                                var retirementDate = moment(new Date(validDates[j]["Date of Retirement"])).format("DD/MM/YYYY");
+                            validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                            validDates[j]["yisTotalDays"] = validDates[j]["yearsInService"] * 365;
+                            validDates[j]["yisInYears"] = Math.floor(validDates[j]["yisTotalDays"]/365);
+                            validDates[j]["yisInMonths"] = Math.floor((validDates[j]["yisTotalDays"]-(validDates[j]["yisInYears"]*365))/30);
+                            validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
+                            validDates[j]["totalDays"] = validDates[j]["Age Of Employee"] * 365;
+                            validDates[j]["inYears"] = Math.floor(validDates[j]["totalDays"]/365);
+                            validDates[j]["inMonths"] = Math.floor((validDates[j]["totalDays"]-(validDates[j]["inYears"] *365))/30);
+                            validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
+                            validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
+                        }
 
-                                //Calculating the years in service, age
-                                var now = moment(inputDate); //todays date
-
-                                validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
-                                validDates[j]["yisTotalDays"] = validDates[j]["yearsInService"] * 365;
-                                validDates[j]["yisInYears"] = Math.floor(validDates[j]["yisTotalDays"]/365);
-                                validDates[j]["yisInMonths"] = Math.floor((validDates[j]["yisTotalDays"]-(validDates[j]["yisInYears"]*365))/30);
-                                validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
-                                validDates[j]["totalDays"] = validDates[j]["Age Of Employee"] * 365;
-                                validDates[j]["inYears"] = Math.floor(validDates[j]["totalDays"]/365);
-                                validDates[j]["inMonths"] = Math.floor((validDates[j]["totalDays"]-(validDates[j]["inYears"] *365))/30);
-                                validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
-                                validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
+                        $.each(validDates, function (index) {
+                            var sbucket = validDates[index].Designation;
+                            if ($.inArray(sbucket, bucketArray) === -1) {
+                                bucketArray.push(sbucket);
                             }
+                        });
 
-                            $.each(validDates, function (index) {
-                                var sbucket = validDates[index].Designation;
-                                if ($.inArray(sbucket, bucketArray) === -1) {
-                                    bucketArray.push(sbucket);
-                                }
+                        var $bucketDropDown = $("#BucketSelect");
+
+                        $bucketDropDown.each(function() {
+                            if (this.selectedIndex === 0) {
+                                populatePage(validDates);
+                            }
+                        });
+
+                        $bucketDropDown.change(function () {
+                            var selectedbucket = this.value;
+                            //filter based on  selected year.
+                            if (selectedbucket==="All") {
+                                populatePage(validDates);
+                            }
+                            else {
+                                selectedBucketArray = jQuery.grep(validDates, function (employee) {
+                                    return employee.Designation === selectedbucket;
+                                });
+                                var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
+                                populatePage(sortedSelectedBucketArray);
+                                populateEmployeeCount(sortedSelectedBucketArray);
+                            }
+                        });
+
+                        function populateEmployeeCount() {
+                            var BlockCountsBel10 = d3.nest()
+                                .key(function (d) {
+                                    return d.District;
+                                })
+                                .key(function (d) {
+                                    return d.Block;
+                                })
+                                .rollup(function (v) {
+                                    return v.length;
+                                })
+                                .entries(Below10Now);
+                        }
+
+
+
+                        function sortByKey(array, key) {
+                            return array.sort(function(a, b) {
+                                var x = a[key]; var y = b[key];
+                                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
                             });
+                        }
 
-                            var $bucketDropDown = $("#BucketSelect");
+                        function populatePage(selectedArray) {
+                            $("#empDetails").find("tbody").empty();
+                            var budget = 0;
 
-                            $bucketDropDown.each(function() {
-                                if (this.selectedIndex === 0) {
-                                    populatePage(validDates);
-                                }
+                            $.each(selectedArray, function () {
+                                budget += this.currentSalary;
                             });
-
-                            $bucketDropDown.change(function () {
-                                var selectedbucket = this.value;
-                                //filter based on  selected year.
-                                if (selectedbucket==="All") {
-                                    populatePage(validDates);
+                            document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'
+                            });
+                            var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+                            $("#empList").append(tbl);
+                            var hr = "<tr>";
+                            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+//                               var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
+//                               var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
+//                               var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
+//                               var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
+                            var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
+//                               var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                            $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8);
+                            for (var j = 0; j < selectedArray.length; j++) {
+                                var emp_id;
+                                if(selectedArray[j]["_id"]["$oid"]){
+                                    emp_id = selectedArray[j]["_id"]["$oid"];
                                 }
                                 else {
-                                    selectedBucketArray = jQuery.grep(validDates, function (employee) {
-                                        return employee.Designation === selectedbucket;
-                                    });
-                                    var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
-                                    populatePage(sortedSelectedBucketArray);
-                                    populateEmployeeCount(sortedSelectedBucketArray);
-                                }
-                            });
-
-                            function populateEmployeeCount() {
-                                var BlockCountsBel10 = d3.nest()
-                                    .key(function (d) {
-                                        return d.District;
-                                    })
-                                    .key(function (d) {
-                                        return d.Block;
-                                    })
-                                    .rollup(function (v) {
-                                        return v.length;
-                                    })
-                                    .entries(Below10Now);
-                            }
-
-
-
-                            function sortByKey(array, key) {
-                                return array.sort(function(a, b) {
-                                    var x = a[key]; var y = b[key];
-                                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-                                });
-                            }
-
-                            function populatePage(selectedArray) {
-                                $("#empDetails").find("tbody").empty();
-                                var budget = 0;
-
-                                $.each(selectedArray, function () {
-                                    budget += this.currentSalary;
-                                });
-                                document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'
-                                });
-                                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
-                                $("#empList").append(tbl);
-                                var hr = "<tr>";
-                                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
-                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
-//                                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
-//                                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
-//                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-//                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
-                                var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-//                                var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8);
-                                for (var j = 0; j < selectedArray.length; j++) {
-                                    var emp_id;
-                                    if(selectedArray[j]["_id"]["$oid"]){
-                                        emp_id = selectedArray[j]["_id"]["$oid"];
-                                    }
-                                    else {
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
