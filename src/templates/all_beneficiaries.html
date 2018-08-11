@@ -113,7 +113,7 @@
             $("#myTable").append(hr + th1 + th2 + th3 + th4 + th5 + th6 );
             for (var j = 0; j < aggregatedData[0].values.length; j++) {
                 var blockLink = aggregatedData[0].values[j].key;
-                var url = '/block_beneficiaries/'+blockLink;
+                var url = '/block_beneficiaries/'+district+'/'+blockLink;
                 var row = $('<tr></tr>').html('<td><a href="' + url + '">' +
                     aggregatedData[0].values[j].key + '</a></td>'+
                     '<td>'+aggregatedData[0].key+'</td>'+

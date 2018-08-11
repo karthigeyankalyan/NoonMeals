@@ -43,7 +43,8 @@ class Database(object):
             return False
 
     @staticmethod
-    def update_employee(collection, query, emp_name, district, block, panchayat, designation, center_name, dob, doj, dor):
+    def update_employee(collection, query, emp_name, district, block, panchayat, designation, center_name, dob, doj,
+                        dor, joining_date_current_post, nhis_id, gender):
         return Database.DATABASE[collection].update_one(query, {'$set': {'Employee Name': emp_name,
                                                                          'District': district,
                                                                          'Block': block,
@@ -51,6 +52,10 @@ class Database(object):
                                                                          'Designation': designation,
                                                                          'Name of the Center': center_name,
                                                                          'Date of Birth': dob,
+                                                                         'joining_date_current_post':
+                                                                             joining_date_current_post,
+                                                                         'nhis_id': nhis_id,
+                                                                         'gender': gender,
                                                                          'Date of Joining': doj,
                                                                          'Date of Retirement': dor}}, True)
     @staticmethod

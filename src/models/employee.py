@@ -6,7 +6,8 @@ from bson.objectid import ObjectId
 class Employee(object):
 
     def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None,
-                 joining_date=None, retirement_date=None, qualification=None, contact_number=None, _id=None):
+                 joining_date=None, retirement_date=None, qualification=None, contact_number=None, _id=None,
+                 joining_date_current_post=None, nhis_id=None, gender=None):
         self.name = name
         self.district = district
         self.block = block
@@ -15,6 +16,9 @@ class Employee(object):
         self.center_name = center_name
         self.qualification = qualification
         self.DOB = DOB
+        self.joining_date_current_post = joining_date_current_post
+        self.nhis_id = nhis_id
+        self.gender = gender
         self.joining_date = joining_date
         self.retirement_date = retirement_date
         self.contact_number = contact_number
@@ -31,16 +35,20 @@ class Employee(object):
             Database.delete_from_mongo(collection='employees', query={'_id': _id})
 
     @classmethod
-    def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor):
+    def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor,
+                        joining_date_current_post, nhis_id, gender):
         if Database.is_valid(emp_id):
             Database.update_employee(collection='employees', query={'_id': ObjectId(emp_id)}, emp_name=name,
                                      district=district, block=block, panchayat=panchayat, designation=designation,
-                                     center_name=center_name, dob=dob, doj=doj, dor=dor)
+                                     center_name=center_name, dob=dob, doj=doj, dor=dor,
+                                     joining_date_current_post=joining_date_current_post, nhis_id=nhis_id,
+                                     gender=gender)
 
         else:
             Database.update_employee(collection='employees', query={'_id': emp_id}, emp_name=name, district=district,
                                      block=block, panchayat=panchayat, designation=designation, center_name=center_name,
-                                     dob=dob, doj=doj, dor=dor)
+                                     dob=dob, doj=doj, dor=dor, joining_date_current_post=joining_date_current_post,
+                                     nhis_id=nhis_id, gender=gender)
 
     def json(self):
         return {
@@ -55,6 +63,9 @@ class Employee(object):
             'Date of Birth': self.DOB,
             'Date of Joining': self.joining_date,
             'Date of Retirement': self.retirement_date,
+            'joining_date_current_post': self.joining_date_current_post,
+            'nhis_id': self.nhis_id,
+            'gender': self.gender,
             '_id': self._id,
         }
 

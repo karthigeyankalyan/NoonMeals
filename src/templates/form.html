@@ -100,10 +100,26 @@
                 <option value= "{{ch}}">{{ch}}</option>"
             {% endfor %}
           </select>
+
+        <label for="retirementDate">This Beneficiary shall retire by?</label>
+        <input type="date" value="" id="retirementDate" name="retirementDate">
     </div>
 
-    <label for="retirementDate">This Beneficiary shall retire by?</label>
-    <input type="date" value="" id="retirementDate" name="retirementDate">
+    <div class="form-group">
+        <label for="gender">What is the gender of Employee?</label>
+          <select class="form-control" id="gender" name="designation">
+            {% set designation = ['Male', 'Female', 'Third Gender'] %}
+            {% for ch in designation %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+
+        <label for="joiningDateCurrentPost">Current Post Joining Date</label>
+        <input type="date" value="" id="joiningDateCurrentPost" name="joiningDateCurrentPost">
+
+        <label for="nhis">NHIS ID</label>
+        <input type="text" value="" id="nhis" name="nhis">
+    </div>
 
     <button type="submit" class="btn btn-success">Save Employee Details</button>
 

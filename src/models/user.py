@@ -6,12 +6,13 @@ from src.common.database import Database
 
 
 class User(object):
-    def __init__(self, email, password, username, district=None, designation=None, _id=None):
+    def __init__(self, email, password, username, district=None, designation=None, _id=None, block=None):
         self.email = email
         self.password = password
         self.username = username
         self.district = district
         self.designation = designation
+        self.block = block
         self._id = uuid.uuid4().hex if _id is None else _id
 
     @classmethod
@@ -65,8 +66,10 @@ class User(object):
             'password': self.password,
             'username': self.username,
             'district': self.district,
-            'designation': self.designation
+            'designation': self.designation,
+            'block': self.block
         }
 
     def save_to_mongo(self):
         Database.insert("users", self.json())
+

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block content %}
+
+<button onclick="downloadPDF()">Download Report</button>
+
+<div id="empList">
+</div>
+
+<script>
+    function downloadPDF() {
+    var date = "{{date}}";
+    var source = "/raw_retirement_by_date_block/"+date+"/"+"{{district}}"+"/"+"{{block}}";
+
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                for(var i = 0; i< json.length; i++){
+                    var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
+                }
+
+                var empCount = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .key(function (d) {
+                        return d.Designation;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                var doc = new jsPDF();
+
+                var columns = ["District", "Cook", "Cook Assistant", "Organiser"];
+                var rows = [];
+                doc.text(25,25, 'District Wise Summary of Employees retiring during '+date);
+                for (var a = 0; a < empCount.length; a++) {
+                    if(empCount[a]['values'].length === 3) {
+                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
+                    }
+
+                    else if(empCount[a]['values'].length === 2) {
+                        if(empCount[a]['values'][0]['key'] === 'Cook' && (empCount[a]['values'][1]['key'] ===
+                            'Cook Assistant' || empCount[a]['values'][1]['key'] === 'Cooking Assistant')) {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]], [[0]]]);
+                        }
+
+                        else if((empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][1]['key'] === 'Cooking Assistant') && empCount[a]['values'][1]['key']
+                            === 'Organiser') {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === 'Cook' && empCount[a]['values'][1]['key'] === 'Organiser') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                    }
+
+                    else if(empCount[a]['values'].length === 1) {
+                        if(empCount[a]['values'][0]['key'] === 'Cook') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[0]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][0]['key'] === 'Cooking Assistant') {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[0]]]);
+                        }
+                        else if(empCount[a]['values'][0]['key'] === 'Organiser') {
+                            rows.push([[[empCount[a]['key']]], [[0]],
+                                [[0]], [[empCount[a]['values'][0]['values']]]]);
+                        }
+                    }
+                }
+
+                doc.autoTable(columns, rows, {startY: 35});
+
+                doc.save('test.pdf')
+
+            },
+            error: function (e) {
+                alert("error");
+            }
+        });
+
+    }
+
+        var date = "{{date}}";
+        var source = "/raw_retirement_by_date_panmp/"+date+"/"+"{{district}}";
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+
+                var empCount = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .key(function (d) {
+                        return d.yearsInService;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+                $("#empList").append(tbl);
+                var hr = "<tr>";
+                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
+                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6);
+                for (var j = 0; j < json.length; j++) {
+                    var row = $('<tr></tr>').html('<td>' +
+                        json[j]["Employee Name"] + '</td>'+
+                        '<td>'+json[j]["Name of the Center"]+'</td>'+
+                        '<td>'+json[j]["Designation"] +'</td>'+
+                        '<td>'+json[j]["District"] +'</td>'+
+                        '<td>'+json[j]["Date of Retirement"] +'</td>');
+                    $("#empDetails").append(row);
+                }
+            },
+            error: function (e) {
+                alert("error");
+            }
+        });
+
+</script>
+
+{% endblock %}

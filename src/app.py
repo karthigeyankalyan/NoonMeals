@@ -67,6 +67,20 @@ def retiring_this_month_panmp(date, District):
     return all_employees_retiring
 
 
+@app.route('/raw_retirement_by_date_block/<string:date>/<string:District>/<string:Block>')
+def retiring_this_month_block(date, District, Block):
+    date_filter = date.replace("_", "/")
+    projects = Database.find("employees", {"$and": [{"Date of Retirement": date_filter},
+                                                    {"District": District},
+                                                    {"Block": Block}]})
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
+
+
 @app.route('/get_retirement_panmp/<string:District>', methods=['POST', 'GET'])
 def retirement_by_date_panmp(District):
     if request.method == 'GET':
@@ -79,6 +93,45 @@ def retirement_by_date_panmp(District):
         date = day+"_"+month+"_"+year
 
         return render_template('retired_on_date_panmp.html', date=date, district=District)
+
+
+@app.route('/get_retirement_block/<string:District>/<string:Block>', methods=['POST', 'GET'])
+def retirement_by_date_block(District, Block):
+    if request.method == 'GET':
+        return render_template('get_date_block.html', district=District, block=Block)
+    else:
+        day = request.form['day']
+        month = request.form['month']
+        year = request.form['year']
+
+        date = day+"_"+month+"_"+year
+
+        return render_template('retired_on_date_block.html', date=date, district=District, block=Block)
+
+
+@app.route('/raw_ttt_block/<string:month>/<string:year>/<string:District>/<string:Block>')
+def ttw_this_month_block(month, year, District, Block):
+    year10 = int(year) - 10
+    year20 = int(year) - 20
+    year30 = int(year) - 30
+
+    year10 = str(year10)
+    year20 = str(year20)
+    year30 = str(year30)
+
+    projects = Database.find("employees", {"$and": [{"$or": [
+        {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
+        {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
+        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}]},
+        {"District": District},
+        {"Block": Block}]})
+
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
 
 
 @app.route('/raw_ttt_panmp/<string:month>/<string:year>/<string:District>')
@@ -149,6 +202,17 @@ def ttw_by_date_panmp(District):
         year = request.form['year']
 
         return render_template('ttt_on_date_panmp.html', month=month, year=year, district=District)
+
+
+@app.route('/get_tentwentythirty_block/<string:District>/<string:Block>', methods=['POST', 'GET'])
+def ttw_by_date_block(District, Block):
+    if request.method == 'GET':
+        return render_template('get_month_date_block.html', district=District, block=Block)
+    else:
+        month = request.form['month']
+        year = request.form['year']
+
+        return render_template('ttt_on_date_block.html', month=month, year=year, district=District, block=Block)
 
 
 @app.route('/login')
@@ -266,16 +330,16 @@ def all_district_employees(District):
         return render_template('login_fail.html')
 
 
-@app.route('/block_beneficiaries/<string:Block>')
+@app.route('/block_beneficiaries/<string:District>/<string:Block>')
 @app.route('/block_beneficiaries')
-def block_employees(Block):
+def block_employees(District, Block):
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
         if user.designation == "PA NMP":
-            return render_template('block_beneficiaries_panmp.html', block=Block)
+            return render_template('block_beneficiaries_panmp.html', block=Block, district=District)
         else:
-            return render_template('block_beneficiaries.html', block=Block)
+            return render_template('block_beneficiaries.html', block=Block, district=District)
     else:
         return render_template('login_fail.html')
 
@@ -312,11 +376,15 @@ def my_entries(_id):
         qualification = request.form['qualification']
         joiningDate = request.form['joiningDate']
         designation = request.form['designation']
+        joiningDateCurrentPost = request.form['joiningDateCurrentPost']
+        gender = request.form['gender']
+        nhis = request.form['nhis']
         retirementDate = request.form['retirementDate']
 
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
-                            retirement_date=retirementDate)
+                            retirement_date=retirementDate, nhis_id=nhis,
+                            joining_date_current_post=joiningDateCurrentPost, gender=gender)
 
         employee.save_to_mongo()
 
@@ -338,14 +406,19 @@ def update_entries(_id):
         joiningDate = request.form['joiningDate']
         designation = request.form['designation']
         retirementDate = request.form['retirementDate']
+        joiningDateCurrentPost = request.form['joiningDateCurrentPost']
+        gender = request.form['gender']
+        nhis = request.form['nhis']
 
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
-                            retirement_date=retirementDate)
+                            retirement_date=retirementDate, joining_date_current_post=joiningDateCurrentPost,
+                            nhis_id=nhis, gender=gender)
 
         employee.update_employee(name=name, district=district, block=block, panchayat=panchayat,
                                  designation=designation, center_name=center, dob=DOB, doj=joiningDate,
-                                 dor=retirementDate, emp_id=_id)
+                                 dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
+                                 gender=gender, nhis_id=nhis)
 
         return render_template('beneficiary_added.html', employee=employee)
 
