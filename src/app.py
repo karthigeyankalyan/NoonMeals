@@ -399,11 +399,12 @@ def my_entries(_id):
         joiningDateCurrentPost = request.form['joiningDateCurrentPost']
         gender = request.form['gender']
         nhis = request.form['nhis']
+        gpf = request.form['gpf']
         retirementDate = request.form['retirementDate']
 
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
-                            retirement_date=retirementDate, nhis_id=nhis,
+                            retirement_date=retirementDate, nhis_id=nhis, gpf=gpf,
                             joining_date_current_post=joiningDateCurrentPost, gender=gender)
 
         employee.save_to_mongo()
@@ -429,16 +430,17 @@ def update_entries(_id):
         joiningDateCurrentPost = request.form['joiningDateCurrentPost']
         gender = request.form['gender']
         nhis = request.form['nhis']
+        gpf = request.form['gpf']
 
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
                             retirement_date=retirementDate, joining_date_current_post=joiningDateCurrentPost,
-                            nhis_id=nhis, gender=gender)
+                            nhis_id=nhis, gender=gender, gpf=gpf)
 
         employee.update_employee(name=name, district=district, block=block, panchayat=panchayat,
                                  designation=designation, center_name=center, dob=DOB, doj=joiningDate,
                                  dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
-                                 gender=gender, nhis_id=nhis)
+                                 gender=gender, nhis_id=nhis, gpf=gpf)
 
         return render_template('beneficiary_added.html', employee=employee)
 
