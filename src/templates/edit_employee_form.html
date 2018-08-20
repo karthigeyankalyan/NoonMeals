@@ -97,12 +97,8 @@
 
     <div class="form-group">
         <label for="qualification">What is the qualification of Employee?</label>
-          <select class="form-control" id="qualification" name="qualification">
-            {% set qualification = ['None', 'Primary (1-5)', 'Secondary (6-10)', 'Higher-Secondary (11-12)', 'Under-Graduation', 'Post-Graduation'] %}
-            {% for ch in qualification %}
-                <option value= "{{ch}}">{{ch}}</option>"
-            {% endfor %}
-          </select>
+        <input type="text" id="qualification" name="qualification">
+
         <label for="retirementDate">This Employee shall retire by?</label>
         <input type="date" value="" id="retirementDate" name="retirementDate">
     </div>
@@ -149,11 +145,13 @@
                 document.getElementById("designation").value = json[0]["Designation"];
                 document.getElementById("qualification").value = json[0]["Educational Qualification"];
                 document.getElementById("center").value = json[0]["Name of the Center"];
-
+                document.getElementById("nhis").value = json[0]["nhis_id"];
+                document.getElementById("gpf").value = json[0]["gpf"];
+                document.getElementById("center").value = json[0]["Name of the Center"];
                 document.getElementById("DOB").value = moment(json[0]["Date of Birth"]).format("YYYY-MM-DD");
                 document.getElementById("retirementDate").value = moment(json[0]["Date of Retirement"]).format("YYYY-MM-DD");
                 document.getElementById("joiningDate").value = moment(json[0]["Date of Joining"]).format("YYYY-MM-DD");
-
+                document.getElementById("joiningDateCurrentPost").value = moment(json[0]["joining_date_current_post"]).format("YYYY-MM-DD");
         },
             error: function (e) {
                 alert("error");

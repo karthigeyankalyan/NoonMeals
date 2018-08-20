@@ -94,12 +94,7 @@
 
     <div class="form-group">
         <label for="qualification">What is the qualification of Employee?</label>
-          <select class="form-control" id="qualification" name="qualification">
-            {% set qualification = ['None', 'Primary (1-5)', 'Secondary (6-10)', 'Higher-Secondary (11-12)', 'Under-Graduation', 'Post-Graduation'] %}
-            {% for ch in qualification %}
-                <option value= "{{ch}}">{{ch}}</option>"
-            {% endfor %}
-          </select>
+        <input type="text" id="qualification" name="qualification">
 
         <label for="retirementDate">This Beneficiary shall retire by?</label>
         <input type="date" value="" id="retirementDate" name="retirementDate">
