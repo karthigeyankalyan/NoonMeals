@@ -334,7 +334,10 @@ def profileLanding():
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
-        return render_template('profile.html', user=user)
+        if user.designation == "Admin":
+            return render_template('profile_admin.html', user=user)
+        else:
+            return render_template('profile.html', user=user)
 
 
 @app.route('/district_beneficiaries/<string:District>')
@@ -343,6 +346,8 @@ def all_district_employees(District):
     if email is not None:
         user = User.get_by_email(email)
         if user.designation == "PA NMP":
+            return render_template('all_beneficiaries_PANMP.html', district=District)
+        elif user.designation == "Admin":
             return render_template('all_beneficiaries_PANMP.html', district=District)
         else:
             return render_template('all_beneficiaries.html', district=District)
