@@ -191,7 +191,7 @@
                 var th6 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
                 $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
                 for (var j = 0; j < json.length; j++) {
-                    var row = $('<tr></tr>').html('<td>' + (j+1) + '</td>'+
+                    var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                         '<td>'+ json[j]["Employee Name"] +'</td>'+
                         '<td>'+json[j]["Name of the Center"]+'</td>'+
                         '<td>'+json[j]["District"]+'</td>'+

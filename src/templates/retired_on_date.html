@@ -3,17 +3,6 @@
 
 <button onclick="downloadPDF()">Download Report</button>
 
-<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center">
-    <label for="sortBy">Sort By</label>
-    <select id="sortBy">
-        <option>Center</option>
-        <option>District</option>
-        <option>Designation</option>
-        <option>Date of Retirement</option>
-    </select>
-    <button onclick="sortTable()">Sort</button>
-</div>
-
 <div id="empList">
 </div>
 
@@ -132,16 +121,14 @@
                 var th2 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
                 var th3 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
                 var th4 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                var th5 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
                 var th6 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
-                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
+                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th6);
                 for (var j = 0; j < json.length; j++) {
-                    var row = $('<tr></tr>').html('<td>' + (j+1) + '</td>'+
+                    var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                         '<td>'+json[j]["Employee Name"] + '</td>'+
                         '<td>'+json[j]["Name of the Center"]+'</td>'+
                         '<td>'+json[j]["District"] +'</td>'+
                         '<td>'+json[j]["Designation"] +'</td>'+
-                        '<td>'+json[j]["District"] +'</td>'+
                         '<td>'+json[j]["Date of Retirement"] +'</td>');
                     $("#empDetails").append(row);
                 }

@@ -197,19 +197,19 @@
                             var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                             $("#empList").append(tbl);
                             var hr = "<tr>";
-                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
-                            var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                            var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                            var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                            var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                            var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
-                            var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+                            var th10 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
+                            var th1 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                            var th2 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th3 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                            var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                            var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
 //                               var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
 //                               var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
 //                               var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
 //                               var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
-                            var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-                            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                            var th8 = "<th onclick='sortTable(7)' style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
+                            var th9 = "<th onclick='sortTable(8)' style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
                             $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
                             for (var j = 0; j < selectedArray.length; j++) {
                                 var emp_id;
@@ -221,7 +221,7 @@
                                     }
 
                                         var url = '/update_employee/'+emp_id;
-                                        var row = $('<tr></tr>').html('<td>' + j + '</td>'+
+                                        var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
@@ -311,6 +311,61 @@
             }
         });
     }
+
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("empDetails");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir === "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir === "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount === 0 && dir === "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
 
     function myFunction() {
         var input, filter, table, tr, td, i;
