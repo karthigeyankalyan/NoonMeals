@@ -197,6 +197,7 @@
                                 var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                                 $("#empList").append(tbl);
                                 var hr = "<tr>";
+                                var th10 = "<th style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
                                 var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
                                 var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
                                 var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
@@ -208,8 +209,8 @@
 //                                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
 //                                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
                                 var th8 = "<th style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-//                                var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6 + th7 + th8);
+                                var th9 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
                                 for (var j = 0; j < selectedArray.length; j++) {
                                     var emp_id;
                                     if(selectedArray[j]["_id"]["$oid"]){
@@ -221,8 +222,8 @@
 
                                         var url = '/update_employee/'+emp_id;
                                         var delete_url = '/delete_employee/'+emp_id;
-                                        var row = $('<tr></tr>').html('<td>' +
-                                       selectedArray[j]["Employee Name"] + '</td>'+
+                                        var row = $('<tr></tr>').html('<td>' + j + '</td>'+
+                                        '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+

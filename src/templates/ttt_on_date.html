@@ -3,6 +3,17 @@
 
 <button onclick="downloadPDF()">Download Report</button>
 
+<div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center">
+    <label for="sortBy">Sort By</label>
+    <select id="sortBy">
+        <option>Center</option>
+        <option>District</option>
+        <option>Designation</option>
+        <option>Years In Service</option>
+    </select>
+    <button onclick="sortTable()">Sort</button>
+</div>
+
 <div id="empList">
 </div>
 
@@ -184,16 +195,19 @@
                 var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                 $("#empList").append(tbl);
                 var hr = "<tr>";
+                var th10 = "<th style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
                 var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
                 var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
                 var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
                 var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6);
+                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
                 for (var j = 0; j < json.length; j++) {
-                    var row = $('<tr></tr>').html('<td>' +
-                        json[j]["Employee Name"] + '</td>'+
+                    var row = $('<tr></tr>').html('<td>' + j + '</td>'+
+                        '<td>'+ json[j]["Employee Name"] +'</td>'+
                         '<td>'+json[j]["Name of the Center"]+'</td>'+
+                        '<td>'+json[j]["District"]+'</td>'+
                         '<td>'+json[j]["Designation"] +'</td>'+
                         '<td>'+json[j]["Date of Joining"] +'</td>'+
                         '<td>'+json[j]["yearsInService"] +'</td>');
@@ -204,6 +218,57 @@
                 alert("error");
             }
         });
+
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("empDetails");
+  switching = true;
+
+  var val = document.getElementById("sortBy").value;
+  var cid;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      if (val === "Center"){
+          cid = 1;
+      }
+      else if (val === "District"){
+          cid = 2;
+      }
+      else if (val === "Designation"){
+          cid = 3;
+      }
+      else {
+          cid = 5;
+      }
+      x = rows[i].getElementsByTagName("TD")[cid];
+      y = rows[i + 1].getElementsByTagName("TD")[cid];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
 </script>
 
 {% endblock %}
