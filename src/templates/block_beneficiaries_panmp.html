@@ -210,7 +210,8 @@
 //                               var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
                             var th8 = "<th onclick='sortTable(7)' style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
                             var th9 = "<th onclick='sortTable(8)' style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                            $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
+                            var th11 = "<th onclick='sortTable(9)' style='text-align:center;vertical-align:middle'>" + "Delete Employees" + "</th></tr>";
+                            $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9 + th11);
                             for (var j = 0; j < selectedArray.length; j++) {
                                 var emp_id;
                                 if(selectedArray[j]["_id"]["$oid"]){
@@ -221,6 +222,7 @@
                                     }
 
                                         var url = '/update_employee/'+emp_id;
+                                        var url1 = '/delete_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
@@ -230,7 +232,8 @@
                                         '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
 //                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
                                         '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
-                                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
+                                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>'+
+                                        '<td><button class="btn btn-default"><a href="' + url1 + '">'+ 'Delete Employee' +'</a></button></td>');
                                         $("#empDetails").append(row);
                                 }
                             }

@@ -451,5 +451,5 @@ def update_entries(_id):
 
 
 if __name__=='__main__':
-    app.run(port=4055, debug=True)
+    app.run(port=4095, debug=True)
 
