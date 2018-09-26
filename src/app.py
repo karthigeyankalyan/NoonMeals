@@ -266,9 +266,11 @@ def render_employees_sample():
 
         df = pd.DataFrame(json_projects)
 
+        df = df.groupby(['District']).size()
+
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return df
+        return render_template('abcdef.html', dfLen=df)
 
 
 @app.route('/employee_table/<string:_id>')
