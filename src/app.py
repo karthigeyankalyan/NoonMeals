@@ -268,7 +268,7 @@ def render_employees_sample():
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return df
+        return render_template('abcdef.html', dfLen=len(df.index))
 
 
 @app.route('/employee_table/<string:_id>')
