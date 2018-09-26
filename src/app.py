@@ -253,7 +253,10 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"gpf": ""})
+        projects = Database.find("employees", {"$or": [{"gpf": ""},
+                                                   {"gpf": "undefined"},
+                                                   {"gpf": None}]})
+
         json_projects = []
         for project in projects:
             json_projects.append(project)
