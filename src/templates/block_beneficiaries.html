@@ -197,20 +197,19 @@
                             var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                             $("#empList").append(tbl);
                             var hr = "<tr>";
-                            var th10 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
-                            var th1 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                            var th2 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                            var th3 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th1 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
+                            var th2 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                            var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
                             var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
                             var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
                             var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
-//                               var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Years" + "</th>";
-//                               var th5 = "<th style='text-align:center;vertical-align:middle'>" + "Age in Months" + "</th>";
-//                               var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-//                               var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Service Months" + "</th>";
-                            var th8 = "<th onclick='sortTable(7)' style='text-align:center;vertical-align:middle'>" + "Current Salary" + "</th>";
-                            var th9 = "<th onclick='sortTable(8)' style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th>;
-                            $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th5 + th6 + th7 + th8 + th9);
+                            var th8 = "<th style='text-align:center;vertical-align:middle'>" + "DOJ Current" + "</th>";
+                            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "NHIS #" + "</th>";
+                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "GPF #" + "</th>";
+                            var th11 = "<th style='text-align:center;vertical-align:middle'>" + "Gender" + "</th>";
+                            var th12 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th>;
+                            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10 + th11 + th12);
                             for (var j = 0; j < selectedArray.length; j++) {
                                 var emp_id;
                                 if(selectedArray[j]["_id"]["$oid"]){
@@ -228,8 +227,10 @@
                                         '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
                                         '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
-//                                        '<td>'+selectedArray[j]["yisInMonths"] +'</td>'+
-                                        '<td>'+selectedArray[j]["currentSalary"] +'</td>'+
+                                        '<td>'+selectedArray[j]["joining_date_current_post"] +'</td>'+
+                                        '<td>'+selectedArray[j]["gpf"] +'</td>'+
+                                        '<td>'+selectedArray[j]["nhis_id"] +'</td>'+
+                                        '<td>'+selectedArray[j]["gender"] +'</td>'+
                                         '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
                                         $("#empDetails").append(row);
                                 }
