@@ -251,6 +251,17 @@ def render_employees():
         return all_employees_state
 
 
+@app.route('/sample_table_jaykumar')
+def render_employees():
+        projects = Database.find("employees", {"gpf": ""})
+        json_projects = []
+        for project in projects:
+            json_projects.append(project)
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
+
+        return all_employees_state
+
+
 @app.route('/employee_table/<string:_id>')
 def render_individual_employees(_id):
     single_employee_array = []
