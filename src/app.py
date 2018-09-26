@@ -268,7 +268,7 @@ def render_employees_sample():
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return len(df.index)
+        return df
 
 
 @app.route('/employee_table/<string:_id>')
