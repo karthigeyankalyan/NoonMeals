@@ -252,7 +252,7 @@ def render_employees():
 
 
 @app.route('/sample_table_jaykumar')
-def render_employees():
+def render_employees_sample():
         projects = Database.find("employees", {"gpf": ""})
         json_projects = []
         for project in projects:
