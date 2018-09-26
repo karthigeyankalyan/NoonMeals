@@ -117,17 +117,20 @@
                 $("#empList").append(tbl);
                 var hr = "<tr>";
                 var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
                 var th5 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
-                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
-                $("#empDetails").append(hr + th1 + th2 + th3 + th5 + th6);
+                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
+                $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7);
                 for (var j = 0; j < json.length; j++) {
-                    var row = $('<tr></tr>').html('<td>' +
-                        json[j]["Employee Name"] + '</td>'+
+                    var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
+                        '<td>' + json[j]["Employee Name"] + '</td>'+
                         '<td>'+json[j]["Name of the Center"]+'</td>'+
                         '<td>'+json[j]["Designation"] +'</td>'+
                         '<td>'+json[j]["District"] +'</td>'+
+                        '<td>'+json[j]["Block"] +'</td>'+
                         '<td>'+json[j]["Date of Retirement"] +'</td>');
                     $("#empDetails").append(row);
                 }
