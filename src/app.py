@@ -1,3 +1,5 @@
+import pandas as pd
+
 from src.common.database import Database
 from src.models.employee import Employee
 from flask import Flask, render_template, request, session, make_response
@@ -254,15 +256,19 @@ def render_employees():
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
         projects = Database.find("employees", {"$or": [{"gpf": ""},
-                                                   {"gpf": "undefined"},
-                                                   {"gpf": None}]})
+                                                       {"gpf": "undefined"},
+                                                       {"gpf": None}]})
 
         json_projects = []
+
         for project in projects:
             json_projects.append(project)
+
+        df = pd.DataFrame(json_projects)
+
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return all_employees_state
+        return len(df.index)
 
 
 @app.route('/employee_table/<string:_id>')
