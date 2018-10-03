@@ -255,9 +255,7 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$or": [{"gpf": ""},
-                                                       {"gpf": "undefined"},
-                                                       {"gpf": None}]})
+        projects = Database.find("employees", {})
 
         json_projects = []
 
@@ -266,7 +264,7 @@ def render_employees_sample():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District']).size()
+        df = df.groupby(['District', 'Designation']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
