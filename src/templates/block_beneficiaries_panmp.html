@@ -35,7 +35,8 @@
         <option value="All">All</option>
         <option value="Cook">Cook</option>
         <option value="Organiser">Organiser</option>
-        <option value="Assistant">Cooking Assistant</option>
+        <option value="Cooking Assistant">Cooking Assistant</option>
+        <option value="Cook Assistant">Cook Assistant</option>
     </select>
 
     <label for="DesignationSelect" style="margin-left: 6%">Select Bucket</label>
@@ -324,7 +325,7 @@
         tr = table.getElementsByTagName("tr");
         console.log(tr.length);
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
+            td = tr[i].getElementsByTagName("td")[1];
             if (td) {
                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
