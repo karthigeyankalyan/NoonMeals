@@ -255,8 +255,8 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$or": [{"nhis_id": ""},
-                                                       {"nhis_id": None}]})
+        projects = Database.find("employees", {"$or": [{"nhis_id": "null"},
+                                                       {"nhis_id": "undefined"}]})
 
         json_projects = []
 
@@ -269,7 +269,7 @@ def render_employees_sample():
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
-        return all_employees_state
+        return df
 
         # return render_template('abcdef.html', dfLen=df)
 
