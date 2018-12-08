@@ -18,17 +18,16 @@ body, html {
   color: #777;
 }
 
-.bgimg-1, .bgimg-2, .bgimg-3 {
-  position: relative;
-  opacity: 0.75;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-}
 .bgimg-1 {
-  background-image: url("nmp.png");
-  height: 100%;
+    background-image: url("http://mdm.puducherry.gov.in/css/png.png");
+    left: 10%;
+    height: 100%;
+    opacity: 0.95;
+    background-repeat: no-repeat;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
 }
 
 .caption {
@@ -40,11 +39,16 @@ body, html {
   color: #000;
 }
 
+.button {
+    left: 40%;
+    position: relative;
+}
 
 button.btn{
     background-color: transparent;
-    border: 1px solid #FFFFFF;
-    color: white;
+    border: 2px solid black;
+    color: black;
+    font-weight: 900;
     width: 25em;
     height: 3em;
     text-align: center;
@@ -53,31 +57,17 @@ button.btn{
     font-size: 12px;
 }
 
-h3 {
+.caption {
   position: absolute;
   letter-spacing: 5px;
   text-transform: uppercase;
   font: 20px "Lato", sans-serif;
-  color: #ffffff;
+  color: black;
   text-align: center;
-  display: table-cell;
-  top: 29%;
-  width: 100%;
+  width: 80%;
   height: 100%;
-  display: table;
-  text-align: center;
+    left: 5%
   }
-
-h5 {
-  position: absolute;
-  top: 23%;
-  left: 37%;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font: 14px "Lato", sans-serif;
-  color: #ffffff;
-  text-align: center;
-}
 
 a { color: inherit; }
 
@@ -92,15 +82,17 @@ a:hover
 
 <body>
 <div class="bgimg-1">
-    <h5>APPEND / ORGANIZE / VIEW / MONITOR </h5>
-    <h3><strong>NOON MEALS PROGRAM DATABASE</strong></h3>
-      <div class="caption">
-        <div class="button">
+</div>
+
+    <div class="caption">
+        <h5>APPEND / ORGANIZE / VIEW / MONITOR </h5>
+        <h3><strong>NOON MEALS PROGRAM DATABASE</strong></h3>
+    </div>
+
+    <div class="button">
       <button style="position:relative;left:-20px;top:-150px;width:7%" type="submit" class="btn"><a href="/login">LOG-IN</a></button>
       <button style="position:relative;top:-150px;width:7%;" type="submit" class="btn"><a href="/register"> REGISTER</a></button>
     </div>
-  </div>
-</div>
 
 <p style="padding:5px 15px">Welcome to the Tamil Nadu Social Welfare Department!</p>
 

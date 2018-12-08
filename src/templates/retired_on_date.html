@@ -116,13 +116,13 @@
                 var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                 $("#empList").append(tbl);
                 var hr = "<tr>";
-                var th1 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                var th2 = "<th style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                var th3 = "<th style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                var th4 = "<th style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                var th5 = "<th style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
-                var th6 = "<th style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
-                var th7 = "<th style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
+                var th1 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th2 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Retirement Date" + "</th>";
                 $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7);
                 for (var j = 0; j < json.length; j++) {
                     var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+

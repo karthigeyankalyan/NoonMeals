@@ -417,6 +417,8 @@ def my_entries(_id):
     if request.method == 'GET':
         return render_template('form.html', _id=_id)
     else:
+        email = session['email']
+        user = User.get_by_email(email)
         district = request.form['district']
         name = request.form['name']
         block = request.form['block']
@@ -439,7 +441,8 @@ def my_entries(_id):
 
         employee.save_to_mongo()
 
-        return render_template('beneficiary_added.html', employee=employee)
+        return render_template('beneficiary_added.html', employee=employee, district=user.district,
+                               block=user.block)
 
 
 @app.route('/update_employee/<string:_id>', methods=['POST', 'GET'])
