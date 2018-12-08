@@ -194,7 +194,7 @@
         var AbilityPlot  = dc.rowChart("#DiffAbility");
         var Unsanctioned  = dc.lineChart("#UnsanctionedBeneficiaries");
 
-        d3.json("/district_table", function(error, data){
+        d3.json("/block_table/"+district+"/"+block, function(error, data) {
 
         var ndx = crossfilter(data);
         var all = ndx.groupAll();

@@ -25,9 +25,11 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/beneficiary_plots')
+@app.route('/employment_charts')
 def beneficiary_plots():
-    return render_template('circle1.html')
+    email = session['email']
+    user = User.get_by_email(email)
+    return render_template('district_plots.html', block=user.block, district=user.district)
 
 
 @app.route('/raw_retirement_by_date/<string:date>')
@@ -289,10 +291,12 @@ def render_individual_employees(_id):
     return single_employee_block
 
 
-@app.route('/block_table/<string:Block>')
-def render_block_employees(Block):
+@app.route('/block_table/<string:District>/<string:Block>')
+def render_block_employees(District, Block):
     block_employees_array = []
-    block_employees_dict = Database.find("employees", {'Block': Block})
+    block_employees_dict = Database.find("employees", {"$and": [{'Block': Block},
+                                                                {'District': District}]})
+
     for Emp in block_employees_dict:
         block_employees_array.append(Emp)
 

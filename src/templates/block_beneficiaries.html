@@ -104,7 +104,8 @@
 
     function name(inputDate) {
         var block = "{{block}}";
-        var source = "/block_table/"+block;
+        var district = "{{district}}";
+        var source = "/block_table/"+district+"/"+block;
         $.ajax({
             type: 'GET',
             url: source,

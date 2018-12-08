@@ -19,6 +19,7 @@
             success: function (json) {
                 for(var i = 0; i< json.length; i++){
                     var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
+                    console.log(json);
                 }
 
                 var empCount = d3.nest()
@@ -32,6 +33,8 @@
                         return v.length;
                     })
                     .entries(json);
+
+                console.log(empCount);
 
                 var doc = new jsPDF();
 

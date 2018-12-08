@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 
 class Employee(object):
 
-    def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None,
+    def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None, last_updated=None,
                  joining_date=None, retirement_date=None, qualification=None, contact_number=None,
                  _id=None, joining_date_current_post=None, nhis_id=None, gpf=None, gender=None):
         self.name = name
@@ -26,6 +26,12 @@ class Employee(object):
         self.retirement_date = retirement_date
         self.contact_number = contact_number
         self._id = uuid.uuid4().hex if _id is None else _id
+        if retirement_date:
+            self.dorV2 = (datetime.combine(datetime.strptime(retirement_date, '%Y-%m-%d').date(),
+                                           datetime.now().time()))
+        else:
+            self.dorV2 = retirement_date
+
         if retirement_date:
             self.dorV2 = (datetime.combine(datetime.strptime(retirement_date, '%Y-%m-%d').date(),
                                            datetime.now().time()))
