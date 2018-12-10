@@ -191,10 +191,10 @@
 
 <script>
         var DistPlot  = dc.rowChart("#District");
-        var AbilityPlot  = dc.rowChart("#DiffAbility");
+        var DesignationPlot  = dc.rowChart("#DiffAbility");
         var Unsanctioned  = dc.lineChart("#UnsanctionedBeneficiaries");
 
-        d3.json("/block_table/"+district+"/"+block, function(error, data) {
+        d3.json("/block_table/{{district}}/{{block}}", function(error, data) {
 
         var ndx = crossfilter(data);
         var all = ndx.groupAll();
@@ -203,12 +203,12 @@
             return d.district;
         });
 
-        var DiffAbl = ndx.dimension(function (d) {
-            return d.condition;
+        var Design = ndx.dimension(function (d) {
+            return d.designation;
         });
 
-        var DistGroup = Dist.group().reduceSum(dc.pluck('no_sanctioned'));
-        var AblGroup = DiffAbl.group().reduceSum(dc.pluck('no_sanctioned'));
+        var DistGroup = Dist.group().reduceCount();
+        var AblGroup = Design.group().reduceCount();
 
 
         DistPlot
@@ -216,8 +216,7 @@
             .height(200)
             .dimension(Dist)
             .group(DistGroup)
-            .margins({top: 0, right: 0, bottom: -1, left: 0})
-            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
+            .margins({top: 0, right: 0, bottom: -1, left: 0});
 
         AbilityPlot
             .width(400)
@@ -227,65 +226,7 @@
             .margins({top: 20, left: 10, right: 10, bottom: 20})
             .xAxis().ticks(4);
 
-        var MonthYear = ndx.dimension(function (d) {
-            return d.MonthYear;
-        });
-
-        var DateGroup = MonthYear.group().reduceSum(function (d){
-            return Math.abs(d.no_eligible - d.no_sanctioned);
-        });
-
-
-        var OBC=MonthYear.group().reduceSum(function(d) {if (d.community==='OBC' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-        var OC=MonthYear.group().reduceSum(function(d) {if (d.community==='OC' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-        var BC=MonthYear.group().reduceSum(function(d) {if (d.community==='BC' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-        var MBC=MonthYear.group().reduceSum(function(d) {if (d.community==='MBC' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-        var SC=MonthYear.group().reduceSum(function(d) {if (d.community==='SC' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-        var ST=MonthYear.group().reduceSum(function(d) {if (d.community==='ST' ) {return Math.abs(d.no_eligible - d.no_sanctioned);}else{return 0;}});
-
-        console.log(DateGroup);
-
-        Unsanctioned
-            .width(600)
-            .height(400)
-            .x(d3.scale.ordinal())
-            .xUnits(dc.units.ordinal)
-            .renderArea(true)
-            .brushOn(false)
-            .xAxisLabel('Month')
-            .yAxisLabel('Unsanctioned Beneficiaries')
-            .dimension(MonthYear)
-            .group(OBC)
-            .stack(OC)
-            .stack(MBC)
-            .stack(SC)
-            .stack(ST)
-            .stack(BC);
-
             dc.renderAll();
-
-
-        var margin = {top: 5, right: 0, bottom: 0, left: 0},
-        width = 750 - margin.left - margin.right ,
-        height = 25 - margin.top - margin.bottom;
-
-	    var svg = d3.select("#Axis")
-            .append("svg:svg")
-            .attr("width", width + margin.right + margin.left)
-            .attr("height", height + margin.top + margin.bottom)
-            .append('g')
-            .attr("transform", function(d, i) {
-            return "translate("+margin.left+","+margin.top+")";
-		})
-            .attr("color", "white");
-
-    	var xAxis = DistPlot.xAxis();
-            svg.append("g")
-                .attr("class", "extnl-axis")
-                .attr("transform", "translate(10," + margin.bottom + ")")
-                .call(xAxis);
-
-        return xAxis;
 
         });
 
