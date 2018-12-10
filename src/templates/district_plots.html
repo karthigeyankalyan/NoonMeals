@@ -192,7 +192,6 @@
 <script>
         var DistPlot  = dc.rowChart("#District");
         var DesignationPlot  = dc.rowChart("#DiffAbility");
-        var Unsanctioned  = dc.lineChart("#UnsanctionedBeneficiaries");
 
         d3.json("/block_table/{{district}}/{{block}}", function(error, data) {
 
