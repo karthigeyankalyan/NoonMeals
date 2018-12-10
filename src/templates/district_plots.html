@@ -195,8 +195,9 @@
 
         d3.json("/block_table/{{district}}/{{block}}", function(error, data) {
 
+            console.log(data);
+
         var ndx = crossfilter(data);
-        var all = ndx.groupAll();
 
         var Dist = ndx.dimension(function (d) {
             return d.district;
