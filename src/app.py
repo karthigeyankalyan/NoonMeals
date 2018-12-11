@@ -465,6 +465,8 @@ def update_entries(_id):
         nhis = request.form['nhis']
         gpf = request.form['gpf']
 
+        user = User.get_by_email(session['email'])
+
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
                             retirement_date=retirementDate, joining_date_current_post=joiningDateCurrentPost,
@@ -475,7 +477,7 @@ def update_entries(_id):
                                  dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
                                  gender=gender, nhis_id=nhis, gpf=gpf)
 
-        return render_template('beneficiary_added.html', employee=employee)
+        return render_template('beneficiary_added.html', employee=employee, district=user.district, block=user.block)
 
 
 if __name__=='__main__':
