@@ -4,6 +4,18 @@
 {% extends "base.html" %}
 {% block content %}
 
+<head>
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-6464421633635166",
+        enable_page_level_ads: true
+      });
+    </script>
+
+</head>
+
 <style>
     h4{
         text-align: center;
@@ -106,7 +118,7 @@
     <div class="form-group">
         <label for="gender">What is the gender of Employee?</label>
           <select class="form-control" id="gender" name="gender">
-            {% set designation = ['Select One', 'Male', 'Female', 'Third Gender'] %}
+            {% set designation = ['Male', 'Female', 'Third Gender'] %}
             {% for ch in designation %}
                 <option value= "{{ch}}">{{ch}}</option>"
             {% endfor %}

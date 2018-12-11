@@ -4,13 +4,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NMP Database</title>
+    <title>Surviva</title>
 	<script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js" charset="utf-8"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/1.7.5/dc.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.js"></script>    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="http://dc-js.github.io/dc.js/js/dc.js"></script>
+    <link rel="stylesheet" href="http://dc-js.github.io/dc.js/css/dc.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
@@ -70,6 +70,10 @@
             left: 54px;
             color: white;
         }
+
+    body {
+        background-color: black;
+    }
 
             #dropbtn, #dropbtn1 {
             color: darkslategrey;
@@ -133,7 +137,7 @@
 <body>
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><strong> NMP Employees Database </strong></a>
+  <a class="navbar-brand" href="#"><strong> Differently Abled People Database </strong></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -178,26 +182,33 @@
     <br />
 </div>
 
+<div id="UnsanctionedBeneficiaries">
+    <strong>Unsanctioned Beneficiaries</strong>
+    <span class="reset" style="display: none;">range: <span class="filter"></span></span>
+    <a class="reset" href="javascript:Unsanctioned.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+    <br />
+</div>
+
 <script>
         var DistPlot  = dc.rowChart("#District");
         var DesignationPlot  = dc.rowChart("#DiffAbility");
+        var Unsanctioned  = dc.lineChart("#UnsanctionedBeneficiaries");
 
         d3.json("/block_table/{{district}}/{{block}}", function(error, data) {
 
-            console.log(data);
-
         var ndx = crossfilter(data);
+        var all = ndx.groupAll();
 
         var Dist = ndx.dimension(function (d) {
-            return d.Block;
+            return d.district;
         });
 
         var Design = ndx.dimension(function (d) {
-            return d.Designation;
+            return d.designation;
         });
 
-        var DistGroup = Dist.group().reduceCount();
-        var AblGroup = Design.group().reduceCount();
+        var DistGroup = Dist.group().reduceSum(dc.pluck('no_sanctioned'));
+        var AblGroup = DiffAbl.group().reduceSum(dc.pluck('no_sanctioned'));
 
 
         DistPlot
@@ -205,12 +216,13 @@
             .height(200)
             .dimension(Dist)
             .group(DistGroup)
-            .margins({top: 0, right: 0, bottom: -1, left: 0});
+            .margins({top: 0, right: 0, bottom: -1, left: 0})
+            .ordinalColors(['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628']);
 
-        DesignationPlot
+        AbilityPlot
             .width(400)
             .height(170)
-            .dimension(Design)
+            .dimension(DiffAbl)
             .group(AblGroup)
             .margins({top: 20, left: 10, right: 10, bottom: 20})
             .xAxis().ticks(4);

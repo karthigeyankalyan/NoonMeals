@@ -3,14 +3,6 @@
 
 <head>
 
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-6464421633635166",
-        enable_page_level_ads: true
-      });
-    </script>
-
     <style>
         #Search{
             margin-left: 1%;
@@ -231,6 +223,8 @@
                                 else {
                                         emp_id = selectedArray[j]["_id"];
                                     }
+
+                                    console.log(moment(selectedArray[j]["Date of Birth"]).format('YYYY-MM-DD'));
 
                                         var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
