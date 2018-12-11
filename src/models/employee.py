@@ -69,7 +69,7 @@ class Employee(object):
 
     @classmethod
     def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor,
-                        joining_date_current_post, nhis_id, gender, gpf):
+                        joining_date_current_post, nhis_id, gender, gpf, qualification):
 
         if dor:
             dorV2 = (datetime.combine(datetime.strptime(dor, '%Y-%m-%d').date(),
@@ -102,7 +102,7 @@ class Employee(object):
                                      center_name=center_name, dob=dob, doj=doj, dor=dor, gpf=gpf,
                                      joining_date_current_post=joining_date_current_post, nhis_id=nhis_id,
                                      gender=gender, joining_date_current_postV2=joining_date_current_postV2,
-                                     dobV2=dobV2, dojV2=dojV2, dorV2=dorV2)
+                                     dobV2=dobV2, dojV2=dojV2, dorV2=dorV2, qualification=qualification)
 
         else:
             Database.update_employee(collection='employees', query={'_id': emp_id}, emp_name=name, district=district,
