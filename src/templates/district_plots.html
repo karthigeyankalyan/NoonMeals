@@ -189,11 +189,11 @@
         var ndx = crossfilter(data);
 
         var Dist = ndx.dimension(function (d) {
-            return d.district;
+            return d.District;
         });
 
         var Design = ndx.dimension(function (d) {
-            return d.designation;
+            return d.Designation;
         });
 
         var DistGroup = Dist.group().reduceCount();

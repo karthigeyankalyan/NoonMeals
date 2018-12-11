@@ -21,6 +21,8 @@
                     var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
                 }
 
+                console.log(json);
+
                 var empCount = d3.nest()
                     .key(function (d) {
                         return d.District;
@@ -32,6 +34,8 @@
                         return v.length;
                     })
                     .entries(json);
+
+                console.log(empCount);
 
                 var doc = new jsPDF();
 
@@ -51,13 +55,31 @@
                                 [[empCount[a]['values'][1]['values']]], [[0]]]);
                         }
 
-                        else if((empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
-                            empCount[a]['values'][1]['key'] === 'Cooking Assistant') && empCount[a]['values'][1]['key']
+                        else if(empCount[a]['values'][1]['key'] === 'Cook' && (empCount[a]['values'][0]['key'] ===
+                            'Cook Assistant' || empCount[a]['values'][0]['key'] === 'Cooking Assistant')) {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]], [[0]]]);
+                        }
+
+                        else if((empCount[a]['values'][0]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][0]['key'] === 'Cooking Assistant') && empCount[a]['values'][1]['key']
                             === 'Organiser') {
                             rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
                                 [[empCount[a]['values'][1]['values']]]]);
                         }
+
+                        else if((empCount[a]['values'][1]['key'] === 'Cook Assistant' ||
+                            empCount[a]['values'][1]['key'] === 'Cooking Assistant') && empCount[a]['values'][0]['key']
+                            === 'Organiser') {
+                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
+                                [[empCount[a]['values'][1]['values']]]]);
+                        }
+
                         else if(empCount[a]['values'][0]['key'] === 'Cook' && empCount[a]['values'][1]['key'] === 'Organiser') {
+                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
+                                [[0]], [[empCount[a]['values'][1]['values']]]]);
+                        }
+                        else if(empCount[a]['values'][1]['key'] === 'Cook' && empCount[a]['values'][0]['key'] === 'Organiser') {
                             rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                                 [[0]], [[empCount[a]['values'][1]['values']]]]);
                         }
