@@ -61,7 +61,7 @@ class Database(object):
                                                                          'nhis_id': nhis_id,
                                                                          'gpf': gpf,
                                                                          'gender': gender,
-                                                                         'qualification': qualification,
+                                                                         'Educational Qualification': qualification,
                                                                          'Date of Joining': doj,
                                                                          'Date of JoiningV2': dojV2,
                                                                          'Date of RetirementV2': dorV2,
