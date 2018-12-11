@@ -109,7 +109,8 @@ class Employee(object):
                                      block=block, panchayat=panchayat, designation=designation, center_name=center_name,
                                      dob=dob, doj=doj, dor=dor, joining_date_current_post=joining_date_current_post,
                                      nhis_id=nhis_id, gender=gender, gpf=gpf, dobV2=dobV2, dojV2=dojV2,
-                                     joining_date_current_postV2=joining_date_current_postV2, dorV2=dorV2, qualification=qualification)
+                                     joining_date_current_postV2=joining_date_current_postV2, dorV2=dorV2,
+                                     qualification=qualification)
 
     def json(self):
         return {

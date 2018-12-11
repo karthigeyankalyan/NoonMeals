@@ -456,7 +456,6 @@ def update_entries(_id):
         panchayat = request.form['panchayat']
         center = request.form['center']
         DOB = request.form['DOB']
-        qualification = request.form['qualification']
         joiningDate = request.form['joiningDate']
         designation = request.form['designation']
         retirementDate = request.form['retirementDate']
@@ -468,17 +467,12 @@ def update_entries(_id):
 
         user = User.get_by_email(session['email'])
 
-        employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
-                            DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
-                            retirement_date=retirementDate, joining_date_current_post=joiningDateCurrentPost,
-                            nhis_id=nhis, gender=gender, gpf=gpf)
-
-        employee.update_employee(name=name, district=district, block=block, panchayat=panchayat,
+        Employee.update_employee(name=name, district=district, block=block, panchayat=panchayat,
                                  designation=designation, center_name=center, dob=DOB, doj=joiningDate,
                                  dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
                                  gender=gender, nhis_id=nhis, gpf=gpf, qualification=qualification)
 
-        return render_template('beneficiary_added.html', employee=employee, district=user.district, block=user.block)
+        return render_template('beneficiary_added.html', employee_id=_id, district=user.district, block=user.block)
 
 
 if __name__=='__main__':
