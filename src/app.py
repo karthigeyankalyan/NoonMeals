@@ -257,8 +257,8 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$or": [{"nhis_id": ""},
-                                                       {"nhis_id": " "}]})
+        projects = Database.find("employees", {"$or": [{"gpf": ""},
+                                                       {"gpf": " "}]})
 
         json_projects = []
 
