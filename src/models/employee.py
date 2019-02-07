@@ -7,9 +7,10 @@ from bson.objectid import ObjectId
 
 class Employee(object):
 
-    def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None, last_updated=None,
-                 joining_date=None, retirement_date=None, qualification=None, contact_number=None,
-                 _id=None, joining_date_current_post=None, nhis_id=None, gpf=None, gender=None):
+    def __init__(self, name, district, block, panchayat, designation, center_name, DOB=None, moa=None,
+                 last_updated=None, strength=None, joining_date=None, retirement_date=None, qualification=None,
+                 contact_number=None, _id=None, joining_date_current_post=None, nhis_id=None, gpf=None, gender=None,
+                 community=None):
         self.name = name
         self.district = district
         self.block = block
@@ -22,6 +23,9 @@ class Employee(object):
         self.nhis_id = nhis_id
         self.gpf = gpf
         self.gender = gender
+        self.community = community
+        self.moa = moa
+        self.strength = strength
         self.joining_date = joining_date
         self.retirement_date = retirement_date
         self.contact_number = contact_number
@@ -69,7 +73,7 @@ class Employee(object):
 
     @classmethod
     def update_employee(cls, name, emp_id, district, block, panchayat, designation, center_name, dob, doj, dor,
-                        joining_date_current_post, nhis_id, gender, gpf, qualification):
+                        joining_date_current_post, nhis_id, gender, gpf, qualification, strength, community, moa):
 
         if dor:
             dorV2 = (datetime.combine(datetime.strptime(dor, '%Y-%m-%d').date(),
@@ -102,7 +106,8 @@ class Employee(object):
                                      center_name=center_name, dob=dob, doj=doj, dor=dor, gpf=gpf,
                                      joining_date_current_post=joining_date_current_post, nhis_id=nhis_id,
                                      gender=gender, joining_date_current_postV2=joining_date_current_postV2,
-                                     dobV2=dobV2, dojV2=dojV2, dorV2=dorV2, qualification=qualification)
+                                     dobV2=dobV2, dojV2=dojV2, dorV2=dorV2, qualification=qualification,
+                                     strength=strength, community=community, moa=moa)
 
         else:
             Database.update_employee(collection='employees', query={'_id': emp_id}, emp_name=name, district=district,
@@ -110,7 +115,7 @@ class Employee(object):
                                      dob=dob, doj=doj, dor=dor, joining_date_current_post=joining_date_current_post,
                                      nhis_id=nhis_id, gender=gender, gpf=gpf, dobV2=dobV2, dojV2=dojV2,
                                      joining_date_current_postV2=joining_date_current_postV2, dorV2=dorV2,
-                                     qualification=qualification)
+                                     qualification=qualification, strength=strength, community=community, moa=moa)
 
     def json(self):
         return {

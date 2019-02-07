@@ -4,18 +4,6 @@
 {% extends "base.html" %}
 {% block content %}
 
-<head>
-
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-6464421633635166",
-        enable_page_level_ads: true
-      });
-    </script>
-
-</head>
-
 <style>
     h4{
         text-align: center;
@@ -98,11 +86,11 @@
     </div>
 
     <div id="joining" style="display: inline;">
-    <label for="joiningDate">Enter Date Of Joining</label>
+        <label for="joiningDate">Enter Date Of Joining</label>
     <input type="date" value="" id="joiningDate" onchange="CalculateYears()" onload="CalculateYears()" name="joiningDate">
 
     <label for="serviceYears" style="display: inline">Years OF Service</label>
-    <input type="text" value="" id="serviceYears" name="serviceYears">
+        <input type="text" value="" id="serviceYears" name="serviceYears">
     </div>
 
     <br><br>
@@ -124,6 +112,14 @@
             {% endfor %}
           </select>
 
+        <label for="community">What is the community of Employee?</label>
+          <select class="form-control" id="community" name="community">
+            {% set designation = ['OC', 'BC', 'MBC', 'OBC', 'SC', 'ST'] %}
+            {% for ch in designation %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+
         <label for="joiningDateCurrentPost">Current Post Joining Date</label>
         <input type="date" value="" id="joiningDateCurrentPost" name="joiningDateCurrentPost">
     </div>
@@ -134,6 +130,19 @@
 
         <label for="gpf">GPF Number</label>
         <input type="text" value="" id="gpf" name="gpf">
+    </div>
+
+    <div>
+        <label for="MOA">Mode of Appointment</label>
+          <select class="form-control" id="MOA" name="MOA">
+            {% set designation = ['Direct', 'Compassion', 'Promotion'] %}
+            {% for ch in designation %}
+                <option value= "{{ch}}">{{ch}}</option>"
+            {% endfor %}
+          </select>
+
+        <label for="strength">Center Strength</label>
+        <input type="number" value="" id="strength" name="strength">
     </div>
 
     <button type="submit" class="btn btn-success">Update Employee Details</button>

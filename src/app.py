@@ -464,13 +464,17 @@ def update_entries(_id):
         nhis = request.form['nhis']
         gpf = request.form['gpf']
         qualification = request.form['qualification']
+        MOA = request.form['MOA']
+        community = request.form['community']
+        strength = request.form['strength']
 
         user = User.get_by_email(session['email'])
 
         Employee.update_employee(name=name, district=district, block=block, panchayat=panchayat,
                                  designation=designation, center_name=center, dob=DOB, doj=joiningDate,
                                  dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
-                                 gender=gender, nhis_id=nhis, gpf=gpf, qualification=qualification)
+                                 gender=gender, nhis_id=nhis, gpf=gpf, qualification=qualification,
+                                 strength=strength, MOA=MOA, community=community)
 
         return render_template('beneficiary_added.html', employee_id=_id, district=user.district, block=user.block)
 

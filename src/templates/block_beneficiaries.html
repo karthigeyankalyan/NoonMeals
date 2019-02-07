@@ -77,6 +77,11 @@
         <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
     </div>
 
+    <div id="centreSearch">
+        <label for="centreSearch" style="margin-left: 10%">Search Center by Name:</label>
+        <input type="text" id="centreSearchInfo" onkeyup="myFunctionCenter()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
     <div id="empList">
     </div>
 
@@ -384,6 +389,25 @@ function sortTable(n) {
         console.log(tr.length);
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunctionCenter() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("centreSearchInfo");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("empList");
+        tr = table.getElementsByTagName("tr");
+        console.log(tr.length);
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
             if (td) {
                 if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";

@@ -146,9 +146,11 @@
 <h1> NMP Employees Database </h1>
 <br>
 <h2>Welcome, {{ user.username }}! </h2>
+<h2>Welcome, {{ user.district }}! </h2>
+<h2>Welcome, {{ user.block }}! </h2>
 
 <div id="singleLink" style="flex-direction: column; align-items: center; justify-content: space-between; display: flex;">
-    <a href="/district_beneficiaries/{{ user.district }}">Block-Wise Employees</a>
+    <a href="/block_beneficiaries/{{ user.district }}/{{ user.block }}">Block-Wise Employees</a>
     <button><a href="/change_password/{{user._id}}">Change Password</a></button>
 </div>
 
