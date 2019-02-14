@@ -17,6 +17,7 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
+                console.log(json);
                 for(var i = 0; i< json.length; i++){
                     var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
                 }

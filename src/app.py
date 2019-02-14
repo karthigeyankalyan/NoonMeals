@@ -436,8 +436,8 @@ def my_entries(_id):
 
         employee = Employee(district=district, name=name, block=block, panchayat=panchayat, center_name=center,
                             DOB=DOB, qualification=qualification, joining_date=joiningDate, designation=designation,
-                            retirement_date=retirementDate, nhis_id=nhis, gpf=gpf,
-                            joining_date_current_post=joiningDateCurrentPost, gender=gender)
+                            retirement_date=retirementDate, nhis_id=nhis, gpf=gpf, gender=gender,
+                            joining_date_current_post=joiningDateCurrentPost)
 
         employee.save_to_mongo()
 
@@ -474,7 +474,7 @@ def update_entries(_id):
                                  designation=designation, center_name=center, dob=DOB, doj=joiningDate,
                                  dor=retirementDate, emp_id=_id, joining_date_current_post=joiningDateCurrentPost,
                                  gender=gender, nhis_id=nhis, gpf=gpf, qualification=qualification,
-                                 strength=strength, MOA=MOA, community=community)
+                                 strength=strength, moa=MOA, community=community)
 
         return render_template('beneficiary_added.html', employee_id=_id, district=user.district, block=user.block)
 
