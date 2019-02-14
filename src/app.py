@@ -441,7 +441,7 @@ def my_entries(_id):
 
         employee.save_to_mongo()
 
-        return render_template('beneficiary_added.html', employee=employee, district=user.district,
+        return render_template('beneficiary_added.html', employee_id=employee._id, district=user.district,
                                block=user.block)
 
 
