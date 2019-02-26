@@ -34,7 +34,16 @@
                     })
                     .entries(json);
 
-                console.log(empCount);
+                var empCountDesignation = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                console.log(empCountDesignation);
 
                 var doc = new jsPDF();
 
@@ -100,6 +109,8 @@
                         }
                     }
                 }
+
+                rows.push([["Total"], [[0]], [[0]], [[0]]]);
 
                 doc.autoTable(columns, rows, {startY: 35});
 
