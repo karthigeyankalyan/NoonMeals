@@ -110,7 +110,19 @@
                     }
                 }
 
-                rows.push([["Total"], [[0]], [[0]], [[0]]]);
+                for (a = 0; a < empCountDesignation.length; a++) {
+                    if (empCountDesignation[a]['key'] === "Cook") {
+                        var cook_strength = empCountDesignation[a]['values']
+                    }
+                    else if (empCountDesignation[a]['key'] === "Cook Assistant") {
+                        var cook_asst_strength = empCountDesignation[a]['values']
+                    }
+                    else {
+                        var org_strength = empCountDesignation[a]['values']
+                    }
+                }
+
+                rows.push([["Total"], [[cook_strength]], [[cook_asst_strength]], [[org_strength]]]);
 
                 doc.autoTable(columns, rows, {startY: 35});
 
