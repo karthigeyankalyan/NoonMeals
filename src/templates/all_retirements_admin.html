@@ -205,17 +205,18 @@
                             var hr = "<tr>";
                             var th1 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
                             var th2 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                            var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                            var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                            var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                            var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
-                            var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
-                            var th8 = "<th style='text-align:center;vertical-align:middle'>" + "DOJ Current" + "</th>";
-                            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "NHIS #" + "</th>";
-                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "GPF #" + "</th>";
-                            var th11 = "<th style='text-align:center;vertical-align:middle'>" + "Gender" + "</th>";
-                            var th12 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
-                            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10 + th11 + th12);
+                            var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                            var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                            var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                            var th8 = "<th onclick='sortTable(7)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+                            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "DOJ Current" + "</th>";
+                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "NHIS #" + "</th>";
+                            var th11 = "<th style='text-align:center;vertical-align:middle'>" + "GPF #" + "</th>";
+                            var th12 = "<th style='text-align:center;vertical-align:middle'>" + "Gender" + "</th>";
+                            var th13 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10 + th11 + th12 + th13);
                             for (var j = 0; j < selectedArray.length; j++) {
                                 var emp_id;
                                 if(selectedArray[j]["_id"]["$oid"]){
@@ -230,6 +231,7 @@
                                         var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
+                                        '<td>'+selectedArray[j]["District"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
                                         '<td>'+moment(selectedArray[j]["Date of BirthV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
