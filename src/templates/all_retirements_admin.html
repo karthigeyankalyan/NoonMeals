@@ -43,6 +43,43 @@
         <option value="Cook Assistant">Cook Assistant</option>
     </select>
 
+    <label for="DistrictSelect" style="margin-left: 6%">District:</label>
+    <select id="DistrictSelect" style="margin-left: 1%; position: relative;">
+      <option>Ariyalur</option>
+      <option>Chennai</option>
+      <option>Coimbatore</option>
+      <option>Cuddalore</option>
+      <option>Dharmapuri</option>
+      <option>Dindigul</option>
+      <option>Erode</option>
+      <option>Kancheepuram</option>
+      <option>Kanyakumari</option>
+      <option>Karur</option>
+      <option>Krishnagiri</option>
+      <option>Madurai</option>
+      <option>Nagapattinam</option>
+      <option>Namakkal</option>
+      <option>Nilgiris</option>
+      <option>Perambalur</option>
+      <option>PUDUKKOTTAI</option>
+      <option>Pudukkottai</option>
+      <option>Ramanathapuram</option>
+      <option>Salem</option>
+      <option>Sivagangai</option>
+      <option>Thanjavur</option>
+      <option>Theni</option>
+      <option>Thirunelveli</option>
+      <option>Thiruvallur</option>
+      <option>Thiruvarur</option>
+      <option>Thoothukudi</option>
+      <option>Thiruvannamalai</option>
+      <option>Tirupur</option>
+      <option>Trichy</option>
+      <option>Vellore</option>
+      <option>Villupuram</option>
+      <option>Virudhunagar</option>
+    </select>
+
     <label for="DesignationSelect" style="margin-left: 6%">Select Bucket</label>
     <select id="DesignationSelect" style="margin-left: 1%; position: relative;">
         <option value="All">All</option>
@@ -161,6 +198,30 @@
                             else {
                                 selectedBucketArray = jQuery.grep(validDates, function (employee) {
                                     return employee.Designation === selectedbucket;
+                                });
+                                var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
+                                populatePage(sortedSelectedBucketArray);
+                                populateEmployeeCount(sortedSelectedBucketArray);
+                            }
+                        });
+
+                        var $DistrictDropDown = $("#DistrictSelect");
+
+                        $DistrictDropDown.each(function() {
+                            if (this.selectedIndex === 0) {
+                                populatePage(validDates);
+                            }
+                        });
+
+                        $DistrictDropDown.change(function () {
+                            selectedbucket = this.value;
+                            //filter based on  selected year.
+                            if (selectedbucket==="All") {
+                                populatePage(validDates);
+                            }
+                            else {
+                                selectedBucketArray = jQuery.grep(validDates, function (employee) {
+                                    return employee.District === selectedbucket;
                                 });
                                 var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
                                 populatePage(sortedSelectedBucketArray);
