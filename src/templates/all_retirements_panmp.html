@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+
+    <style>
+        #Search{
+            margin-left: 1%;
+            margin-top: 7%;
+            margin-bottom: 3%;
+            position: relative;
+        }
+
+        th, td {
+            text-align:center;
+            vertical-align:middle
+        }
+
+        #budgetOverall{
+            text-align:center;
+            vertical-align:middle;
+            margin-left: 50%;
+            margin-top: 2%;
+            width: 20%;
+            position: absolute;
+        }
+    </style>
+
+</head>
+
+<body onload="todayDate()">
+
+<div style="margin-top: 3%;margin-bottom: 3%; border: double; padding-top: 5px; padding-bottom: 5px;">
+<span>
+    <label for="DateFilter" style="margin-left: 6%">Enter Date To Check Budget</label>
+    <input type="date" value="" style="margin-left: 1%" id="DateFilter" name="DateFilter">
+    <label for="BucketSelect" style="margin-left: 6%">Service Designation:</label>
+    <select id="BucketSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Cook">Cook</option>
+        <option value="Organiser">Organiser</option>
+        <option value="Cooking Assistant">Cooking Assistant</option>
+        <option value="Cook Assistant">Cook Assistant</option>
+    </select>
+
+    <label for="DesignationSelect" style="margin-left: 6%">Select Bucket</label>
+    <select id="DesignationSelect" style="margin-left: 1%; position: relative;">
+        <option value="All">All</option>
+        <option value="Bel10">Below 10</option>
+        <option value="10to20">10 to 20</option>
+        <option value="20to30">20 to 30</option>
+        <option value="Above30">Above 30</option>
+    </select>
+
+    <button type="submit" class="btn btn-success" onclick="updateDate()" style="margin-left: 6%">Refresh Date</button>
+</span>
+</div>
+
+    <table id="budgetOverall" class="table table-bordered">
+        <thead>
+            <th style="text-align:center; vertical-align:middle;">Total Budget For Month</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalBudget"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="flex-direction: row; display: flex; justify-content: space-between">
+        <button><a href="/get_retirement_block/{{district}}/{{block}}">Get Retirements</a></button>
+        <button><a href="/get_tentwentythirty_block/{{district}}/{{block}}">Get Ten Twenty & Thirty</a></button>
+    </div>
+
+    <div id="Search">
+        <label for="myInput" style="margin-left: 10%">Search for Employee by Name:</label>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
+    <div id="centreSearch">
+        <label for="centreSearch" style="margin-left: 10%">Search Center by Name:</label>
+        <input type="text" id="centreSearchInfo" onkeyup="myFunctionCenter()" placeholder="Search for names.." title="Type in a name">
+    </div>
+
+    <div id="empList">
+    </div>
+
+</body>
+
+<script>
+
+    function todayDate() {
+        var todaysDate = new Date();
+        name(moment(todaysDate).format("DD/MM/YYYY"));
+    }
+
+    function updateDate() {
+            var inputDate = moment(document.getElementById("DateFilter").value);
+            name(inputDate);
+    }
+
+    function name(inputDate) {
+        var district = "{{district}}";
+        var start_date = "{{start_date}}";
+        var end_date = "{{end_date}}";
+        var source = "/raw_retirements_within_date_panmp/"+start_date+"/"+end_date+"/"+district;
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                    {
+                        var bucketArray = [];
+                        bucketArray = ["All"];
+                        var validDates = [];
+                        var myObj = json;
+                        for (var i = 0; i < myObj.length; i++) {
+                            if (myObj[i]["Block"] === block) {
+                                validDates.push(myObj[i]);
+                            }
+                        }
+
+                        //Looping through the valid dates JSON to assign age, years in service
+                        for (var j = 0; j < validDates.length; j++) {
+                            //Declaring moment.js dates
+                            var birthDate = moment(new Date(validDates[j]["Date of BirthV2"])).format("DD/MM/YYYY");
+                            var joiningDate = moment(new Date(validDates[j]["Date of JoiningV2"])).format("DD/MM/YYYY");
+                            var retirementDate = moment(new Date(validDates[j]["Date of RetirementV2"])).format("DD/MM/YYYY");
+                            //Calculating the years in service, age
+                            var now = moment(inputDate); //todays date
+
+                            validDates[j]["yearsInService"] = moment.duration(now.diff(joiningDate)).asYears();
+                            validDates[j]["yisTotalDays"] = validDates[j]["yearsInService"] * 365;
+                            validDates[j]["yisInYears"] = Math.floor(validDates[j]["yisTotalDays"]/365);
+                            validDates[j]["yisInMonths"] = Math.floor((validDates[j]["yisTotalDays"]-(validDates[j]["yisInYears"]*365))/30);
+                            validDates[j]["Age Of Employee"] = moment.duration(now.diff(birthDate)).asYears();
+                            validDates[j]["totalDays"] = validDates[j]["Age Of Employee"] * 365;
+                            validDates[j]["inYears"] = Math.floor(validDates[j]["totalDays"]/365);
+                            validDates[j]["inMonths"] = Math.floor((validDates[j]["totalDays"]-(validDates[j]["inYears"] *365))/30);
+                            validDates[j]["serviceBucket"] = calculateServiceBucket(validDates[j]["Designation"], validDates[j]["yearsInService"]);
+                            validDates[j]["currentSalary"] = calculateCurrentSalary(validDates[j]["Designation"], validDates[j]["serviceBucket"]);
+                        }
+
+                        $.each(validDates, function (index) {
+                            var sbucket = validDates[index].Designation;
+                            if ($.inArray(sbucket, bucketArray) === -1) {
+                                bucketArray.push(sbucket);
+                            }
+                        });
+
+                        var $bucketDropDown = $("#BucketSelect");
+
+                        $bucketDropDown.each(function() {
+                            if (this.selectedIndex === 0) {
+                                populatePage(validDates);
+                            }
+                        });
+
+                        $bucketDropDown.change(function () {
+                            var selectedbucket = this.value;
+                            //filter based on  selected year.
+                            if (selectedbucket==="All") {
+                                populatePage(validDates);
+                            }
+                            else {
+                                selectedBucketArray = jQuery.grep(validDates, function (employee) {
+                                    return employee.Designation === selectedbucket;
+                                });
+                                var sortedSelectedBucketArray = sortByKey(selectedBucketArray, 'Name of the Center');
+                                populatePage(sortedSelectedBucketArray);
+                                populateEmployeeCount(sortedSelectedBucketArray);
+                            }
+                        });
+
+                        function populateEmployeeCount() {
+                            var BlockCountsBel10 = d3.nest()
+                                .key(function (d) {
+                                    return d.District;
+                                })
+                                .key(function (d) {
+                                    return d.Block;
+                                })
+                                .rollup(function (v) {
+                                    return v.length;
+                                })
+                                .entries(Below10Now);
+                        }
+
+
+
+                        function sortByKey(array, key) {
+                            return array.sort(function(a, b) {
+                                var x = a[key]; var y = b[key];
+                                return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                            });
+                        }
+
+                        function populatePage(selectedArray) {
+                            $("#empDetails").find("tbody").empty();
+                            var budget = 0;
+
+                            $.each(selectedArray, function () {
+                                budget += this.currentSalary;
+                            });
+                            document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'
+                            });
+                            var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+                            $("#empList").append(tbl);
+                            var hr = "<tr>";
+                            var th1 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
+                            var th2 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                            var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                            var th4 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th5 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th6 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                            var th7 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                            var th8 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+                            var th9 = "<th style='text-align:center;vertical-align:middle'>" + "DOJ Current" + "</th>";
+                            var th10 = "<th style='text-align:center;vertical-align:middle'>" + "NHIS #" + "</th>";
+                            var th11 = "<th style='text-align:center;vertical-align:middle'>" + "GPF #" + "</th>";
+                            var th12 = "<th style='text-align:center;vertical-align:middle'>" + "Gender" + "</th>";
+                            var th13 = "<th style='text-align:center;vertical-align:middle'>" + "Edit Employees" + "</th></tr>";
+                            $("#empDetails").append(hr + th1 + th2 + th3 + th4 + th5 + th6 + th7 + th8 + th9 + th10 + th11 + th12 + th13);
+                            for (var j = 0; j < selectedArray.length; j++) {
+                                var emp_id;
+                                if(selectedArray[j]["_id"]["$oid"]){
+                                    emp_id = selectedArray[j]["_id"]["$oid"];
+                                }
+                                else {
+                                        emp_id = selectedArray[j]["_id"];
+                                    }
+
+                                    console.log(moment(selectedArray[j]["Date of Birth"]).format('YYYY-MM-DD'));
+
+                                        var url = '/update_employee/'+emp_id;
+                                        var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
+                                        '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
+                                        '<td>'+selectedArray[j]["District"]+'</td>'+
+                                        '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
+                                        '<td>'+selectedArray[j]["Designation"] +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of BirthV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of JoiningV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of RetirementV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+selectedArray[j]["joining_date_current_post"] +'</td>'+
+                                        '<td>'+selectedArray[j]["nhis_id"] +'</td>'+
+                                        '<td>'+selectedArray[j]["gpf"] +'</td>'+
+                                        '<td>'+selectedArray[j]["gender"] +'</td>'+
+                                        '<td><button class="btn btn-default"><a href="' + url + '">'+ 'Update Details' +'</a></button></td>');
+                                        $("#empDetails").append(row);
+                                }
+                            }
+
+                            function calculateCurrentSalary(Post, Bucket) {
+                                if (Post==="Organiser") {
+                                    if(Bucket==="Below 10"){
+                                        return 14000;
+                                    }
+                                    else if(Bucket==="10 to 20") {
+                                        return 20000;
+                                    }
+                                    else if(Bucket==="20 to 30") {
+                                        return 20000;
+                                    }
+                                    else {
+                                        return 25000;
+                                    }
+                                }
+
+                                else if (Post==="Cook") {
+                                    if(Bucket==="Below 10"){
+                                        return 10000;
+                                    }
+                                    else if(Bucket==="10 to 20") {
+                                        return 15000;
+                                    }
+                                    else if(Bucket==="20 to 30") {
+                                        return 17000;
+                                    }
+                                    else {
+                                        return 20000;
+                                    }
+                                }
+
+                                else {
+                                    if(Bucket==="Below 10"){
+                                        return 8000;
+                                    }
+                                    else if(Bucket==="10 to 20") {
+                                        return 10000;
+                                    }
+                                    else if(Bucket==="20 to 30") {
+                                        return 12000;
+                                    }
+                                    else {
+                                        return 15000;
+                                    }
+                                }
+
+                            }
+
+                            function calculateServiceBucket(Designation, YIS) {
+                                if(YIS<10) {
+                                    return "Below 10";
+                                }
+                                else if (YIS>=10 && YIS<20) {
+                                    return "10 to 20";
+                                }
+                                else if (YIS>=20 && YIS<30) {
+                                    return "20 to 30";
+                                }
+                                else if (YIS>58 && Designation===("Cook"|"Assistant")) {
+                                    return "Retired";
+                                }
+                                else if (YIS>60 && Designation===("Organizer")) {
+                                    return "Retired";
+                                }
+                                else {
+                                    return "Above 30";
+                                }
+                            }
+
+                        }
+                },
+            error: function (e) {
+                alert("error");
+            }
+        });
+    }
+
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("empDetails");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir === "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir === "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount === 0 && dir === "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("empList");
+        tr = table.getElementsByTagName("tr");
+        console.log(tr.length);
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function myFunctionCenter() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("centreSearchInfo");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("empList");
+        tr = table.getElementsByTagName("tr");
+        console.log(tr.length);
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+</script>
+
+{% endblock %}

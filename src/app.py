@@ -77,7 +77,7 @@ def enter_dates_to_get_retirements_within(District, Block):
             return render_template('all_retirements_admin.html', user=user, start_date=start_date,
                                    end_date=end_date)
         else:
-            return render_template('all_retirements_district.html', user=user, start_date=start_date,
+            return render_template('all_retirements_panmp.html', user=user, start_date=start_date,
                                    end_date=end_date, district=District, block=Block)
 
 
@@ -94,6 +94,27 @@ def retirements_within_by_district(start_date, end_date, District, Block):
     all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gte": start, "$lt": end}},
                                                           {"District": District},
                                                           {"Block": Block}]})
+
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
+
+    all_t = json.dumps(all_transactions, default=json_util.default)
+
+    return all_t
+
+
+@app.route('/raw_retirements_within_date_panmp/<string:start_date>/<string:end_date>/'
+           '<string:District>')
+def retirements_within_by_panmp(start_date, end_date, District):
+    all_transactions = []
+
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
+
+    all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gte": start, "$lt": end}},
+                                                          {"District": District}]})
 
     for tran in all_trans_dict:
         all_transactions.append(tran)
