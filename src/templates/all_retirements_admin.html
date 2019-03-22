@@ -232,9 +232,9 @@
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of BirthV2"]['$date'] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of JoiningV2"]['$date'] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of RetirementV2"]['$date'] +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of BirthV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of JoiningV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+moment(selectedArray[j]["Date of RetirementV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
                                         '<td>'+selectedArray[j]["joining_date_current_post"] +'</td>'+
                                         '<td>'+selectedArray[j]["nhis_id"] +'</td>'+
                                         '<td>'+selectedArray[j]["gpf"] +'</td>'+
