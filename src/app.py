@@ -88,7 +88,7 @@ def retirements_within_by_district(start_date, end_date, District, Block):
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
-    all_trans_dict = Database.find("employees", {"$and": [{"Date of Retirement V2": {"$gte": start, "$lt": end}},
+    all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gte": start, "$lt": end}},
                                                           {"District": District},
                                                           {"Block": Block}]})
 
@@ -109,7 +109,7 @@ def retirements_within_overall(start_date, end_date):
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
-    all_trans_dict = Database.find("employees", {"Date of Retirement V2": {"$gte": start, "$lt": end}})
+    all_trans_dict = Database.find("employees", {"Date of RetirementV2": {"$gte": start, "$lt": end}})
 
     for tran in all_trans_dict:
         all_transactions.append(tran)
