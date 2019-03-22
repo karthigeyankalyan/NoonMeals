@@ -70,12 +70,15 @@ def enter_dates_to_get_retirements_within(District, Block):
         start_date = request.form['startDate']
         end_date = request.form['endDate']
 
-        if user.designation == "PA NMP":
+        if user.designation == "Block Operator":
             return render_template('all_retirements_district.html', user=user, start_date=start_date,
                                    end_date=end_date, district=District, block=Block)
         elif user.designation == "Admin":
             return render_template('all_retirements_admin.html', user=user, start_date=start_date,
                                    end_date=end_date)
+        else:
+            return render_template('all_retirements_district.html', user=user, start_date=start_date,
+                                   end_date=end_date, district=District, block=Block)
 
 
 @app.route('/raw_retirements_within_date_district/<string:start_date>/<string:end_date>/'
