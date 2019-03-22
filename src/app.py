@@ -60,7 +60,7 @@ def retirement_by_date():
 
 
 @app.route('/get_all_retirements_within/<string:District>/<string:Block>', methods=['POST', 'GET'])
-def retirement_by_date(District, Block):
+def enter_dates_to_get_retirements_within(District, Block):
     email = session['email']
     user = User.get_by_email(email)
     if request.method == 'GET':
@@ -456,8 +456,7 @@ def block_employees(District, Block):
 
 
 @app.route('/retired_block_employees/<string:District>/<string:Block>')
-@app.route('/block_beneficiaries')
-def block_employees(District, Block):
+def retired_employees_block_employees(District, Block):
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
