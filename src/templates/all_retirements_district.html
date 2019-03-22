@@ -2,6 +2,7 @@
 {% block content %}
 
 <head>
+
     <style>
         #Search{
             margin-left: 1%;
@@ -9,10 +10,12 @@
             margin-bottom: 3%;
             position: relative;
         }
+
         th, td {
             text-align:center;
             vertical-align:middle
         }
+
         #budgetOverall{
             text-align:center;
             vertical-align:middle;
@@ -22,6 +25,7 @@
             position: absolute;
         }
     </style>
+
 </head>
 
 <body onload="todayDate()">
@@ -98,7 +102,9 @@
     function name(inputDate) {
         var block = "{{block}}";
         var district = "{{district}}";
-        var source = "/block_table/"+district+"/"+block;
+        var start_date = "{{start_date}}";
+        var end_date = "{{end_date}}";
+        var source = "/raw_retirements_within_date_district/"+start_date+"/"+end_date+"/"+district+"/"+block;
         $.ajax({
             type: 'GET',
             url: source,
@@ -112,19 +118,16 @@
                         var myObj = json;
                         for (var i = 0; i < myObj.length; i++) {
                             if (myObj[i]["Block"] === block) {
-                                var retirementDate = moment(new Date(myObj[i]["Date of Retirement"])).format("DD/MM/YYYY");
-                                if (retirementDate.isBefore(moment().format('DD/MM/YYYY'))) {
-                                    validDates.push(myObj[i]);
-                                }
+                                validDates.push(myObj[i]);
                             }
                         }
 
                         //Looping through the valid dates JSON to assign age, years in service
                         for (var j = 0; j < validDates.length; j++) {
                             //Declaring moment.js dates
-                            var birthDate = moment(new Date(validDates[j]["Date of Birth"])).format("DD/MM/YYYY");
-                            var joiningDate = moment(new Date(validDates[j]["Date of Joining"])).format("DD/MM/YYYY");
-                            retirementDate = moment(new Date(validDates[j]["Date of Retirement"])).format("DD/MM/YYYY");
+                            var birthDate = moment(new Date(validDates[j]["Date of BirthV2"])).format("DD/MM/YYYY");
+                            var joiningDate = moment(new Date(validDates[j]["Date of JoiningV2"])).format("DD/MM/YYYY");
+                            var retirementDate = moment(new Date(validDates[j]["Date of RetirementV2"])).format("DD/MM/YYYY");
                             //Calculating the years in service, age
                             var now = moment(inputDate); //todays date
 
@@ -235,9 +238,9 @@
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of Birth"] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of Joining"] +'</td>'+
-                                        '<td>'+selectedArray[j]["Date of Retirement"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of BirthV2"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of JoiningV2"] +'</td>'+
+                                        '<td>'+selectedArray[j]["Date of RetirementV2"] +'</td>'+
                                         '<td>'+selectedArray[j]["joining_date_current_post"] +'</td>'+
                                         '<td>'+selectedArray[j]["nhis_id"] +'</td>'+
                                         '<td>'+selectedArray[j]["gpf"] +'</td>'+

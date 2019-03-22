@@ -3,6 +3,7 @@ import pandas as pd
 from src.common.database import Database
 from src.models.employee import Employee
 from flask import Flask, render_template, request, session, make_response
+from datetime import datetime
 
 import json
 from bson import json_util
@@ -56,6 +57,66 @@ def retirement_by_date():
         date = day+"_"+month+"_"+year
 
         return render_template('retired_on_date.html', date=date)
+
+
+@app.route('/get_all_retirements_within/<string:District>/<string:Block>', methods=['POST', 'GET'])
+def retirement_by_date(District, Block):
+    email = session['email']
+    user = User.get_by_email(email)
+    if request.method == 'GET':
+        return render_template('get_retirement_date_within.html', district=District, block=Block)
+
+    else:
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
+
+        if user.designation == "PA NMP":
+            return render_template('all_retirements_district.html', user=user, start_date=start_date,
+                                   end_date=end_date, district=District, block=Block)
+        elif user.designation == "Admin":
+            return render_template('all_retirements_admin.html', user=user, start_date=start_date,
+                                   end_date=end_date)
+
+
+@app.route('/raw_retirements_within_date_district/<string:start_date>/<string:end_date>/'
+           '<string:District>/<string:Block>')
+def retirements_within_by_district(start_date, end_date, District, Block):
+    all_transactions = []
+
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
+
+    all_trans_dict = Database.find("employees", {"$and": [{"Date of Retirement V2": {"$gte": start, "$lt": end}},
+                                                          {"District": District},
+                                                          {"Block": Block}]})
+
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
+
+    all_t = json.dumps(all_transactions, default=json_util.default)
+
+    return all_t
+
+
+@app.route('/raw_retirements_within_date_overall/<string:start_date>/<string:end_date>')
+def retirements_within_overall(start_date, end_date):
+    all_transactions = []
+
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
+
+    all_trans_dict = Database.find("employees", {"Date of Retirement V2": {"$gte": start, "$lt": end}})
+
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
+
+    all_t = json.dumps(all_transactions, default=json_util.default)
+
+    return all_t
 
 
 @app.route('/raw_retirement_by_date_panmp/<string:date>/<string:District>')
@@ -394,6 +455,20 @@ def block_employees(District, Block):
         return render_template('login_fail.html')
 
 
+@app.route('/retired_block_employees/<string:District>/<string:Block>')
+@app.route('/block_beneficiaries')
+def block_employees(District, Block):
+    email = session['email']
+    if email is not None:
+        user = User.get_by_email(email)
+        if user.designation == "PA NMP":
+            return render_template('retired_block_employees.html', block=Block, district=District)
+        else:
+            return render_template('retired_block_employees.html', block=Block, district=District)
+    else:
+        return render_template('login_fail.html')
+
+
 @app.route('/delete_employee/<string:_id>')
 def delete_application(_id):
 
@@ -405,11 +480,6 @@ def delete_application(_id):
 @app.route('/retirement_employees')
 def retired_employees():
     return render_template('retirement_employees.html')
-
-
-@app.route('/retired/block_employees/<string:Block>')
-def retired_block_employees(Block):
-    return render_template('retired_block_employees.html', block=Block)
 
 
 @app.route('/new_employee/<string:_id>', methods=['POST', 'GET'])
