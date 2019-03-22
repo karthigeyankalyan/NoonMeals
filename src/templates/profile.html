@@ -117,9 +117,8 @@
                 <div class="dropdown">
                 <div id="dropbtn2">Retired Employees</div>
                   <div class="dropdown-content">
-                      {{user.District}}
-                    <a href="/retired_block_employees/{{user.District}}/{{user.Block}}">View Retirements</a>
-                    <a href="/get_all_retirements_within/{{user.District}}/{{user.Block}}">All Retirements</a>
+                    <a href="/retired_block_employees/{{user.district}}/{{user.block}}">View Retirements</a>
+                    <a href="/get_all_retirements_within/{{user.district}}/{{user.block}}">All Retirements</a>
                   </div>
                 </div>
               </li>
@@ -167,7 +166,4 @@
 </div>
 
 <script>
-
-    console.log("{{user.District}}");
-
 </script>
