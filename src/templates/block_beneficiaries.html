@@ -56,17 +56,6 @@
 </span>
 </div>
 
-    <table id="budgetOverall" class="table table-bordered">
-        <thead>
-            <th style="text-align:center; vertical-align:middle;">Total Budget For Month</th>
-        </thead>
-        <tbody>
-            <tr>
-                <td id="totalBudget"></td>
-            </tr>
-        </tbody>
-    </table>
-
     <div style="flex-direction: row; display: flex; justify-content: space-between">
         <button><a href="/get_retirement_block/{{district}}/{{block}}">Get Retirements</a></button>
         <button><a href="/get_tentwentythirty_block/{{district}}/{{block}}">Get Ten Twenty & Thirty</a></button>
@@ -204,13 +193,7 @@
 
                         function populatePage(selectedArray) {
                             $("#empDetails").find("tbody").empty();
-                            var budget = 0;
 
-                            $.each(selectedArray, function () {
-                                budget += this.currentSalary;
-                            });
-                            document.getElementById('totalBudget').innerHTML = (budget).toLocaleString('en-US', {style: 'currency', currency: 'INR'
-                            });
                             var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                             $("#empList").append(tbl);
                             var hr = "<tr>";
