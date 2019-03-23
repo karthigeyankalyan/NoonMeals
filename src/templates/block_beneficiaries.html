@@ -236,16 +236,14 @@
                                         emp_id = selectedArray[j]["_id"];
                                     }
 
-                                    console.log(moment(selectedArray[j]["Date of Birth"]).format('YYYY-MM-DD'));
-
                                         var url = '/update_employee/'+emp_id;
                                         var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                                         '<td>'+selectedArray[j]["Employee Name"]+'</td>'+
                                         '<td>'+selectedArray[j]["Name of the Center"]+'</td>'+
                                         '<td>'+selectedArray[j]["Designation"] +'</td>'+
-                                        '<td>'+moment(selectedArray[j]["Date of BirthV2"]['$date']).format('DD/MM/YYYY') +'</td>'+
-                                        '<td>'+moment(selectedArray[j]["Date of Joining"]['$date']).format('DD/MM/YYYY') +'</td>'+
-                                        '<td>'+moment(selectedArray[j]["Date of Retirement"]['$date']).format('DD/MM/YYYY') +'</td>'+
+                                        '<td>'+ moment(selectedArray[j]["Date of Birth"]).format('YYYY-MM-DD') +'</td>'+
+                                        '<td>'+ moment(selectedArray[j]["Date of Joining"]).format('YYYY-MM-DD') +'</td>'+
+                                        '<td>'+ moment(selectedArray[j]["Date of Retirement"]).format('YYYY-MM-DD') +'</td>'+
                                         '<td>'+selectedArray[j]["joining_date_current_post"] +'</td>'+
                                         '<td>'+selectedArray[j]["nhis_id"] +'</td>'+
                                         '<td>'+selectedArray[j]["gpf"] +'</td>'+
