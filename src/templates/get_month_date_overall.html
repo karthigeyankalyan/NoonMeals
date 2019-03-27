@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="display: flex; flex-direction: column; justify-content: space-around; align-items: center">
+
+    <h3>Please Enter the Day, Month and Year to see the Employees completing 10, 20 and 30 Years:</h3>
+
+    <div style="display: flex; flex-direction: row; justify-content: space-between">
+        <form id="getByDate" action="/get_tentwentythirty" method="post">
+            <div>
+                Enter Dates Below to get all Retirements
+            </div>
+            <div>
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name="startDate">
+            </div>
+            <div>
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate">
+            </div>
+            <button type="submit" class="btn btn-success">Get Details</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

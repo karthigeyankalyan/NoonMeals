@@ -301,8 +301,8 @@ def ttw_this_month(start_date, end_date):
     thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
 
     projects = Database.find("employees", {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
-                 {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
-                 {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]})
+                                                   {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
+                                                   {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]})
 
     json_projects = []
 
@@ -316,7 +316,7 @@ def ttw_this_month(start_date, end_date):
 @app.route('/get_tentwentythirty', methods=['POST', 'GET'])
 def ttw_by_date():
     if request.method == 'GET':
-        return render_template('get_month_date_block.html')
+        return render_template('get_month_date_overall.html')
     else:
         start_date = request.form['startDate']
         end_date = request.form['endDate']
@@ -327,7 +327,7 @@ def ttw_by_date():
 @app.route('/get_tentwentythirty_panmp/<string:District>', methods=['POST', 'GET'])
 def ttw_by_date_panmp(District):
     if request.method == 'GET':
-        return render_template('get_month_date_block.html', district=District)
+        return render_template('get_month_date_district.html', district=District)
     else:
         start_date = request.form['startDate']
         end_date = request.form['endDate']

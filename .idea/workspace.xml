@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="050e1f6d-b8eb-4970-a09c-ce61e3ae91cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/templates/get_month_date_district.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/templates/get_month_date_overall.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.py" afterPath="$PROJECT_DIR$/src/app.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/get_month_date_block.html" afterPath="$PROJECT_DIR$/src/templates/get_month_date_block.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/ttt_on_date.html" afterPath="$PROJECT_DIR$/src/templates/ttt_on_date.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/ttt_on_date_block.html" afterPath="$PROJECT_DIR$/src/templates/ttt_on_date_block.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,8 +33,8 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="329" column="0" lean-forward="false" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -44,42 +42,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ttt_on_date.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date.html">
+      <file leaf-file-name="get_month_date_district.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_district.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1553688951695" expanded="true" signature="8467:8481" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="8626:8665" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="8751:8790" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="8884:8923" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="9010:9049" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="9138:9177" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="9263:9302" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="9394:9433" ph="..." />
-                <marker date="1553688951695" expanded="true" signature="9527:9566" ph="..." />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="8" column="74" lean-forward="false" selection-start-line="8" selection-start-column="74" selection-end-line="8" selection-end-column="74" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ttt_on_date_block.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_block.html">
+      <file leaf-file-name="get_month_date_overall.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_overall.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="508">
-              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-              <folding>
-                <marker date="1553688951555" expanded="true" signature="8582:8596" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="8741:8780" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="8866:8905" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="8999:9038" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="9125:9164" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="9253:9292" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="9378:9417" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="9509:9548" ph="..." />
-                <marker date="1553688951555" expanded="true" signature="9642:9681" ph="..." />
-              </folding>
+            <state relative-caret-position="136">
+              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -87,8 +65,8 @@
       <file leaf-file-name="get_month_date_block.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_block.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="85">
+              <caret line="5" column="36" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -186,6 +164,7 @@
       <find>raw_ttt_block</find>
       <find>raw_ttt_panmp</find>
       <find>raw_ttt</find>
+      <find>/get_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -194,8 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/templates/user_beneficiaries.html" />
-        <option value="$PROJECT_DIR$/src/models/district.py" />
         <option value="$PROJECT_DIR$/src/templates/sanctioned_beneficiaries.html" />
         <option value="$PROJECT_DIR$/src/templates/sanctions_table.html" />
         <option value="$PROJECT_DIR$/runtime.txt" />
@@ -242,9 +219,11 @@
         <option value="$PROJECT_DIR$/src/common/database.py" />
         <option value="$PROJECT_DIR$/src/templates/block_beneficiaries.html" />
         <option value="$PROJECT_DIR$/src/templates/get_month_date_block.html" />
-        <option value="$PROJECT_DIR$/src/app.py" />
         <option value="$PROJECT_DIR$/src/templates/ttt_on_date_block.html" />
         <option value="$PROJECT_DIR$/src/templates/ttt_on_date.html" />
+        <option value="$PROJECT_DIR$/src/app.py" />
+        <option value="$PROJECT_DIR$/src/templates/get_month_date_overall.html" />
+        <option value="$PROJECT_DIR$/src/templates/get_month_date_district.html" />
       </list>
     </option>
   </component>
@@ -752,14 +731,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/templates/login_fail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="14" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/abc.html" />
     <entry file="file://$PROJECT_DIR$/src/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1136,14 +1107,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_block.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/profile_admin.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
@@ -1198,10 +1161,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_block.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="36" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_overall.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/get_month_date_district.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="74" lean-forward="false" selection-start-line="8" selection-start-column="74" selection-end-line="8" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="308" column="0" lean-forward="false" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="329" column="0" lean-forward="false" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
