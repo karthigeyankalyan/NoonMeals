@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="050e1f6d-b8eb-4970-a09c-ce61e3ae91cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" afterPath="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -76,18 +75,18 @@
       <file leaf-file-name="ttt_on_date_overall.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="22" column="96" lean-forward="true" selection-start-line="22" selection-start-column="96" selection-end-line="22" selection-end-column="96" />
+            <state relative-caret-position="221">
+              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding>
-                <marker date="1553696724974" expanded="true" signature="8537:8551" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="8696:8735" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="8821:8860" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="8954:8993" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="9080:9119" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="9208:9247" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="9333:9372" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="9464:9503" ph="..." />
-                <marker date="1553696724974" expanded="true" signature="9597:9636" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="8542:8556" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="8701:8740" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="8826:8865" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="8959:8998" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="9085:9124" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="9213:9252" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="9338:9377" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="9469:9508" ph="..." />
+                <marker date="1553696880697" expanded="true" signature="9602:9641" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1204,18 +1203,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="22" column="96" lean-forward="true" selection-start-line="22" selection-start-column="96" selection-end-line="22" selection-end-column="96" />
+        <state relative-caret-position="221">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding>
-            <marker date="1553696724974" expanded="true" signature="8537:8551" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="8696:8735" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="8821:8860" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="8954:8993" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="9080:9119" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="9208:9247" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="9333:9372" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="9464:9503" ph="..." />
-            <marker date="1553696724974" expanded="true" signature="9597:9636" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="8542:8556" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="8701:8740" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="8826:8865" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="8959:8998" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="9085:9124" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="9213:9252" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="9338:9377" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="9469:9508" ph="..." />
+            <marker date="1553696880697" expanded="true" signature="9602:9641" ph="..." />
           </folding>
         </state>
       </provider>
