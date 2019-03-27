@@ -22,6 +22,7 @@
                 for(var i = 0; i< json.length; i++){
                     var joiningDate = moment(json[i]["Date of JoiningV2"]).format("DD/MM/YYYY");
                     var inputDate = new Date(moment(joiningDate).format("YYYY"), moment(joiningDate).format("MM"), moment(joiningDate).format("DD"));
+                    console.log(moment(joiningDate).format("YYYY"));
                     var now = moment(inputDate);
                     console.log(joiningDate, inputDate);
                     json[i]["yearsInService"] = Math.round(moment.duration(now.diff(joiningDate)).asYears());
