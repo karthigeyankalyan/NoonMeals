@@ -20,7 +20,7 @@
             dataType: 'json',
             success: function (json) {
                 for(var i = 0; i< json.length; i++){
-                    var joiningDate = moment(new Date(json[i]["Date of Joining"])).format("MM/DD/YYYY");
+                    var joiningDate = moment(new Date(json[i]["Date of JoiningV2"])).format("DD/MM/YYYY");
                     var inputDate = new Date(year, month-1, 1);
                     var now = moment(inputDate);
                     console.log(now.diff(joiningDate), joiningDate);
