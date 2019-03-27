@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="050e1f6d-b8eb-4970-a09c-ce61e3ae91cc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.py" afterPath="$PROJECT_DIR$/src/app.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" afterPath="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +40,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="database.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="database.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/common/database.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="156">
@@ -56,8 +55,8 @@
       <file leaf-file-name="ttt_on_date_panmp.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_panmp.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="17">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
               <folding>
                 <marker date="1537957847930" expanded="true" signature="8548:8562" ph="..." />
                 <marker date="1537957847930" expanded="true" signature="8707:8746" ph="..." />
@@ -73,21 +72,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ttt_on_date_overall.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ttt_on_date_overall.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+            <state relative-caret-position="122">
+              <caret line="58" column="42" lean-forward="false" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
               <folding>
-                <marker date="1553690208514" expanded="true" signature="8516:8530" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="8675:8714" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="8800:8839" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="8933:8972" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="9059:9098" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="9187:9226" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="9312:9351" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="9443:9482" ph="..." />
-                <marker date="1553690208514" expanded="true" signature="9576:9615" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="8519:8533" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="8678:8717" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="8803:8842" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="8936:8975" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="9062:9101" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="9190:9229" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="9315:9354" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="9446:9485" ph="..." />
+                <marker date="1553694699040" expanded="true" signature="9579:9618" ph="..." />
               </folding>
             </state>
           </provider>
@@ -224,9 +223,9 @@
         <option value="$PROJECT_DIR$/src/templates/get_month_date_overall.html" />
         <option value="$PROJECT_DIR$/src/templates/get_month_date_district.html" />
         <option value="$PROJECT_DIR$/src/templates/ttt_on_date_block.html" />
-        <option value="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" />
         <option value="$PROJECT_DIR$/src/app.py" />
         <option value="$PROJECT_DIR$/src/common/database.py" />
+        <option value="$PROJECT_DIR$/src/templates/ttt_on_date_overall.html" />
       </list>
     </option>
   </component>
@@ -1136,42 +1135,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="154" column="0" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
-          <folding>
-            <marker date="1553690208514" expanded="true" signature="8516:8530" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="8675:8714" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="8800:8839" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="8933:8972" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="9059:9098" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="9187:9226" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="9312:9351" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="9443:9482" ph="..." />
-            <marker date="1553690208514" expanded="true" signature="9576:9615" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_panmp.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1537957847930" expanded="true" signature="8548:8562" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="8707:8746" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="8832:8871" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="8965:9004" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="9091:9130" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="9219:9258" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="9344:9383" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="9475:9514" ph="..." />
-            <marker date="1537957847930" expanded="true" signature="9608:9647" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_block.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -1216,6 +1179,42 @@
           <caret line="15" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_panmp.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <marker date="1537957847930" expanded="true" signature="8548:8562" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="8707:8746" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="8832:8871" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="8965:9004" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="9091:9130" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="9219:9258" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="9344:9383" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="9475:9514" ph="..." />
+            <marker date="1537957847930" expanded="true" signature="9608:9647" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="58" column="42" lean-forward="false" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+          <folding>
+            <marker date="1553694699040" expanded="true" signature="8519:8533" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="8678:8717" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="8803:8842" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="8936:8975" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="9062:9101" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="9190:9229" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="9315:9354" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="9446:9485" ph="..." />
+            <marker date="1553694699040" expanded="true" signature="9579:9618" ph="..." />
           </folding>
         </state>
       </provider>

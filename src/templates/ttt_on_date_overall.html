@@ -56,6 +56,7 @@
                 var rows = [];
                 doc.text(25,25, 'District Wise Summaries of Employees completing 10/20/30 years during '+month+'/'+year);
                 for (var a = 0; a < empCount.length; a++) {
+                    console.log(empCount);
                     if(empCount[a]['values'].length === 3) {
                     rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                         [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
@@ -178,8 +179,6 @@
                         return v.length;
                     })
                     .entries(json);
-
-                console.log(empCount);
 
                 var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
                 $("#empList").append(tbl);
