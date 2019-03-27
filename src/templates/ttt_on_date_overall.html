@@ -11,7 +11,7 @@
     function downloadPDF() {
     var month = "{{start_date}}";
     var year = "{{end_date}}";
-    var source = "/raw_ttt_block/"+month+"/"+year+"/"+"{{district}}"+"/"+"{{block}}";
+    var source = "/raw_ttt/"+month+"/"+year;
 
         $.ajax({
             type: 'GET',
@@ -152,7 +152,7 @@
 
     var month = "{{start_date}}";
     var year = "{{end_date}}";
-    var source = "/raw_ttt_block/"+month+"/"+year+"/"+"{{district}}"+"/"+"{{block}}";
+    var source = "/raw_ttt/"+month+"/"+year;
 
         $.ajax({
             type: 'GET',

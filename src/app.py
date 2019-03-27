@@ -321,7 +321,7 @@ def ttw_by_date():
         start_date = request.form['startDate']
         end_date = request.form['endDate']
 
-        return render_template('ttt_on_date_block.html', start_date=start_date, end_date=end_date)
+        return render_template('ttt_on_date_overall.html', start_date=start_date, end_date=end_date)
 
 
 @app.route('/get_tentwentythirty_panmp/<string:District>', methods=['POST', 'GET'])
@@ -332,7 +332,7 @@ def ttw_by_date_panmp(District):
         start_date = request.form['startDate']
         end_date = request.form['endDate']
 
-        return render_template('ttt_on_date_block.html', start_date=start_date, end_date=end_date,
+        return render_template('ttt_on_date_panmp.html', start_date=start_date, end_date=end_date,
                                district=District)
 
 
