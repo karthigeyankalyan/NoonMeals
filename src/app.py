@@ -3,7 +3,7 @@ import pandas as pd
 from src.common.database import Database
 from src.models.employee import Employee
 from flask import Flask, render_template, request, session, make_response
-from datetime import datetime
+from datetime import datetime, date
 
 import json
 from bson import json_util
@@ -218,24 +218,32 @@ def retirement_by_date_block(District, Block):
         return render_template('retired_on_date_block.html', date=date, district=District, block=Block)
 
 
-@app.route('/raw_ttt_block/<string:month>/<string:year>/<string:District>/<string:Block>')
-def ttw_this_month_block(month, year, District, Block):
-    year10 = int(year) - 10
-    year20 = int(year) - 20
-    year30 = int(year) - 30
+@app.route('/raw_ttt_block/<string:start_date>/<string:end_date>/<string:District>/<string:Block>')
+def ttw_this_month_block(start_date, end_date, District, Block):
 
-    year10 = str(year10)
-    year20 = str(year20)
-    year30 = str(year30)
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
 
-    projects = Database.find("employees", {"$and": [{"$or": [
-        {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}]},
+    ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
+    ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    twenty_year_start_date = date(int(start.strftime('%Y'))-20, int(start.strftime('%m')), int(start.strftime('%d')))
+    twenty_year_end_date = date(int(end.strftime('%Y'))-20, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
+    thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    projects = Database.find("employees", {"$and": [
+        {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]},
         {"District": District},
         {"Block": Block}]})
 
     json_projects = []
+
     for project in projects:
         json_projects.append(project)
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
@@ -243,23 +251,31 @@ def ttw_this_month_block(month, year, District, Block):
     return all_employees_retiring
 
 
-@app.route('/raw_ttt_panmp/<string:month>/<string:year>/<string:District>')
-def ttw_this_month_panmp(month, year, District):
-    year10 = int(year) - 10
-    year20 = int(year) - 20
-    year30 = int(year) - 30
+@app.route('/raw_ttt_panmp/<string:start_date>/<string:end_date>/<string:District>')
+def ttw_this_month_panmp(start_date, end_date, District):
 
-    year10 = str(year10)
-    year20 = str(year20)
-    year30 = str(year30)
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
 
-    projects = Database.find("employees", {"$and": [{"$or": [
-        {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}
-    ]}, {"District": District}]})
+    ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
+    ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    twenty_year_start_date = date(int(start.strftime('%Y'))-20, int(start.strftime('%m')), int(start.strftime('%d')))
+    twenty_year_end_date = date(int(end.strftime('%Y'))-20, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
+    thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    projects = Database.find("employees", {"$and": [
+        {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]},
+        {"District": District}]})
 
     json_projects = []
+
     for project in projects:
         json_projects.append(project)
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
@@ -267,23 +283,29 @@ def ttw_this_month_panmp(month, year, District):
     return all_employees_retiring
 
 
-@app.route('/raw_ttt/<string:month>/<string:year>')
-def ttw_this_month(month, year):
-    year10 = int(year) - 10
-    year20 = int(year) - 20
-    year30 = int(year) - 30
+@app.route('/raw_ttt/<string:start_date>/<string:end_date>')
+def ttw_this_month(start_date, end_date):
 
-    year10 = str(year10)
-    year20 = str(year20)
-    year30 = str(year30)
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.now().time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.now().time())
 
-    projects = Database.find("employees", {"$or": [
-        {"$and": [{"Date of Joining": {'$regex': year10+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year20+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]},
-        {"$and": [{"Date of Joining": {'$regex': year30+'$'}}, {"Date of Joining": {'$regex': '^'+month}}]}
-    ]})
+    ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
+    ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    twenty_year_start_date = date(int(start.strftime('%Y'))-20, int(start.strftime('%m')), int(start.strftime('%d')))
+    twenty_year_end_date = date(int(end.strftime('%Y'))-20, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
+    thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    projects = Database.find("employees", {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
+                 {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]})
 
     json_projects = []
+
     for project in projects:
         json_projects.append(project)
     all_employees_retiring = json.dumps(json_projects, default=json_util.default)
@@ -294,23 +316,24 @@ def ttw_this_month(month, year):
 @app.route('/get_tentwentythirty', methods=['POST', 'GET'])
 def ttw_by_date():
     if request.method == 'GET':
-        return render_template('get_month_date.html')
+        return render_template('get_month_date_block.html')
     else:
-        month = request.form['month']
-        year = request.form['year']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
 
-        return render_template('ttt_on_date.html', month=month, year=year)
+        return render_template('ttt_on_date_block.html', start_date=start_date, end_date=end_date)
 
 
 @app.route('/get_tentwentythirty_panmp/<string:District>', methods=['POST', 'GET'])
 def ttw_by_date_panmp(District):
     if request.method == 'GET':
-        return render_template('get_month_date_panmp.html', district=District)
+        return render_template('get_month_date_block.html', district=District)
     else:
-        month = request.form['month']
-        year = request.form['year']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
 
-        return render_template('ttt_on_date_panmp.html', month=month, year=year, district=District)
+        return render_template('ttt_on_date_block.html', start_date=start_date, end_date=end_date,
+                               district=District)
 
 
 @app.route('/get_tentwentythirty_block/<string:District>/<string:Block>', methods=['POST', 'GET'])
@@ -318,10 +341,11 @@ def ttw_by_date_block(District, Block):
     if request.method == 'GET':
         return render_template('get_month_date_block.html', district=District, block=Block)
     else:
-        month = request.form['month']
-        year = request.form['year']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
 
-        return render_template('ttt_on_date_block.html', month=month, year=year, district=District, block=Block)
+        return render_template('ttt_on_date_block.html', start_date=start_date, end_date=end_date,
+                               district=District, block=Block)
 
 
 @app.route('/login')
