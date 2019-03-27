@@ -1,3 +1,5 @@
+from time import strftime
+
 import pandas as pd
 
 from src.common.database import Database
@@ -235,6 +237,13 @@ def ttw_this_month_block(start_date, end_date, District, Block):
     thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
     thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
 
+    ten_year_start_date = datetime.combine(ten_year_start_date, datetime.now().time())
+    ten_year_end_date = datetime.combine(ten_year_end_date, datetime.now().time())
+    twenty_year_start_date = datetime.combine(twenty_year_start_date, datetime.now().time())
+    twenty_year_end_date = datetime.combine(twenty_year_end_date, datetime.now().time())
+    thirty_year_start_date = datetime.combine(thirty_year_start_date, datetime.now().time())
+    thirty_year_end_date = datetime.combine(thirty_year_end_date, datetime.now().time())
+
     projects = Database.find("employees", {"$and": [
         {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
                  {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
@@ -268,6 +277,13 @@ def ttw_this_month_panmp(start_date, end_date, District):
     thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
     thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
 
+    ten_year_start_date = datetime.combine(ten_year_start_date, datetime.now().time())
+    ten_year_end_date = datetime.combine(ten_year_end_date, datetime.now().time())
+    twenty_year_start_date = datetime.combine(twenty_year_start_date, datetime.now().time())
+    twenty_year_end_date = datetime.combine(twenty_year_end_date, datetime.now().time())
+    thirty_year_start_date = datetime.combine(thirty_year_start_date, datetime.now().time())
+    thirty_year_end_date = datetime.combine(thirty_year_end_date, datetime.now().time())
+
     projects = Database.find("employees", {"$and": [
         {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
                  {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
@@ -299,6 +315,13 @@ def ttw_this_month(start_date, end_date):
 
     thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
     thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
+
+    ten_year_start_date = datetime.combine(ten_year_start_date, datetime.now().time())
+    ten_year_end_date = datetime.combine(ten_year_end_date, datetime.now().time())
+    twenty_year_start_date = datetime.combine(twenty_year_start_date, datetime.now().time())
+    twenty_year_end_date = datetime.combine(twenty_year_end_date, datetime.now().time())
+    thirty_year_start_date = datetime.combine(thirty_year_start_date, datetime.now().time())
+    thirty_year_end_date = datetime.combine(thirty_year_end_date, datetime.now().time())
 
     projects = Database.find("employees", {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
                                                    {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
