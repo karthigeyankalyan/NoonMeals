@@ -56,11 +56,12 @@
                 var rows = [];
                 doc.text(25,25, 'District Wise Summaries of Employees completing 10/20/30 years during '+month+'/'+year);
                 for (var a = 0; a < empCount.length; a++) {
-                    console.log(empCount);
                     if(empCount[a]['values'].length === 3) {
                     rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
                         [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
                     }
+
+                    console.log(empCount[a]['values'][0]['key']);
 
                     else if(empCount[a]['values'].length === 2) {
                         if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '20') {

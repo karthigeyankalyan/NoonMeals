@@ -75,18 +75,18 @@
       <file leaf-file-name="ttt_on_date_overall.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="58" column="42" lean-forward="false" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+            <state relative-caret-position="17">
+              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding>
-                <marker date="1553694699040" expanded="true" signature="8519:8533" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="8678:8717" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="8803:8842" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="8936:8975" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="9062:9101" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="9190:9229" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="9315:9354" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="9446:9485" ph="..." />
-                <marker date="1553694699040" expanded="true" signature="9579:9618" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="8543:8557" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="8702:8741" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="8827:8866" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="8960:8999" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="9086:9125" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="9214:9253" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="9339:9378" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="9470:9509" ph="..." />
+                <marker date="1553694965537" expanded="true" signature="9603:9642" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1203,18 +1203,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/templates/ttt_on_date_overall.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="58" column="42" lean-forward="false" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
+        <state relative-caret-position="17">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
-            <marker date="1553694699040" expanded="true" signature="8519:8533" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="8678:8717" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="8803:8842" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="8936:8975" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="9062:9101" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="9190:9229" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="9315:9354" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="9446:9485" ph="..." />
-            <marker date="1553694699040" expanded="true" signature="9579:9618" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="8543:8557" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="8702:8741" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="8827:8866" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="8960:8999" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="9086:9125" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="9214:9253" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="9339:9378" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="9470:9509" ph="..." />
+            <marker date="1553694965537" expanded="true" signature="9603:9642" ph="..." />
           </folding>
         </state>
       </provider>
