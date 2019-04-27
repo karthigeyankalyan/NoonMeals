@@ -115,7 +115,7 @@
                             if (myObj[i]["Block"] === block) {
                                 if (myObj[i]["Date of RetirementV2"]) {
                                     var retirementDate = moment(new Date(myObj[i]["Date of RetirementV2"]['$date'])).format("DD/MM/YYYY");
-                                    if (moment(retirementDate).isAfter(moment())) {
+                                    if (moment(retirementDate).isBefore(moment())) {
                                         console.log(retirementDate);
                                         validDates.push(myObj[i]);
                                     }
