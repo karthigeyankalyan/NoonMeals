@@ -112,7 +112,7 @@
                         var myObj = json;
                         for (var i = 0; i < myObj.length; i++) {
                             if (myObj[i]["Block"] === block) {
-                                var retirementDate = moment(new Date(myObj[i]["Date of Retirement"])).format("DD/MM/YYYY");
+                                var retirementDate = moment(new Date(myObj[i]["Date of RetirementV2"])).format("DD/MM/YYYY");
                                 if (retirementDate.isBefore(moment().format('DD/MM/YYYY'))) {
                                     validDates.push(myObj[i]);
                                 }
@@ -122,9 +122,9 @@
                         //Looping through the valid dates JSON to assign age, years in service
                         for (var j = 0; j < validDates.length; j++) {
                             //Declaring moment.js dates
-                            var birthDate = moment(new Date(validDates[j]["Date of Birth"])).format("DD/MM/YYYY");
-                            var joiningDate = moment(new Date(validDates[j]["Date of Joining"])).format("DD/MM/YYYY");
-                            retirementDate = moment(new Date(validDates[j]["Date of Retirement"])).format("DD/MM/YYYY");
+                            var birthDate = moment(new Date(validDates[j]["Date of BirthV2"])).format("DD/MM/YYYY");
+                            var joiningDate = moment(new Date(validDates[j]["Date of JoiningV2"])).format("DD/MM/YYYY");
+                            retirementDate = moment(new Date(validDates[j]["Date of RetirementV2"])).format("DD/MM/YYYY");
                             //Calculating the years in service, age
                             var now = moment(inputDate); //todays date
 
