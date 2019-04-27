@@ -9,8 +9,8 @@
 <script>
 
     function downloadPDF() {
-    var month = "{{month}}";
-    var year = "{{year}}";
+    var month = "{{start_date}}";
+    var year = "{{end_date}}";
     var source = "/raw_ttt_panmp/"+month+"/"+year+"/"+"{{district}}";
 
         $.ajax({
@@ -149,8 +149,8 @@
         });
     }
 
-    var month = "{{month}}";
-    var year = "{{year}}";
+    var month = "{{start_date}}";
+    var year = "{{end_date}}";
     var source = "/raw_ttt_panmp/"+month+"/"+year+"/"+"{{district}}";
 
         $.ajax({
