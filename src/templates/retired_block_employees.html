@@ -113,10 +113,11 @@
                         var myObj = json;
                         for (var i = 0; i < myObj.length; i++) {
                             if (myObj[i]["Block"] === block) {
-                                var retirementDate = moment(new Date(myObj[i]["Date of RetirementV2"]['$date'])).format("DD/MM/YYYY");
-                                console.log(retirementDate);
-                                if (retirementDate.isBefore(moment().format('DD/MM/YYYY'))) {
-                                    validDates.push(myObj[i]);
+                                if (myObj[i]["Date of RetirementV2"]) {
+                                    var retirementDate = moment(new Date(myObj[i]["Date of RetirementV2"]['$date'])).format("DD/MM/YYYY");
+                                    if (retirementDate.isBefore(moment().format('DD/MM/YYYY'))) {
+                                        validDates.push(myObj[i]);
+                                    }
                                 }
                             }
                         }
