@@ -480,8 +480,10 @@ def profileLanding():
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
-        if user.designation == "Admin" or user.designation == "PA NMP":
+        if user.designation == "Admin":
             return render_template('profile_admin.html', user=user)
+        elif user.designation == "PA NMP":
+            return render_template('profile_NMP.html', user=user)
         else:
             return render_template('profile.html', user=user)
 
