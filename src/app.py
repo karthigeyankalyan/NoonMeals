@@ -145,19 +145,6 @@ def retirements_within_overall(start_date, end_date):
     return all_t
 
 
-@app.route('/raw_retirement_by_date_panmp/<string:date>/<string:District>')
-def retiring_this_month_panmp(date, District):
-    date_filter = date.replace("_", "/")
-    projects = Database.find("employees", {"$and": [{"Date of Retirement": date_filter},
-                                                    {"District": District}]})
-    json_projects = []
-    for project in projects:
-        json_projects.append(project)
-    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
-
-    return all_employees_retiring
-
-
 @app.route('/raw_retirement_by_date_block/<string:date>/<string:District>/<string:Block>')
 def retiring_this_month_block(date, District, Block):
     date_filter = date.replace("_", "/")
@@ -173,17 +160,18 @@ def retiring_this_month_block(date, District, Block):
 
 
 @app.route('/get_retirement_panmp/<string:District>', methods=['POST', 'GET'])
-def retirement_by_date_panmp(District):
+def retirement_by_date_of_panmp(District):
+    email = session['email']
+    user = User.get_by_email(email)
     if request.method == 'GET':
-        return render_template('get_date_panmp.html', district=District)
+        return render_template('get_month_date_panmp.html', district=District)
+
     else:
-        day = request.form['day']
-        month = request.form['month']
-        year = request.form['year']
+        start_date = request.form['startDate']
+        end_date = request.form['endDate']
 
-        date = day+"_"+month+"_"+year
-
-        return render_template('retired_on_date_panmp.html', date=date, district=District)
+        return render_template('all_retirements_district.html', user=user, start_date=start_date,
+                               end_date=end_date, district=District)
 
 
 @app.route('/change_password/<string:_id>', methods=['POST', 'GET'])

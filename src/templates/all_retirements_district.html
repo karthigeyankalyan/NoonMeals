@@ -100,11 +100,10 @@
     }
 
     function name(inputDate) {
-        var block = "{{block}}";
         var district = "{{district}}";
         var start_date = "{{start_date}}";
         var end_date = "{{end_date}}";
-        var source = "/raw_retirements_within_date_district/"+start_date+"/"+end_date+"/"+district+"/"+block;
+        var source = "/raw_retirements_within_date_panmp/"+start_date+"/"+end_date+"/"+district;
         $.ajax({
             type: 'GET',
             url: source,
