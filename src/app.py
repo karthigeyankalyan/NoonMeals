@@ -188,7 +188,7 @@ def retirement_by_date_panmp(District):
 
 @app.route('/change_password/<string:_id>', methods=['POST', 'GET'])
 def change_password(_id):
-    user = User.get_by_id(_id)
+    user = User.get_by_id(int(_id))
     if request.method == 'GET':
         return render_template('update_password.html', user=user, user_id=_id)
     else:
