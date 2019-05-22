@@ -198,7 +198,7 @@ def change_password(_id):
 
     if user.password == old_password:
         if newPassword == newPasswordAgain:
-            User.change_password(_id, new_password=newPassword)
+            User.change_password(user_id=_id, new_password=newPassword)
             return render_template('passwords_changed.html', user=user)
         else:
             return render_template('passwords_dont_match.html', user=user)
