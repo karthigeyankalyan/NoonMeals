@@ -465,7 +465,8 @@ def login_user():
     if valid:
         if user.designation == "Admin":
             return render_template('profile_admin.html', user=user)
-
+        elif user.designation == "PA NMP":
+            return render_template('profile_NMP.html', user=user)
         else:
             return render_template('profile.html', user=user)
 
