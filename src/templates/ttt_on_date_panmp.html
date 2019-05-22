@@ -8,6 +8,63 @@
 
 <script>
 
+    var month = "{{start_date}}";
+    var year = "{{end_date}}";
+    var source = "/raw_ttt_panmp/"+month+"/"+year+"/"+"{{district}}";
+
+        $.ajax({
+            type: 'GET',
+            url: source,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (json) {
+                for(var i = 0; i< json.length; i++){
+                    var joiningDate = moment(json[i]["Date of JoiningV2"]['$date']).format("MM/DD/YYYY");
+                    var inputDate = new Date(moment().format("YYYY"), moment(json[i]["Date of JoiningV2"]['$date']).format("MM")-1, 1);
+                    json[i]["yearsInService"] = Math.round(moment.duration(moment(inputDate).diff(moment(joiningDate))).asYears());
+                }
+
+                var empCount = d3.nest()
+                    .key(function (d) {
+                        return d.District;
+                    })
+                    .key(function (d) {
+                        return d.yearsInService;
+                    })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
+                $("#empList").append(tbl);
+                var hr = "<tr>";
+                var th10 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
+                var th1 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
+                var th2 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                var th3 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
+                var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
+                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
+                for (var j = 0; j < json.length; j++) {
+                    var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
+                        '<td>'+ json[j]["Employee Name"] +'</td>'+
+                        '<td>'+json[j]["Name of the Center"]+'</td>'+
+                        '<td>'+json[j]["District"]+'</td>'+
+                        '<td>'+json[j]["Block"]+'</td>'+
+                        '<td>'+json[j]["Designation"] +'</td>'+
+                        '<td>'+json[j]["Date of Joining"] +'</td>'+
+                        '<td>'+json[j]["yearsInService"] +'</td>');
+                    $("#empDetails").append(row);
+                }
+            },
+            error: function (e) {
+                alert("error");
+            }
+        });
+
     function downloadPDF() {
     var month = "{{start_date}}";
     var year = "{{end_date}}";
@@ -149,64 +206,6 @@
         });
     }
 
-    var month = "{{start_date}}";
-    var year = "{{end_date}}";
-    var source = "/raw_ttt_panmp/"+month+"/"+year+"/"+"{{district}}";
-
-        $.ajax({
-            type: 'GET',
-            url: source,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (json) {
-                for(var i = 0; i< json.length; i++){
-                    var joiningDate = moment(json[i]["Date of JoiningV2"]['$date']).format("MM/DD/YYYY");
-                    var inputDate = new Date(moment().format("YYYY"), moment(json[i]["Date of JoiningV2"]['$date']).format("MM")-1, 1);
-                    json[i]["yearsInService"] = Math.round(moment.duration(moment(inputDate).diff(moment(joiningDate))).asYears());
-                }
-
-                var empCount = d3.nest()
-                    .key(function (d) {
-                        return d.District;
-                    })
-                    .key(function (d) {
-                        return d.yearsInService;
-                    })
-                    .rollup(function (v) {
-                        return v.length;
-                    })
-                    .entries(json);
-
-                console.log(empCount);
-
-                var tbl = $("<table class='table table-bordered table-dark' id='empDetails' style='margin-top: 4%'/>");
-                $("#empList").append(tbl);
-                var hr = "<tr>";
-                var th10 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
-                var th1 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
-                var th2 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                var th3 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
-                var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
-                var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
-                for (var j = 0; j < json.length; j++) {
-                    var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
-                        '<td>'+ json[j]["Employee Name"] +'</td>'+
-                        '<td>'+json[j]["Name of the Center"]+'</td>'+
-                        '<td>'+json[j]["District"]+'</td>'+
-                        '<td>'+json[j]["Block"]+'</td>'+
-                        '<td>'+json[j]["Designation"] +'</td>'+
-                        '<td>'+json[j]["Date of Joining"] +'</td>'+
-                        '<td>'+json[j]["yearsInService"] +'</td>');
-                    $("#empDetails").append(row);
-                }
-            },
-            error: function (e) {
-                alert("error");
-            }
-        });
 </script>
 
 {% endblock %}
