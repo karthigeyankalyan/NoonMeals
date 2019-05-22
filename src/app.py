@@ -491,7 +491,7 @@ def profileLanding():
     email = session['email']
     if email is not None:
         user = User.get_by_email(email)
-        if user.designation == "Admin":
+        if user.designation == "Admin" or user.designation == "PA NMP":
             return render_template('profile_admin.html', user=user)
         else:
             return render_template('profile.html', user=user)
