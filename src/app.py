@@ -109,10 +109,7 @@ def retirements_within_by_district(start_date, end_date, District, Block):
 def retirements_within_by_block_alone(District, Block):
     all_transactions = []
 
-    current_date = datetime.date.today()
-
-    end = datetime.combine(current_date.strftime('%Y-%m-%d'),
-                           datetime.now().time())
+    end = datetime.now()
 
     all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$lt": end}},
                                                           {"District": District},
