@@ -105,6 +105,27 @@ def retirements_within_by_district(start_date, end_date, District, Block):
     return all_t
 
 
+@app.route('/raw_retirements_within_date_block_alone/<string:District>/<string:Block>')
+def retirements_within_by_block_alone(District, Block):
+    all_transactions = []
+
+    current_date = datetime.date.today()
+
+    end = datetime.combine(current_date.strftime('%Y-%m-%d'),
+                           datetime.now().time())
+
+    all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$lt": end}},
+                                                          {"District": District},
+                                                          {"Block": Block}]})
+
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
+
+    all_t = json.dumps(all_transactions, default=json_util.default)
+
+    return all_t
+
+
 @app.route('/raw_retirements_within_date_panmp/<string:start_date>/<string:end_date>/'
            '<string:District>')
 def retirements_within_by_panmp(start_date, end_date, District):

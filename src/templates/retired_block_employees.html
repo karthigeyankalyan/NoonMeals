@@ -98,7 +98,7 @@
     function name(inputDate) {
         var block = "{{block}}";
         var district = "{{district}}";
-        var source = "/block_table/"+district+"/"+block;
+        var source = "/raw_retirements_within_date_block_alone/"+district+"/"+block;
         $.ajax({
             type: 'GET',
             url: source,
@@ -113,15 +113,11 @@
                         for (var i = 0; i < myObj.length; i++) {
                             if (myObj[i]["Block"] === block) {
                                 if (myObj[i]["Date of RetirementV2"]) {
-                                    myObj[i]["retire_date"] = moment(myObj[i]["Date of RetirementV2"]['$date']).format('YYYY-MM-DD');
-                                    console.log(moment(myObj[i]["retire_date"]).isBefore(moment()), myObj[i]["retire_date"]);
-                                    if (moment(myObj[i]["retire_date"]).isBefore(moment())) {
                                         console.log(retirementDate);
                                         validDates.push(myObj[i]);
                                     }
                                 }
                             }
-                        }
 
                         //Looping through the valid dates JSON to assign age, years in service
                         for (var j = 0; j < validDates.length; j++) {
