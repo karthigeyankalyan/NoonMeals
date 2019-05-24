@@ -111,7 +111,7 @@ def retirements_within_by_block_alone(District, Block):
 
     end = datetime.now()
 
-    all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gt": end}},
+    all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$lt": end}},
                                                           {"District": District},
                                                           {"Block": Block}]})
 
