@@ -113,8 +113,9 @@
                         for (var i = 0; i < myObj.length; i++) {
                             if (myObj[i]["Block"] === block) {
                                 if (myObj[i]["Date of RetirementV2"]) {
-                                    console.log(moment(myObj[i]["Date of RetirementV2"]['$date']).isBefore(moment()), moment(myObj[i]["Date of RetirementV2"]['$date']))
-                                    if (moment(myObj[i]["Date of RetirementV2"]['$date']).isBefore(moment())) {
+                                    myObj[i]["retire_date"] = moment(myObj[i]["Date of RetirementV2"]['$date']).format('YYYY-MM-DD');
+                                    console.log(moment(myObj[i]["retire_date"]).isBefore(moment()), myObj[i]["retire_date"]);
+                                    if (moment(myObj[i]["retire_date"]).isBefore(moment())) {
                                         console.log(retirementDate);
                                         validDates.push(myObj[i]);
                                     }
