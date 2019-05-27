@@ -628,6 +628,19 @@ def update_entries(_id):
         return render_template('beneficiary_added.html', employee_id=_id, district=user.district, block=user.block)
 
 
+@app.route('/loggedOut')
+def log_out():
+    email = session['email']
+    user = User.get_by_email(email)
+    if email is not None:
+        if user.society_name is not None:
+            user.logout()
+            return render_template('logged_out.html', user=user.username)
+
+    else:
+        return render_template('login_fail.html')
+
+
 if __name__=='__main__':
     app.run(port=4095, debug=True)
 
