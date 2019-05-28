@@ -47,7 +47,7 @@
                 var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
                 var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
                 var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Service Years" + "</th>";
-                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6);
+                $("#empDetails").append(hr + th10 + th1 + th2 + th3 + th4 + th5 + th6 + th7);
                 for (var j = 0; j < json.length; j++) {
                     var row = $('<tr></tr>').html('<td>' + parseInt(j+1) + '</td>'+
                         '<td>'+ json[j]["Employee Name"] +'</td>'+
@@ -84,8 +84,14 @@
 
                 var empCount = d3.nest()
                     .key(function (d) {
-                        return d.District;
+                        return d.Block;
                     })
+                    .rollup(function (v) {
+                        return v.length;
+                    })
+                    .entries(json);
+
+                var serviceYearsCount = d3.nest()
                     .key(function (d) {
                         return d.yearsInService;
                     })
@@ -98,9 +104,6 @@
                     .key(function (d) {
                         return d.Designation;
                     })
-                    .key(function (d) {
-                        return d.yearsInService;
-                    })
                     .rollup(function (v) {
                         return v.length;
                     })
@@ -109,46 +112,18 @@
                 var doc = new jsPDF();
                 console.log(json);
                 console.log(empCount);
+                console.log(serviceYearsCount);
+                console.log(designationWise);
 
-                var columns = ["District", "10 Years", "20 Years", "30 Years"];
+                var columns = ["Block", "10 Years", "20 Years", "30 Years"];
                 var rows = [];
-                doc.text(25,25, 'District Wise Summaries of Employees completing 10/20/30 years during '+month+'/'+year);
+
+                doc.setFontSize(10);
+                doc.text(25,25, 'Block-Wise Summary of Employees completing 10/20/30 years during '+month+'/'+year);
+
+                var total_employees = 0;
+
                 for (var a = 0; a < empCount.length; a++) {
-                    if(empCount[a]['values'].length === 3) {
-                    rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
-                        [[empCount[a]['values'][1]['values']]], [[empCount[a]['values'][2]['values']]]]);
-                    }
-
-                    else if(empCount[a]['values'].length === 2) {
-                        if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '20') {
-                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
-                                [[empCount[a]['values'][1]['values']]], [[0]]]);
-                        }
-
-                        else if(empCount[a]['values'][0]['key'] === '20' && empCount[a]['values'][1]['key'] === '30') {
-                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
-                                [[empCount[a]['values'][1]['values']]]]);
-                        }
-                        else if(empCount[a]['values'][0]['key'] === '10' && empCount[a]['values'][1]['key'] === '30') {
-                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
-                                [[0]], [[empCount[a]['values'][1]['values']]]]);
-                        }
-                    }
-
-                    else if(empCount[a]['values'].length === 1) {
-                        if(empCount[a]['values'][0]['key'] === '10') {
-                            rows.push([[[empCount[a]['key']]], [[empCount[a]['values'][0]['values']]],
-                                [[0]], [[0]]]);
-                        }
-                        else if(empCount[a]['values'][0]['key'] === '20') {
-                            rows.push([[[empCount[a]['key']]], [[0]], [[empCount[a]['values'][0]['values']]],
-                                [[0]]]);
-                        }
-                        else if(empCount[a]['values'][0]['key'] === '30') {
-                            rows.push([[[empCount[a]['key']]], [[0]],
-                                [[0]], [[empCount[a]['values'][0]['values']]]]);
-                        }
-                    }
                 }
 
                 doc.autoTable(columns, rows, {startY: 35});
