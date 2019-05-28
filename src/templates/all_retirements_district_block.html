@@ -101,9 +101,10 @@
 
     function name(inputDate) {
         var district = "{{district}}";
+        var block = "{{block}}";
         var start_date = "{{start_date}}";
         var end_date = "{{end_date}}";
-        var source = "/raw_retirements_within_date_panmp/"+start_date+"/"+end_date+"/"+district;
+        var source = "/raw_retirements_within_date_district/"+start_date+"/"+end_date+"/"+district+"/"+block;
         $.ajax({
             type: 'GET',
             url: source,
@@ -209,12 +210,12 @@
                             var th1 = "<th onclick='sortTable(0)' style='text-align:center;vertical-align:middle'>" + "S. No" + "</th>";
                             var th2 = "<th onclick='sortTable(1)' style='text-align:center;vertical-align:middle'>" + "Employee Name" + "</th>";
                             var th3 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "District" + "</th>";
-                            var th4 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
-                            var th5 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
-                            var th6 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
-                            var th7 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
-                            var th8 = "<th onclick='sortTable(7)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
-                            var th9 = "<th onclick='sortTable(8)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
+                            var th4 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Block" + "</th>";
+                            var th5 = "<th onclick='sortTable(2)' style='text-align:center;vertical-align:middle'>" + "Center" + "</th>";
+                            var th6 = "<th onclick='sortTable(3)' style='text-align:center;vertical-align:middle'>" + "Designation" + "</th>";
+                            var th7 = "<th onclick='sortTable(4)' style='text-align:center;vertical-align:middle'>" + "Date Of Birth" + "</th>";
+                            var th8 = "<th onclick='sortTable(5)' style='text-align:center;vertical-align:middle'>" + "Date Of Joining" + "</th>";
+                            var th9 = "<th onclick='sortTable(6)' style='text-align:center;vertical-align:middle'>" + "Date Of Retirement" + "</th>";
                             var th10 = "<th style='text-align:center;vertical-align:middle'>" + "DOJ Current" + "</th>";
                             var th11 = "<th style='text-align:center;vertical-align:middle'>" + "NHIS #" + "</th>";
                             var th12 = "<th style='text-align:center;vertical-align:middle'>" + "GPF #" + "</th>";
