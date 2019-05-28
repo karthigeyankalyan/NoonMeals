@@ -158,7 +158,6 @@
             contentType: "application/json",
             dataType: 'json',
             success: function (json) {
-                console.log(json);
                 document.getElementById("Name").value = json[0]["Employee Name"];
                 document.getElementById("district").value = json[0]["District"];
                 document.getElementById("block").value = json[0]["Block"];
