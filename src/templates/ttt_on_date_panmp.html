@@ -79,26 +79,25 @@
                 for(var i = 0; i< json.length; i++){
                     var joiningDate = moment(json[i]["Date of JoiningV2"]['$date']).format("MM/DD/YYYY");
                     var inputDate = new Date(moment().format("YYYY"), moment(json[i]["Date of JoiningV2"]['$date']).format("MM")-1, 1);
-                    json[i]["yearsInService"] = Math.round(moment.duration(moment(inputDate).diff(moment(joiningDate))).asYears());
+                    json[i]["yearsInService"] = parseInt(Math.round(moment.duration(moment(inputDate).diff(moment(joiningDate))).asYears()));
                 }
 
-                var empCount = d3.nest()
-                    .key(function (d) {
-                        return d.Block;
-                    })
-                    .rollup(function (v) {
-                        return v.length;
-                    })
-                    .entries(json);
-
-                var serviceYearsCount = d3.nest()
-                    .key(function (d) {
-                        return d.yearsInService;
-                    })
-                    .rollup(function (v) {
-                        return v.length;
-                    })
-                    .entries(json);
+            var aggregatedData = d3.nest()
+                .key(function (d) {
+                    return d.District;
+                })
+                .key(function (d) {
+                    return d.Block;
+                })
+                .rollup(function (v) {
+                    return {
+                        "Below10": v.filter(function (v) { return v.yearsInService<10 }).length,
+                        "10to20": v.filter(function (v) { return (v.yearsInService>=10 && v.yearsInService<20)}).length,
+                        "20to30": v.filter(function (v) { return (v.yearsInService>=20 && v.yearsInService<30) }).length,
+                        "Above30": v.filter(function (v) { return v.yearsInService>30 }).length
+                    }
+                })
+                .entries(json);
 
                 var designationWise = d3.nest()
                     .key(function (d) {
@@ -110,20 +109,19 @@
                     .entries(json);
 
                 var doc = new jsPDF();
-                console.log(json);
-                console.log(empCount);
-                console.log(serviceYearsCount);
-                console.log(designationWise);
 
-                var columns = ["Block", "10 Years", "20 Years", "30 Years"];
+                var columns = ["Block", "No 0f Employees"];
                 var rows = [];
 
                 doc.setFontSize(10);
                 doc.text(25,25, 'Block-Wise Summary of Employees completing 10/20/30 years during '+month+'/'+year);
 
+                console.log(aggregatedData);
+
                 var total_employees = 0;
 
                 for (var a = 0; a < empCount.length; a++) {
+
                 }
 
                 doc.autoTable(columns, rows, {startY: 35});
