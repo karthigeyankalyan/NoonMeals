@@ -123,9 +123,9 @@
                 var total_employees = 0;
 
                 for (var j = 0; j < aggregatedData.length; j++) {
-                    total_employees += aggregatedData[j]['key'].values['10to20'] + aggregatedData[j]['key'].values['20to30'] + aggregatedData[j]['key'].values['Above30'];
-                    rows.push([[[aggregatedData[j]['key']]], [[aggregatedData[j]['key'].values['10to20']]], [[aggregatedData[j]['key'].values['20to30']]],
-                        [[aggregatedData[j]['key'].values['Above30']]]]);
+                    total_employees += aggregatedData[j].values['10to20'] + aggregatedData[j].values['20to30'] + aggregatedData[j].values['Above30'];
+                    rows.push([[[aggregatedData[j]['key']]], [[aggregatedData[j].values['10to20']]], [[aggregatedData[j].values['20to30']]],
+                        [[aggregatedData[j].values['Above30']]]]);
                 }
 
                 doc.autoTable(columns, rows, {startY: 35});
@@ -138,9 +138,9 @@
                 doc.text(25,25, 'Designation-Wise Employees completing 10/20/30 years during '+month+'/'+year);
 
                 for (j = 0; j < designationWise.length; j++) {
-                    total_employees += designationWise[j]['key'].values['10to20'] + designationWise[j]['key'].values['20to30'] + designationWise[j]['key'].values['Above30'];
-                    rows.push([[[designationWise[j]['key']]], [[designationWise[j]['key'].values['10to20']]], [[designationWise[j]['key'].values['20to30']]],
-                        [[designationWise[j]['key'].values['Above30']]]]);
+                    total_employees += designationWise[j].values['10to20'] + designationWise[j].values['20to30'] + designationWise[j].values['Above30'];
+                    rows.push([[[designationWise[j]['key']]], [[designationWise[j].values['10to20']]], [[designationWise[j].values['20to30']]],
+                        [[designationWise[j].values['Above30']]]]);
                 }
 
                 doc.autoTable(columns1, rows1, {startY: 35});
