@@ -129,9 +129,9 @@ def retirements_within_by_panmp(start_date, end_date, District):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('0000', '%H%M').time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.strptime('0000', '%H%M').time())
+                           datetime.strptime('2359', '%H%M').time())
 
     all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gte": start, "$lte": end}},
                                                           {"District": District}]})
