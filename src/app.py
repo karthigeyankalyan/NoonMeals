@@ -89,7 +89,7 @@ def retirements_within_by_district(start_date, end_date, District, Block):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.now().time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
@@ -149,7 +149,7 @@ def retirements_within_overall(start_date, end_date):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.now().time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
@@ -230,7 +230,7 @@ def retirement_by_date_block(District, Block):
 def ttw_this_month_block(start_date, end_date, District, Block):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.now().time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
@@ -270,7 +270,7 @@ def ttw_this_month_block(start_date, end_date, District, Block):
 def ttw_this_month_panmp(start_date, end_date, District):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.now().time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
@@ -309,7 +309,7 @@ def ttw_this_month_panmp(start_date, end_date, District):
 def ttw_this_month(start_date, end_date):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.now().time())
+                             datetime.strptime('2359', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.now().time())
 
