@@ -396,8 +396,7 @@ def render_employees():
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
         projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
-                                                        {"$or": [{"Designation": "Cooking Assistant"},
-                                                                 {"Designation": "Cook Assistant"}]}]})
+                                                        {"Designation": "Cook Assistant"}]})
 
         json_projects = []
 
