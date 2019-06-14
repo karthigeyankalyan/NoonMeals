@@ -396,7 +396,8 @@ def render_employees():
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
         projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
-                                                        {"Designation": "Cook"}]})
+                                                        {"$or": [{"Designation": "Cooking Assistant"},
+                                                                 {"Designation": "Cook Assistant"}]}]})
 
         json_projects = []
 
@@ -405,7 +406,7 @@ def render_employees_sample():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District', 'Designation']).size()
+        df = df.groupby(['District']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
@@ -414,7 +415,8 @@ def render_employees_sample():
 
 @app.route('/sample_table_jaykumar_v2')
 def render_employees_v2():
-        projects = Database.find("employees", {"Employee Name": {"$ne": "Vacant"}})
+        projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
+                                                        {"Designation": "Organiser"}]})
 
         json_projects = []
 
@@ -423,7 +425,7 @@ def render_employees_v2():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District', 'Designation']).size()
+        df = df.groupby(['District']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
