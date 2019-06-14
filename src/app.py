@@ -404,7 +404,7 @@ def render_employees_sample():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District']).size()
+        df = df.groupby(['District', 'Designation']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
@@ -422,7 +422,7 @@ def render_employees_v2():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District']).size()
+        df = df.groupby(['District', 'Designation']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
