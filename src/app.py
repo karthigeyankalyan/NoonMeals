@@ -413,7 +413,7 @@ def render_employees_sample():
 
 
 @app.route('/sample_table_jaykumar_v1')
-def render_employees_sample():
+def render_employees_sample_v1():
         projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
                                                         {"Designation": "Cook Assistant"}]})
 
