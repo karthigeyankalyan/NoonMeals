@@ -395,7 +395,7 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
                                                         {"Designation": "Cook"}]})
 
         json_projects = []
@@ -414,7 +414,7 @@ def render_employees_sample():
 
 @app.route('/sample_table_jaykumar_v1')
 def render_employees_sample_v1():
-        projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
                                                         {"Designation": "Cook Assistant"}]})
 
         json_projects = []
@@ -433,7 +433,7 @@ def render_employees_sample_v1():
 
 @app.route('/sample_table_jaykumar_v2')
 def render_employees_v2():
-        projects = Database.find("employees", {"$and": [{"Employee Name": "Vacant"},
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
                                                         {"Designation": "Organiser"}]})
 
         json_projects = []
