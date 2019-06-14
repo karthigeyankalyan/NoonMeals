@@ -395,8 +395,25 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$or": [{"gpf": ""},
-                                                       {"gpf": " "}]})
+        projects = Database.find("employees", {"Employee Name": "Vacant"})
+
+        json_projects = []
+
+        for project in projects:
+            json_projects.append(project)
+
+        df = pd.DataFrame(json_projects)
+
+        df = df.groupby(['District']).size()
+
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
+
+        return render_template('abcdef.html', dfLen=df)
+
+
+@app.route('/sample_table_jaykumar_v2')
+def render_employees_v2():
+        projects = Database.find("employees", {"Employee Name": {"$ne": "Vacant"}})
 
         json_projects = []
 
