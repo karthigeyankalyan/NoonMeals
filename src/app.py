@@ -89,9 +89,9 @@ def retirements_within_by_district(start_date, end_date, District, Block):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.now().time())
+                           datetime.strptime('2359', '%H%M').time())
 
     all_trans_dict = Database.find("employees", {"$and": [{"Date of RetirementV2": {"$gte": start, "$lt": end}},
                                                           {"District": District},
@@ -129,7 +129,7 @@ def retirements_within_by_panmp(start_date, end_date, District):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
                            datetime.strptime('2359', '%H%M').time())
 
@@ -149,9 +149,9 @@ def retirements_within_overall(start_date, end_date):
     all_transactions = []
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.now().time())
+                           datetime.strptime('2359', '%H%M').time())
 
     all_trans_dict = Database.find("employees", {"Date of RetirementV2": {"$gte": start, "$lt": end}})
 
@@ -230,9 +230,9 @@ def retirement_by_date_block(District, Block):
 def ttw_this_month_block(start_date, end_date, District, Block):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.now().time())
+                           datetime.strptime('2359', '%H%M').time())
 
     ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
     ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
@@ -270,9 +270,9 @@ def ttw_this_month_block(start_date, end_date, District, Block):
 def ttw_this_month_panmp(start_date, end_date, District):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.now().time())
+                           datetime.strptime('2359', '%H%M').time())
 
     ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
     ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
@@ -309,9 +309,9 @@ def ttw_this_month_panmp(start_date, end_date, District):
 def ttw_this_month(start_date, end_date):
 
     start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
-                             datetime.strptime('2359', '%H%M').time())
+                             datetime.strptime('0000', '%H%M').time())
     end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
-                           datetime.now().time())
+                           datetime.strptime('2359', '%H%M').time())
 
     ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
     ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
