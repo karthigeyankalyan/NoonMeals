@@ -666,6 +666,25 @@ def update_entries(_id):
         return render_template('beneficiary_added.html', employee_id=_id, district=user.district, block=user.block)
 
 
+@app.route('/all_appointments_before')
+def retirements_within_overall():
+    all_transactions = []
+
+    start_date = '1993-12-31'
+
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.strptime('2359', '%H%M').time())
+
+    all_trans_dict = Database.find("employees", {"Date of JoiningV2": {"$lte": start}})
+
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
+
+    all_t = json.dumps(all_transactions, default=json_util.default)
+
+    return all_t
+
+
 @app.route('/loggedOut')
 def log_out():
     email = session['email']
