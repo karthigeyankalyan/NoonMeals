@@ -667,7 +667,7 @@ def update_entries(_id):
 
 
 @app.route('/all_appointments_before')
-def retirements_within_overall():
+def all_appointments_before():
     all_transactions = []
 
     start_date = '1993-12-31'
