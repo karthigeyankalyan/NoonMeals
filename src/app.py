@@ -402,14 +402,9 @@ def render_employees_sample():
 
         for project in projects:
             json_projects.append(project)
+        all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-        df = pd.DataFrame(json_projects)
-
-        df = df.groupby(['District', 'Block']).size()
-
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
-
-        return render_template('abcdef.html', dfLen=df)
+        return all_employees_retiring
 
 
 @app.route('/sample_table_jaykumar_v1')
@@ -421,14 +416,9 @@ def render_employees_sample_v1():
 
         for project in projects:
             json_projects.append(project)
+        all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-        df = pd.DataFrame(json_projects)
-
-        df = df.groupby(['District']).size()
-
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
-
-        return render_template('abcdef.html', dfLen=df)
+        return all_employees_retiring
 
 
 @app.route('/sample_table_jaykumar_v2')
@@ -440,71 +430,72 @@ def render_employees_v2():
 
         for project in projects:
             json_projects.append(project)
+        all_employees_retiring = json.dumps(json_projects, default=json_util.default)
 
-        df = pd.DataFrame(json_projects)
-
-        df = df.groupby(['District']).size()
-
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
-
-        return render_template('abcdef.html', dfLen=df)
+        return all_employees_retiring
 
 
-@app.route('/sample_table_jaykumar_ne')
-def render_employees_sample_ne():
-        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Date of BirthV2": {"$ne": ""}}]})
+@app.route('/sample_jay_v3')
+def sample_jay_v3():
 
-        json_projects = []
+    start_date = '2019-04-01'
+    end_date = '2019-07-31'
 
-        for project in projects:
-            json_projects.append(project)
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.strptime('0000', '%H%M').time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.strptime('2359', '%H%M').time())
 
-        df = pd.DataFrame(json_projects)
+    ten_year_start_date = date(int(start.strftime('%Y'))-10, int(start.strftime('%m')), int(start.strftime('%d')))
+    ten_year_end_date = date(int(end.strftime('%Y'))-10, int(end.strftime('%m')), int(end.strftime('%d')))
 
-        df = df.groupby(['District', 'Block']).size()
+    twenty_year_start_date = date(int(start.strftime('%Y'))-20, int(start.strftime('%m')), int(start.strftime('%d')))
+    twenty_year_end_date = date(int(end.strftime('%Y'))-20, int(end.strftime('%m')), int(end.strftime('%d')))
 
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
+    thirty_year_start_date = date(int(start.strftime('%Y'))-30, int(start.strftime('%m')), int(start.strftime('%d')))
+    thirty_year_end_date = date(int(end.strftime('%Y'))-30, int(end.strftime('%m')), int(end.strftime('%d')))
 
-        return render_template('abcdef.html', dfLen=df)
+    ten_year_start_date = datetime.combine(ten_year_start_date, datetime.now().time())
+    ten_year_end_date = datetime.combine(ten_year_end_date, datetime.now().time())
+    twenty_year_start_date = datetime.combine(twenty_year_start_date, datetime.now().time())
+    twenty_year_end_date = datetime.combine(twenty_year_end_date, datetime.now().time())
+    thirty_year_start_date = datetime.combine(thirty_year_start_date, datetime.now().time())
+    thirty_year_end_date = datetime.combine(thirty_year_end_date, datetime.now().time())
+
+    projects = Database.find("employees", {"$or": [{"Date of JoiningV2": {"$gte": ten_year_start_date, "$lt": ten_year_end_date}},
+                                                   {"Date of JoiningV2": {"$gte": twenty_year_start_date, "$lt": twenty_year_end_date}},
+                                                   {"Date of JoiningV2": {"$gte": thirty_year_start_date, "$lt": thirty_year_end_date}}]})
+
+    json_projects = []
+
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
 
 
-@app.route('/sample_table_jaykumar_v1_ne')
-def render_employees_sample_v1_ne():
-        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Date of JoiningV2": {"$ne": ""}}]})
+@app.route('/sample_jay_4')
+def sample_jay_4():
 
-        json_projects = []
+    start_date = '2019-04-01'
+    end_date = '2019-07-31'
 
-        for project in projects:
-            json_projects.append(project)
+    all_transactions = []
 
-        df = pd.DataFrame(json_projects)
+    start = datetime.combine(datetime.strptime(start_date, '%Y-%m-%d').date(),
+                             datetime.strptime('0000', '%H%M').time())
+    end = datetime.combine(datetime.strptime(end_date, '%Y-%m-%d').date(),
+                           datetime.strptime('2359', '%H%M').time())
 
-        df = df.groupby(['District']).size()
+    all_trans_dict = Database.find("employees", {"Date of RetirementV2": {"$gte": start, "$lt": end}})
 
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
+    for tran in all_trans_dict:
+        all_transactions.append(tran)
 
-        return render_template('abcdef.html', dfLen=df)
+    all_t = json.dumps(all_transactions, default=json_util.default)
 
-
-@app.route('/sample_table_jaykumar_v2_ne')
-def render_employees_v2_ne():
-        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Date of RetirementV2": {"$ne": ""}}]})
-
-        json_projects = []
-
-        for project in projects:
-            json_projects.append(project)
-
-        df = pd.DataFrame(json_projects)
-
-        df = df.groupby(['District']).size()
-
-        all_employees_state = json.dumps(json_projects, default=json_util.default)
-
-        return render_template('abcdef.html', dfLen=df)
+    return all_t
 
 
 @app.route('/employee_table/<string:_id>')
