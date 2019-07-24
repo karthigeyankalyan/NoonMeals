@@ -396,7 +396,7 @@ def render_employees():
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
         projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Designation": "Cook"}]})
+                                                        {"Date of BirthV2": ""}]})
 
         json_projects = []
 
@@ -405,7 +405,7 @@ def render_employees_sample():
 
         df = pd.DataFrame(json_projects)
 
-        df = df.groupby(['District']).size()
+        df = df.groupby(['District', 'Block']).size()
 
         all_employees_state = json.dumps(json_projects, default=json_util.default)
 
@@ -415,7 +415,7 @@ def render_employees_sample():
 @app.route('/sample_table_jaykumar_v1')
 def render_employees_sample_v1():
         projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Designation": "Cook Assistant"}]})
+                                                        {"Date of JoiningV2": ""}]})
 
         json_projects = []
 
@@ -434,7 +434,64 @@ def render_employees_sample_v1():
 @app.route('/sample_table_jaykumar_v2')
 def render_employees_v2():
         projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Designation": "Organiser"}]})
+                                                        {"Date of RetirementV2": ""}]})
+
+        json_projects = []
+
+        for project in projects:
+            json_projects.append(project)
+
+        df = pd.DataFrame(json_projects)
+
+        df = df.groupby(['District']).size()
+
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
+
+        return render_template('abcdef.html', dfLen=df)
+
+
+@app.route('/sample_table_jaykumar_ne')
+def render_employees_sample_ne():
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
+                                                        {"Date of BirthV2": {"$ne": ""}}]})
+
+        json_projects = []
+
+        for project in projects:
+            json_projects.append(project)
+
+        df = pd.DataFrame(json_projects)
+
+        df = df.groupby(['District', 'Block']).size()
+
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
+
+        return render_template('abcdef.html', dfLen=df)
+
+
+@app.route('/sample_table_jaykumar_v1_ne')
+def render_employees_sample_v1_ne():
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
+                                                        {"Date of JoiningV2": {"$ne": ""}}]})
+
+        json_projects = []
+
+        for project in projects:
+            json_projects.append(project)
+
+        df = pd.DataFrame(json_projects)
+
+        df = df.groupby(['District']).size()
+
+        all_employees_state = json.dumps(json_projects, default=json_util.default)
+
+        return render_template('abcdef.html', dfLen=df)
+
+
+@app.route('/sample_table_jaykumar_v2_ne')
+def render_employees_v2_ne():
+        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
+                                                        {"Date of RetirementV2": {"$ne": ""}}]})
 
         json_projects = []
 
