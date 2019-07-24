@@ -414,7 +414,7 @@ def render_employees_sample_v1():
         projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
                                                         {"Employee Name": {"$ne": "VACANT"}},
                                                         {"Employee Name": {"$ne": ""}},
-                                                        {"Date of JoiningV2": ""}]})
+                                                        {"nhis_id": ""}]})
 
         json_projects = []
 
@@ -430,7 +430,7 @@ def render_employees_v2():
         projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
                                                         {"Employee Name": {"$ne": "VACANT"}},
                                                         {"Employee Name": {"$ne": ""}},
-                                                        {"Date of RetirementV2": ""}]})
+                                                        {"gpf": ""}]})
 
         json_projects = []
 
