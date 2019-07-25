@@ -106,7 +106,7 @@
     <div class="form-group">
         <label for="gender">What is the gender of Employee?</label>
           <select class="form-control" id="gender" name="gender">
-            {% set designation = ['Male', 'Female', 'Third Gender'] %}
+            {% set designation = ['Vacant', 'Male', 'Female', 'Third Gender'] %}
             {% for ch in designation %}
                 <option value= "{{ch}}">{{ch}}</option>"
             {% endfor %}
@@ -114,7 +114,7 @@
 
         <label for="community">What is the community of Employee?</label>
           <select class="form-control" id="community" name="community">
-            {% set designation = ['OC', 'BC', 'MBC', 'OBC', 'SC', 'ST'] %}
+            {% set designation = ['Vacant', 'OC', 'BC', 'MBC', 'OBC', 'SC', 'ST'] %}
             {% for ch in designation %}
                 <option value= "{{ch}}">{{ch}}</option>"
             {% endfor %}
@@ -135,7 +135,7 @@
     <div>
         <label for="MOA">Mode of Appointment</label>
           <select class="form-control" id="MOA" name="MOA">
-            {% set designation = ['Direct', 'Compassion', 'Promotion'] %}
+            {% set designation = ['Vacant', 'Direct', 'Compassion', 'Promotion'] %}
             {% for ch in designation %}
                 <option value= "{{ch}}">{{ch}}</option>"
             {% endfor %}
