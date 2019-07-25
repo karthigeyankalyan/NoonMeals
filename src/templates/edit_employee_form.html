@@ -159,6 +159,11 @@
             dataType: 'json',
             success: function (json) {
                 document.getElementById("Name").value = json[0]["Employee Name"];
+                if (json[0]["Employee Name"] === "Vacant") {
+                    document.getElementById("MOA").value = "Vacant";
+                    document.getElementById("community").value = "Vacant";
+                    document.getElementById("gender").value = "Vacant";
+                }
                 document.getElementById("district").value = json[0]["District"];
                 document.getElementById("block").value = json[0]["Block"];
                 document.getElementById("strength").value = json[0]["strength"];
