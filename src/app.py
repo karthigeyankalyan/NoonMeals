@@ -406,7 +406,7 @@ def render_employees_sample():
             '$group': {
                 '_id': {
                     '$concat': [
-                        '$District', '-', '$Block', '-', '$Designation', '-', '$gender'
+                        '$District', '|', '$Block', '|', '$Designation', '|', '$gender'
                     ]
                 },
                 'count': {
