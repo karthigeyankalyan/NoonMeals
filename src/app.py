@@ -395,18 +395,44 @@ def render_employees():
 
 @app.route('/sample_table_jaykumar')
 def render_employees_sample():
-        projects = Database.find("employees", {"$and": [{"Employee Name": {"$ne": "Vacant"}},
-                                                        {"Employee Name": {"$ne": "VACANT"}},
-                                                        {"Employee Name": {"$ne": ""}},
-                                                        {"Date of BirthV2": ""}]})
+    from pymongo import MongoClient
 
-        json_projects = []
+    # Requires the PyMongo package.
+    # https://api.mongodb.com/python/current
 
-        for project in projects:
-            json_projects.append(project)
-        all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+    client = MongoClient('mongodb+srv://karthigeyan:deekarthik1911!@cluster0.g5qg2.mongodb.net/test?authSource=admin&replicaSet=atlas-8rmrpb-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true')
+    projects = client['nmp']['employees'].aggregate([
+        {
+            '$group': {
+                '_id': {
+                    '$concat': [
+                        '$District', '-', '$Block', '-', '$Designation', '-', '$gender'
+                    ]
+                },
+                'count': {
+                    '$sum': 1
+                }
+            }
+        }, {
+            '$match': {
+                'count': {
+                    '$gt': 1
+                }
+            }
+        }, {
+            '$sort': {
+                'count': -1
+            }
+        }
+    ])
 
-        return all_employees_retiring
+    json_projects = []
+
+    for project in projects:
+        json_projects.append(project)
+    all_employees_retiring = json.dumps(json_projects, default=json_util.default)
+
+    return all_employees_retiring
 
 
 @app.route('/sample_table_jaykumar_v1')
